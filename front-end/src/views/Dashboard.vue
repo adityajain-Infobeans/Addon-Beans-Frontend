@@ -13,14 +13,14 @@
 <script>
 // @ is an alias to /src
 
-import TicketsSummary from '@/components/Dashboard/TicketsSummary.vue';
-import TicketsTable from '@/components/Dashboard/TicketsTable.vue';
+// import TicketsSummary from '';
+// import TicketsTable from '';
 
 export default {
   name: 'Dashboard',
   components: {
-    TicketsSummary,
-    TicketsTable,
+    TicketsSummary: () => import('@/components/Dashboard/TicketsSummary.vue'),
+    TicketsTable: () => import('@/components/Dashboard/TicketsTable.vue'),
   },
 
   mounted() {

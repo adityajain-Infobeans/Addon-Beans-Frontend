@@ -21,18 +21,13 @@
 // @ is an alias to /src
 // params me ticket id h toh uski details dika do varna pura table
 
-import TicketsTable from '@/components/Dashboard/TicketsTable.vue';
-import TicketFom from '@/components/Forms/Ticketform.vue';
-import AddTicketComments from '@/components/Forms/AddTicketComments.vue';
-import TicketComments from '@/components/Forms/TicketComments.vue';
-
 export default {
   name: 'ViewTickets',
   components: {
-    TicketsTable,
-    TicketFom,
-    AddTicketComments,
-    TicketComments,
+    TicketsTable: () => import('@/components/Dashboard/TicketsTable.vue'),
+    TicketFom: () => import('@/components/Forms/Ticketform.vue'),
+    AddTicketComments: () => import('@/components/Forms/AddTicketComments.vue'),
+    TicketComments: () => import('@/components/Forms/TicketComments.vue'),
   },
 
   mounted() {

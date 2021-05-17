@@ -10,12 +10,11 @@
 
 <script>
 // @ is an alias to /src
-import TicketForm from '@/components/Forms/Ticketform.vue';
 
 export default {
   name: 'AddTicket',
   components: {
-    TicketForm,
+    TicketForm: () => import('@/components/Forms/Ticketform.vue'),
   },
   mounted() {
     document.getElementById('app').style.backgroundColor = '#80CBC4';
