@@ -118,13 +118,13 @@ export default {
 
   methods: {
     editTicket(id) {
-      this.$router.push({ path: `/updateticket/${id}` });
+      this.$router.push({ name: 'Update Ticket', params: { id } });
     },
     deleteTicket(id) {
       console.log(id);
     },
     detailTicket(id) {
-      this.$router.push({ path: `/viewticket/${id}` });
+      this.$router.push({ name: 'View Ticket', params: { id } });
     },
 
     bgColor(priority) {
