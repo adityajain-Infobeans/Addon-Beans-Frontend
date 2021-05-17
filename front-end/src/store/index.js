@@ -24,7 +24,12 @@ export default new Vuex.Store({
       {
         icon: 'mdi-logout',
         text: 'Logout',
-        route: '/Logout',
+        route: 'Logout',
+      },
+      {
+        icon: 'mdi-login',
+        text: 'Login',
+        route: 'Login',
       },
     ],
     headers: [
