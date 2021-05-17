@@ -8,45 +8,37 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
+    path: '/Support-Ticket-System/',
     name: 'Home',
     component: Home,
   },
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-  // },
   {
-    path: '/dashboard',
+    path: '/Support-Ticket-System/dashboard',
     name: 'Dashboard',
     component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
   },
   {
-    path: '/addticket',
+    path: '/Support-Ticket-System/addticket',
     name: 'Add Ticket',
     component: () => import(/* webpackChunkName: "addticket" */ '../views/AddTicket.vue'),
   },
   {
-    path: '/updateticket/:id',
+    path: '/Support-Ticket-System/updateticket/:id',
     name: 'Update Ticket',
     component: () => import(/* webpackChunkName: "updateticket" */ '../views/UpdateTicket.vue'),
   },
   {
-    path: '/viewticket/:id?',
+    path: '/Support-Ticket-System/viewticket/:id?',
     name: 'View Ticket',
     component: () => import(/* webpackChunkName: "viewticket" */ '../views/ViewTicket.vue'),
   },
   {
-    path: '/logout',
+    path: '/Support-Ticket-System/logout',
     name: 'Logout',
     component: Logout,
   },
   {
-    path: '/login',
+    path: '/Support-Ticket-System/login',
     name: 'Login',
     component: Login,
   },
