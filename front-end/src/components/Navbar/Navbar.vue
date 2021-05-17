@@ -15,7 +15,7 @@
             v-for="(item, i) in this.$store.state.navItems"
             :key="i"
             router
-            :to="item.route"
+            :to="{ name: item.text }"
           >
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
