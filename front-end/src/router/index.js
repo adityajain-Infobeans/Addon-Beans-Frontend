@@ -8,37 +8,37 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/Support-Ticket-System/',
+    path: '/',
     name: 'Home',
     component: Home,
   },
   {
-    path: '/Support-Ticket-System/dashboard',
+    path: '/dashboard',
     name: 'Dashboard',
     component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
   },
   {
-    path: '/Support-Ticket-System/addticket',
+    path: '/addticket',
     name: 'Add Ticket',
     component: () => import(/* webpackChunkName: "addticket" */ '../views/AddTicket.vue'),
   },
   {
-    path: '/Support-Ticket-System/updateticket/:id',
+    path: '/updateticket/:id',
     name: 'Update Ticket',
     component: () => import(/* webpackChunkName: "updateticket" */ '../views/UpdateTicket.vue'),
   },
   {
-    path: '/Support-Ticket-System/viewticket/:id?',
+    path: '/viewticket/:id?',
     name: 'View Ticket',
     component: () => import(/* webpackChunkName: "viewticket" */ '../views/ViewTicket.vue'),
   },
   {
-    path: '/Support-Ticket-System/logout',
+    path: '/logout',
     name: 'Logout',
     component: Logout,
   },
   {
-    path: '/Support-Ticket-System/login',
+    path: '/login',
     name: 'Login',
     component: Login,
   },
