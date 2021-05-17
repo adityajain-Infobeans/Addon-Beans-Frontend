@@ -2,8 +2,9 @@
   <v-container>
     <h2 class="display-2 mb-6 black--text">Tickets:</h2>
 
-    <v-layout v-resize="onResize">
-      <!-- refer this  https://stackoverflow.com/questions/59081299/vuetify-insert-action-button-in-data-table-and-get-row-data -->
+    <!-- <v-layout v-resize="onResize"> -->
+    <!-- refer this  https://stackoverflow.com/questions/59081299/vuetify-insert-action-button-in-data-table-and-get-row-data -->
+    <div v-resize="onResize">
       <v-data-table
         :headers="this.$store.state.headers"
         :items="this.$store.state.tickets"
@@ -55,10 +56,18 @@
           <tr class="text-center" v-else>
             <td>
               <ul class="flex-content">
-                <li class="flex-item" data-label="Ticket Id">
+                <li
+                  class="flex-item"
+                  :class="isMobile ? 'my-auto' : ''"
+                  data-label="Ticket Id"
+                >
                   {{ row.item.ticket_id }}
                 </li>
-                <li class="flex-item" data-label="Ticket Status">
+                <li
+                  class="flex-item"
+                  :class="isMobile ? 'my-auto' : ''"
+                  data-label="Ticket Status"
+                >
                   {{ row.item.ticket_status }}
                 </li>
                 <li
@@ -69,6 +78,7 @@
                     {{ row.item.ticket_priority }}
                   </v-chip>
                 </li>
+
                 <li
                   class="text-left font-weight-bold flex-item"
                   data-label="Ticket Subject"
@@ -106,7 +116,8 @@
           </tr>
         </template>
       </v-data-table>
-    </v-layout>
+    </div>
+    <!-- </v-layout> -->
   </v-container>
 </template>
 
