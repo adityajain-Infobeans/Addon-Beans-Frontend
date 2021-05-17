@@ -10,7 +10,7 @@
         :items-per-page="10"
         class="elevation-1"
         dark
-        :hide-headers="isMobile"
+        :hide-default-header="isMobile"
         :class="{ mobile: isMobile }"
       >
         <template v-slot:item="row">
