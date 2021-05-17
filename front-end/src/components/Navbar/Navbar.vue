@@ -16,6 +16,7 @@
             :key="i"
             router
             :to="{ name: item.text }"
+            exact
           >
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
