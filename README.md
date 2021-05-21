@@ -1,4 +1,5 @@
-#Jira Lite
+# Jira Lite
+
 A simple single page application where Frontend and Backend code will be completely seaprated,
 Frontend will communicate with Backend via REST APIs for authentication and database operations.
 
@@ -6,15 +7,15 @@ Frontend will communicate with Backend via REST APIs for authentication and data
 
 1. Login page (simple form with fields username/password)
 2. There will 2 types of Users
-   - Manager
-   - HR
+    - Manager
+    - HR
 3. Manager can :
-   - raise ticket
-   - view their own tickets.
+    - raise ticket
+    - view their own tickets.
 4. HR can
-   - view all tickets
-   - change ticket status
-   - Add comments
+    - view all tickets
+    - change ticket status
+    - Add comments
 
 ##### Backend :
 
