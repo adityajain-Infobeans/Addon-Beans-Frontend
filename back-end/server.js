@@ -55,11 +55,10 @@ function db_connect(req, res, next) {
 }
 
 function checkAuth(req, res, next) {
-    // Verify JWT here
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, data) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, data) => {
         if (err) {
             console.log(err);
             res.json({
@@ -69,9 +68,6 @@ function checkAuth(req, res, next) {
             });
             return;
         }
-
-        req.user = user;
-
         next();
     });
 }
