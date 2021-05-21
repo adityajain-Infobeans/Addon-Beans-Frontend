@@ -1,6 +1,6 @@
-# Jira Lite
+# Support Ticket System
 
-A simple single page application where Frontend and Backend code will be completely seaprated,
+A simple single page application where Frontend and Backend code will be completely separated,
 Frontend will communicate with Backend via REST APIs for authentication and database operations.
 
 ##### Front-end (Create using VueJS, Vuetify, Vuex)
@@ -10,12 +10,18 @@ Frontend will communicate with Backend via REST APIs for authentication and data
     - Manager
     - HR
 3. Manager can :
-    - raise ticket
-    - view their own tickets.
+    - Raise ticket
+    - View their own tickets.
+    - Edit their ticket
+    - Delete Their Ticket
 4. HR can
-    - view all tickets
-    - change ticket status
-    - Add comments
+    - View all tickets
+    - Change status of any ticket
+    - Add comments to any ticket
+    - Raise ticket
+    - View their own tickets.
+    - Edit their ticket
+    - Delete Their Ticket
 
 ##### Backend :
 
