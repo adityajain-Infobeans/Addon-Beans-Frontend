@@ -11,6 +11,7 @@ require('dotenv').config();
 const User = require('./route/user');
 const Ticket = require('./route/ticket');
 const Comment = require('./route/comment');
+const Client = require('./route/client');
 
 app.use(cors());
 app.use(express.json());
@@ -22,13 +23,15 @@ API :
 Ticket CRUD 
 Comments CRUD 
 POST: Login User
-GET: ticket summary
+GET: tickets summary
 GET: allTickets
+GET: clients list
 
 */
 app.use('/user', User);
 app.use('/ticket', checkAuth, Ticket);
 app.use('/comment', checkAuth, Comment);
+app.use('/client', checkAuth, Client);
 
 app.get('/', (req, res) => {
     res.send('Imagine api doc here');
