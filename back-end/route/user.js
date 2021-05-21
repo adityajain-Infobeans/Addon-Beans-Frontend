@@ -70,7 +70,7 @@ router.post('/', function (req, res) {
         });
 });
 
-router.post('/', function (req, res) {
+router.get('/', function (req, res) {
     res.send('Try POST method');
 });
 module.exports = router;
