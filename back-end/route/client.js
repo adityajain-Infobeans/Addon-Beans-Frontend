@@ -13,6 +13,16 @@ router.get('/', function (req, res) {
             for (const client of clients) {
                 clientsList.push(client.dataValues);
             }
+
+            if (clientsList.length === 0) {
+                res.json({
+                    status: 'success',
+                    message: 'No client found in database',
+                    data: { clientsList },
+                });
+                return;
+            }
+
             res.json({
                 status: 'success',
                 message: 'Clients successfully retrieved from database',
