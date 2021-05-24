@@ -7,7 +7,40 @@ router.get('/:ticket_id?', function (req, res) {
     if (!req.params.ticket_id) {
         // send all tickets for dashboard  code here
 
-        res.send('');
+        Ticket.findAll()
+            .then((tickets) => {
+                let ticketsList = [];
+                for (const ticket of tickets) {
+                    ticketsList.push(ticket.dataValues);
+                }
+
+                if (ticketsList.length === 0) {
+                    res.json({
+                        status: 'success',
+                        message: 'No ticket found in database',
+                        data: { ticketsList },
+                    });
+                    return;
+                }
+
+                res.json({
+                    status: 'success',
+                    message: 'Tickets successfully retrieved from database',
+                    data: { ticketsList },
+                });
+                return;
+            })
+            .catch((err) => {
+                console.log('Error: ', err);
+                res.json({
+                    status: 'error',
+                    message: 'Error while querying tickets',
+                    data: {},
+                });
+                return;
+            });
+
+        // res.send('');
     } else {
         // supplied data for supplied ticket id  code here
         res.send('');
