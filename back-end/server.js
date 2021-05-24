@@ -61,16 +61,25 @@ function checkAuth(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, data) => {
-        if (err) {
-            console.log(err);
-            res.json({
-                status: 'error',
-                message: 'JWT auth failed',
-                data: {},
-            });
-            return;
-        }
-        next();
-    });
+    if (authHeader && token) {
+        jwt.verify(token, process.env.JWT_SECRET, (err, data) => {
+            if (err) {
+                console.log(err);
+                res.json({
+                    status: 'error',
+                    message: 'JWT auth failed',
+                    data: {},
+                });
+                return;
+            }
+            next();
+        });
+    } else {
+        res.json({
+            status: 'error',
+            message: 'JWT not provided',
+            data: {},
+        });
+        return;
+    }
 }
