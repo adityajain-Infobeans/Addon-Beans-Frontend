@@ -24,6 +24,7 @@ const Comment = db.define(
     },
     {
         tableName: 'infobeans_comments',
+        timestamps: false,
     }
 );
 

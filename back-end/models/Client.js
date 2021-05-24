@@ -16,6 +16,7 @@ const Client = db.define(
     },
     {
         tableName: 'infobeans_clients',
+        timestamps: false,
     }
 );
 

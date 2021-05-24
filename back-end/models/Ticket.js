@@ -4,6 +4,11 @@ const db = require('../database');
 const Ticket = db.define(
     'Ticket',
     {
+        ticket_id: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
         ticket_name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -31,6 +36,7 @@ const Ticket = db.define(
     },
     {
         tableName: 'infobeans_tickets',
+        timestamps: false,
     }
 );
 
