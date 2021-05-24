@@ -9,8 +9,8 @@ const Ticket = db.define(
             primaryKey: true,
             autoIncrement: true,
         },
-        ticket_name: {
-            type: DataTypes.STRING,
+        emp_id: {
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         status: {

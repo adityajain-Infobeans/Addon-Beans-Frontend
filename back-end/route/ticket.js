@@ -43,12 +43,47 @@ router.get('/:ticket_id?', function (req, res) {
         // res.send('');
     } else {
         // supplied data for supplied ticket id  code here
-        res.send('');
+        let ticket_id = req.params.ticket_id;
+
+        Ticket.findByPk(ticket_id)
+            .then((ticket) => {
+                console.log(ticket);
+                return;
+            })
+            .catch((err) => {
+                console.log('Error: ', err);
+                res.json({
+                    status: 'error',
+                    message: 'Error while querying ticket',
+                    data: {},
+                });
+                return;
+            });
+
+        // res.send('');
     }
 });
 
 router.post('/', function (req, res) {
     // add ticket to db code here
+
+    // Ticket.create({
+    //     emp_id: 1,
+    //     client: 1
+    //   }, { fields: ['emp_id','created_on','updated_on','status','priority','contact','subject','client' ] }).then((ticket) => {
+    //     console.log(ticket);
+    //     return;
+    // })
+    // .catch((err) => {
+    //     console.log('Error: ', err);
+    //     res.json({
+    //         status: 'error',
+    //         message: 'Error while querying ticket',
+    //         data: {},
+    //     });
+    //     return;
+    // });
+
     res.end('');
 });
 
