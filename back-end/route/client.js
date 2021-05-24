@@ -4,7 +4,31 @@ const Client = require('../models/Client');
 
 router.get('/', function (req, res) {
     // show all clients code here
-    res.send('
-    ');
+
+    Client.findAll({
+        attributes: ['client_id', 'client_name'],
+    })
+        .then((clients) => {
+            let clientsList = [];
+            for (const client of clients) {
+                clientsList.push(client.dataValues);
+            }
+            res.json({
+                status: 'success',
+                message: 'Clients successfully retrieved from database',
+                data: { clientsList },
+            });
+            return;
+        })
+        .catch((err) => {
+            console.log('Error: ', err);
+            res.json({
+                status: 'error',
+                message: 'Error while querying clients',
+                data: {},
+            });
+            return;
+        });
 });
+
 module.exports = router;
