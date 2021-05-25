@@ -8,7 +8,7 @@ const port = 3000;
 
 require('dotenv').config();
 
-const User = require('./route/user');
+const Employee = require('./route/employee');
 const Ticket = require('./route/ticket');
 const Comment = require('./route/comment');
 const Client = require('./route/client');
@@ -22,13 +22,13 @@ app.use(db_connect); // Custom middleware to check if DB is available of not
 API :
 Ticket CRUD 
 Comments CRUD 
-POST: Login User
+POST: Login Employee
 GET: tickets summary
 GET: allTickets
 GET: clients list
 
 */
-app.use('/user', User);
+app.use('/employee', Employee);
 app.use('/ticket', checkAuth, Ticket);
 app.use('/comment', checkAuth, Comment);
 app.use('/client', checkAuth, Client);

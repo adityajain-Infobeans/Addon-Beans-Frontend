@@ -1,8 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../database');
 
-const User = db.define(
-    'User',
+const Employee = db.define(
+    'Employee',
     {
         emp_id: {
             type: DataTypes.INTEGER,
@@ -27,9 +27,9 @@ const User = db.define(
         },
     },
     {
-        tableName: 'infobeans_user_details',
+        tableName: 'infobeans_employee_details',
         timestamps: false,
     }
 );
 
-module.exports = User;
+module.exports = Employee;
