@@ -1,5 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../database');
+const Employee = require('./Employee');
+const Client = require('./Client');
 
 const Ticket = db.define(
     'Ticket',
@@ -12,6 +14,10 @@ const Ticket = db.define(
         emp_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: Employee,
+                key: 'emp_id',
+            },
         },
         status: {
             type: DataTypes.STRING,
@@ -29,9 +35,13 @@ const Ticket = db.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        client: {
-            type: DataTypes.STRING,
+        client_id: {
+            type: DataTypes.INTEGER,
             allowNull: false,
+            references: {
+                model: Client,
+                key: 'client_id',
+            },
         },
     },
     {
