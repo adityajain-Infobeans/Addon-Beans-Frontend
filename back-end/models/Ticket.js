@@ -29,9 +29,17 @@ const Ticket = db.define(
         },
         contact: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         subject: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        updated_on: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        created_on: {
             type: DataTypes.STRING,
             allowNull: false,
         },
