@@ -7,21 +7,21 @@ Frontend will communicate with Backend via REST APIs for authentication and data
 
 1. Login page (simple form with fields username/password)
 2. There will 2 types of Users
-    - Manager
-    - HR
+   - Manager
+   - HR
 3. Manager can :
-    - Raise ticket
-    - View their own tickets.
-    - Edit their ticket
-    - Delete Their Ticket
+   - Raise ticket
+   - View their own tickets.
+   - Edit their ticket
+   - Delete Their Ticket
 4. HR can
-    - View all tickets
-    - Change status of any ticket
-    - Add comments to any ticket
-    - Raise ticket
-    - View their own tickets.
-    - Edit their ticket
-    - Delete Their Ticket
+   - View all tickets
+   - Change status of any ticket
+   - Add comments to any ticket
+   - Raise ticket
+   - View their own tickets.
+   - Edit their ticket
+   - Delete Their Ticket
 
 ##### Backend :
 
@@ -30,3 +30,29 @@ Frontend will communicate with Backend via REST APIs for authentication and data
 3. Express
 4. Passport & JWT
 5. CORS enabled
+
+# Front-end Commands
+
+## Project setup
+
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+
+```
+npm run build
+```
+
+### Lints and fixes files
+
+```
+npm run lint
+```
