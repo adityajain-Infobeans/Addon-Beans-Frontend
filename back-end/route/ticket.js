@@ -3,6 +3,23 @@ const router = express.Router();
 const Ticket = require('../models/Ticket');
 const { Op } = require('sequelize');
 
+let todays_date = () => {
+    today = new Date();
+    let dd = today.getDate();
+
+    let mm = today.getMonth() + 1;
+    const yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = `0${dd}`;
+    }
+
+    if (mm < 10) {
+        mm = `0${mm}`;
+    }
+
+    return `${dd}-${mm}-${yyyy}`;
+};
+
 router.get('/:ticket_id?', function (req, res) {
     if (!req.params.ticket_id) {
         // send all tickets for dashboard  code here
@@ -47,7 +64,19 @@ router.get('/:ticket_id?', function (req, res) {
 
         Ticket.findByPk(ticket_id)
             .then((ticket) => {
-                console.log(ticket);
+                if (!ticket) {
+                    res.json({
+                        status: 'error',
+                        message: 'Invalid Ticket ID',
+                        data: {},
+                    });
+                    return;
+                }
+                res.json({
+                    status: 'success',
+                    message: 'Ticket Data Successfully Retrieved',
+                    data: ticket.dataValues,
+                });
                 return;
             })
             .catch((err) => {
@@ -67,24 +96,67 @@ router.get('/:ticket_id?', function (req, res) {
 router.post('/', function (req, res) {
     // add ticket to db code here
 
-    // Ticket.create({
-    //     emp_id: 1,
-    //     client: 1
-    //   }, { fields: ['emp_id','created_on','updated_on','status','priority','contact','subject','client' ] }).then((ticket) => {
-    //     console.log(ticket);
-    //     return;
-    // })
-    // .catch((err) => {
-    //     console.log('Error: ', err);
-    //     res.json({
-    //         status: 'error',
-    //         message: 'Error while querying ticket',
-    //         data: {},
-    //     });
-    //     return;
-    // });
+    const emp_id = req.body.employee_data.emp_id;
+    const created_on = todays_date() + ' by ' + req.body.employee_data.emp_name;
+    const updated_on = `${todays_date()} by ${req.body.employee_data.emp_name}`;
+    const status = req.body.status;
+    const priority = req.body.priority;
+    const contact = req.body.contact ? req.body.contact : null;
+    const subject = req.body.subject;
+    const client_id = req.body.client_id;
 
-    res.end('');
+    if (!(status && priority && subject && client_id)) {
+        res.json({
+            status: 'error',
+            message: 'Parameter missing',
+            data: {},
+        });
+        return;
+    }
+
+    Ticket.create(
+        {
+            emp_id: emp_id,
+            created_on: created_on,
+            updated_on: updated_on,
+            status: status,
+            priority: priority,
+            contact: contact,
+            subject: subject,
+            client_id: client_id,
+        },
+        {
+            fields: [
+                'emp_id',
+                'created_on',
+                'updated_on',
+                'status',
+                'priority',
+                'contact',
+                'subject',
+                'client_id',
+            ],
+        }
+    )
+        .then((ticket) => {
+            res.json({
+                status: 'success',
+                message: 'Ticket Created Successfully',
+                data: ticket.dataValues,
+            });
+            return;
+        })
+        .catch((err) => {
+            console.log('Error: ', err);
+            res.json({
+                status: 'error',
+                message: 'Error while querying ticket',
+                data: {},
+            });
+            return;
+        });
+
+    // res.end('');
 });
 
 router.put('/', function (req, res) {
