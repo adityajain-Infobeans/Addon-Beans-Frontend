@@ -17,7 +17,6 @@ export default {
     TicketForm: () => import('@/components/Forms/Ticketform.vue'),
   },
   mounted() {
-    document.getElementById('app').style.backgroundColor = '#90CAF9';
     document.title = 'Add Ticket';
   },
 };

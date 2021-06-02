@@ -31,7 +31,6 @@ export default {
   },
 
   mounted() {
-    document.getElementById('app').style.backgroundColor = '#cc7351';
     document.title = 'View Ticket';
   },
 };
