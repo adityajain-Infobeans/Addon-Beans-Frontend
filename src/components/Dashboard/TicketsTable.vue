@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h2 class="display-2 mb-6 black--text">Tickets:</h2>
+    <h2 class="display-2 mb-6 white--text">Tickets:</h2>
 
     <!-- <v-layout v-resize="onResize"> -->
     <!-- refer this  https://stackoverflow.com/questions/59081299/vuetify-insert-action-button-in-data-table-and-get-row-data -->
@@ -10,7 +10,7 @@
         :items="this.$store.state.tickets"
         :items-per-page="10"
         class="elevation-1"
-        dark
+        light
         :hide-default-header="isMobile"
         :class="{ mobile: isMobile }"
       >
