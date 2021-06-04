@@ -6,7 +6,9 @@
       </v-card-title>
 
       <v-card-text>
-        <v-form>
+        <v-alert type="error" v-if="errorMessage">{{ errorMessage }}</v-alert>
+        <v-alert type="success" v-if="successMessage">Login Success</v-alert>
+        <v-form v-model="formValidated">
           <v-text-field
             name="email"
             label="Email"
@@ -14,6 +16,7 @@
             prepend-icon="mdi-account-circle"
             type="email"
             v-model="email"
+            :rules="emailRules"
           ></v-text-field>
           <v-text-field
             name="Password"
@@ -24,6 +27,7 @@
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             @click:append="showPassword = !showPassword"
             v-model="password"
+            :rules="passwordRules"
           ></v-text-field>
         </v-form>
       </v-card-text>
@@ -31,7 +35,9 @@
       <v-card-actions>
         <!-- <v-btn color="success">Registration </v-btn> -->
         <v-spacer></v-spacer>
-        <v-btn color="info" @click="login">Login </v-btn>
+        <v-btn color="info" @click="login" :disabled="!formValidated"
+          >Login
+        </v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -45,6 +51,16 @@ export default {
     showPassword: false,
     email: null,
     password: null,
+    formValidated: false,
+    errorMessage: null,
+    successMessage: null,
+
+    emailRules: [
+      (v) => !!v || 'Email is required',
+      (v) => /\S+@\S+\.\S+/.test(v) || 'Invalid email.',
+    ],
+
+    passwordRules: [(v) => !!v || 'Password is required'],
   }),
 
   mounted() {
@@ -60,10 +76,18 @@ export default {
             password: this.password,
           })
           .then((response) => {
-            console.log(response);
+            this.successMessage = response.data;
+            localStorage.setItem('emp_id', response.data.emp_id);
+            localStorage.setItem('emp_name', response.data.emp_name);
+            localStorage.setItem('emp_email', response.data.emp_email);
+            localStorage.setItem('token', response.data.token);
+
+            setTimeout(() => {
+              this.$router.push({ name: 'Dashboard' });
+            }, 3000);
           })
           .catch((error) => {
-            console.log(error);
+            this.errorMessage = error.response.data.message;
           });
       }
       return true;
