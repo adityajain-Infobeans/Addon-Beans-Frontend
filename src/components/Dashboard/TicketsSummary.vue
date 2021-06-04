@@ -12,7 +12,7 @@
           elevation="4"
         >
           <p class="headline mb-2">Total Tickets</p>
-          <p class="display-3 font-weight-bold">26</p>
+          <p class="display-3 font-weight-bold">{{ totalTickets }}</p>
         </v-col>
         <v-spacer></v-spacer>
         <v-col
@@ -22,7 +22,7 @@
           elevation="4"
         >
           <p class="headline mb-2">Open Tickets</p>
-          <p class="display-3 font-weight-bold">06</p>
+          <p class="display-3 font-weight-bold">{{ openTickets }}</p>
         </v-col>
         <v-spacer></v-spacer>
         <v-col
@@ -32,7 +32,7 @@
           elevation="4"
         >
           <p class="headline mb-2">Resolved Tickets</p>
-          <p class="display-3 font-weight-bold">20</p>
+          <p class="display-3 font-weight-bold">{{ resolvedTickets }}</p>
         </v-col>
       </v-row>
     </v-container>
@@ -40,8 +40,36 @@
 </template>
 
 <script>
+const axios = require('axios');
+
 export default {
+  data: () => ({
+    totalTickets: '--',
+    openTickets: '--',
+    resolvedTickets: '--',
+  }),
+
   methods: {},
+  created() {
+    axios
+      .get('https://infobeans-support.herokuapp.com/summary', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        this.totalTickets = response.data.data.totalTickets;
+        this.openTickets = response.data.data.openTicket;
+        this.resolvedTickets = response.data.data.resolvedTicket;
+      })
+      .catch((error) => {
+        console.log(error);
+        if (error.response.status === 401) {
+          this.$router.push({ name: 'Login' });
+        }
+      });
+  },
 };
 </script>
 
