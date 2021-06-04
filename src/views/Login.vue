@@ -77,10 +77,10 @@ export default {
           })
           .then((response) => {
             this.successMessage = response.data;
-            localStorage.setItem('emp_id', response.data.emp_id);
-            localStorage.setItem('emp_name', response.data.emp_name);
-            localStorage.setItem('emp_email', response.data.emp_email);
-            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('emp_id', response.data.data.emp_id);
+            localStorage.setItem('emp_name', response.data.data.emp_name);
+            localStorage.setItem('emp_email', response.data.data.emp_email);
+            localStorage.setItem('token', response.data.data.token);
 
             setTimeout(() => {
               this.$router.push({ name: 'Dashboard' });
