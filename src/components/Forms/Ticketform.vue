@@ -1,6 +1,6 @@
 <template >
   <v-card light class="mt-8 pa-5">
-    <v-form>
+    <v-form v-model="formValidated">
       <v-container>
         <div v-if="type === 'add'">
           <h1 class="h1">Open Support Ticket</h1>
@@ -63,7 +63,14 @@
           </v-col>
 
           <v-col cols="12">
-            <v-btn block color="primary" dark v-if="!ifView">Submit</v-btn>
+            <v-btn
+              block
+              color="primary"
+              dark
+              v-if="!ifView"
+              :disabled="!formValidated"
+              >Submit</v-btn
+            >
           </v-col>
         </v-row>
       </v-container>
@@ -80,7 +87,7 @@ export default {
     priority: null,
     contactNumber: null,
     description: null,
-    formValidated: 'false',
+    formValidated: false,
 
     subjectRules: [
       (v) => !!v || 'Subject is required',
