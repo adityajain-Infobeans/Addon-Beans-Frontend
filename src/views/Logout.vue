@@ -1,5 +1,13 @@
 <template>
-  <div>
-    <h1>This is logout page</h1>
-  </div>
+  <div>{{ redirect() }}</div>
 </template>
+<script>
+export default {
+  methods: {
+    redirect() {
+      localStorage.clear();
+      this.$router.push({ name: 'Login' });
+    },
+  },
+};
+</script>
