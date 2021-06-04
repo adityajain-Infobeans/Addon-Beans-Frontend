@@ -19,6 +19,9 @@ export default {
   },
   methods: {
     isLogin() {
+      if (!localStorage.getItem('token')) {
+        return false;
+      }
       return true;
     },
   },

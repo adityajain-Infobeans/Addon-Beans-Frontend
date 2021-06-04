@@ -10,7 +10,7 @@
       ></v-img>
 
       <v-spacer></v-spacer>
-      <v-toolbar-title class="body-1">Welcome User!</v-toolbar-title>
+      <v-toolbar-title class="body-1">{{ welcomeMessage }}</v-toolbar-title>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute temporary dark>
@@ -41,6 +41,7 @@ export default {
   data: () => ({
     drawer: false,
     model: 1,
+    welcomeMessage: null,
   }),
 };
 </script>
