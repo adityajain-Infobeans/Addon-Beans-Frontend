@@ -18,6 +18,9 @@ export default {
   },
   mounted() {
     document.title = 'Update Ticket';
+    if (!localStorage.getItem('token')) {
+      this.$router.push({ name: 'Login' });
+    }
   },
 };
 </script>

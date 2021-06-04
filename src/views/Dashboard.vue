@@ -25,6 +25,9 @@ export default {
 
   mounted() {
     document.title = 'Dashboard';
+    if (!localStorage.getItem('token')) {
+      this.$router.push({ name: 'Login' });
+    }
   },
 };
 </script>
