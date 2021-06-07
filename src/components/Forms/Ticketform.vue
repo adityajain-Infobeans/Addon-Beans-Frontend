@@ -69,6 +69,7 @@
               dark
               v-if="!ifView"
               :disabled="!formValidated"
+              @click="formSubmit"
               >Submit</v-btn
             >
           </v-col>
@@ -79,6 +80,8 @@
 </template>
 
 <script>
+const axios = require('axios');
+
 export default {
   props: ['type'],
   data: () => ({
@@ -124,6 +127,94 @@ export default {
     ifView() {
       return !this.type;
     },
+  },
+
+  methods: {
+    formSubmit() {
+      if (this.type === 'add') {
+        // call add api
+        console.log('add api call');
+
+        axios
+          .post(
+            'http://localhost:3000/ticket',
+            {
+              status: 'OPEN',
+              priority: this.priority,
+              contact: this.contactNumber,
+              subject: this.subject,
+              description: this.description,
+              client_id: 1,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+              },
+            },
+          )
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else if (this.type === 'update') {
+        // call update api
+        console.log('update api call');
+        const ticketId = this.$route.params.id;
+        axios
+          .put(
+            `http://localhost:3000/ticket/${ticketId}`,
+            {
+              priority: this.priority,
+              contact: this.contactNumber,
+              subject: this.subject,
+              description: this.description,
+              client_id: 1,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+              },
+            },
+          )
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        // invalid
+      }
+    },
+  },
+
+  created() {
+    if (this.type !== 'add') {
+      // get ticket data to view or update
+
+      const ticketId = this.$route.params.id;
+      axios
+        .get(`http://localhost:3000/ticket/${ticketId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data.data);
+
+          this.status = response.data.data.status;
+          this.priority = response.data.data.priority;
+          this.contact = response.data.data.contactNumber;
+          this.subject = response.data.data.subject;
+          this.description = response.data.data.description;
+          this.client_id = response.data.data.client_id;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   },
 };
 </script>
