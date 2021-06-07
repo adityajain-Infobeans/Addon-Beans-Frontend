@@ -7,7 +7,7 @@
     <div v-resize="onResize">
       <v-data-table
         :headers="this.$store.state.headers"
-        :items="this.$store.state.tickets"
+        :items="ticketsData"
         :items-per-page="10"
         class="elevation-1"
         light
@@ -17,10 +17,10 @@
         <template v-slot:item="row">
           <tr class="text-center" v-if="!isMobile">
             <td>{{ row.item.ticket_id }}</td>
-            <td>{{ row.item.ticket_status }}</td>
+            <td>{{ row.item.status }}</td>
             <td class="font-weight-bold">
-              <v-chip :color="bgColor(row.item.ticket_priority)" light>
-                {{ row.item.ticket_priority }}
+              <v-chip :color="bgColor(row.item.priority)" light>
+                {{ row.item.priority }}
               </v-chip>
             </td>
             <td
@@ -28,12 +28,12 @@
               @click="detailTicket(row.item.ticket_id)"
             >
               {{
-                row.item.ticket_subject.length > 140
-                  ? row.item.ticket_subject.substring(0, 140) + '...'
-                  : row.item.ticket_subject
+                row.item.subject.length > 140
+                  ? row.item.subject.substring(0, 140) + '...'
+                  : row.item.subject
               }}
             </td>
-            <td>{{ row.item.ticket_last_updated }}</td>
+            <td>{{ row.item.updated_on }}</td>
             <td>
               <v-btn
                 class="blue white--text"
@@ -68,14 +68,14 @@
                   :class="isMobile ? 'my-auto' : ''"
                   data-label="Ticket Status"
                 >
-                  {{ row.item.ticket_status }}
+                  {{ row.item.status }}
                 </li>
                 <li
                   class="font-weight-bold flex-item"
                   data-label="Ticket Priority"
                 >
-                  <v-chip :color="bgColor(row.item.ticket_priority)" light>
-                    {{ row.item.ticket_priority }}
+                  <v-chip :color="bgColor(row.item.priority)" light>
+                    {{ row.item.priority }}
                   </v-chip>
                 </li>
 
@@ -85,13 +85,13 @@
                   @click="detailTicket(row.item.ticket_id)"
                 >
                   {{
-                    row.item.ticket_subject.length > 140
-                      ? row.item.ticket_subject.substring(0, 140) + '...'
-                      : row.item.ticket_subject
+                    row.item.subject.length > 140
+                      ? row.item.subject.substring(0, 140) + '...'
+                      : row.item.subject
                   }}
                 </li>
                 <li class="flex-item" data-label="Ticket Last Updated">
-                  {{ row.item.ticket_last_updated }}
+                  {{ row.item.updated_on }}
                 </li>
                 <li class="flex-item" data-label="Edit Ticket">
                   <v-btn
@@ -122,9 +122,12 @@
 </template>
 
 <script>
+const axios = require('axios');
+
 export default {
   data: () => ({
     isMobile: false,
+    ticketsData: [],
   }),
 
   methods: {
@@ -155,6 +158,22 @@ export default {
       if (window.innerWidth < 650) this.isMobile = true;
       else this.isMobile = false;
     },
+  },
+
+  created() {
+    axios
+      .get('http://localhost:3000/ticket', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+      .then((response) => {
+        this.ticketsData = response.data.data.ticketsList;
+        console.log(response.data.data.ticketsList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 </script>
