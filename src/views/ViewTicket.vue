@@ -31,10 +31,10 @@ export default {
   },
 
   mounted() {
-    document.title = 'View Ticket';
     if (!localStorage.getItem('token')) {
       this.$router.push({ name: 'Login' });
     }
+    document.title = 'View Ticket';
   },
 };
 </script>

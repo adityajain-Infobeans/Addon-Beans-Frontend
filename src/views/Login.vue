@@ -7,7 +7,9 @@
 
       <v-card-text>
         <v-alert type="error" v-if="errorMessage">{{ errorMessage }}</v-alert>
-        <v-alert type="success" v-if="successMessage">Login Success</v-alert>
+        <v-alert type="success" v-else-if="successMessage"
+          >Login Success</v-alert
+        >
         <v-form v-model="formValidated">
           <v-text-field
             name="email"
@@ -71,7 +73,7 @@ export default {
     login() {
       if (this.email && this.password) {
         axios
-          .post('https://infobeans-support.herokuapp.com/employee', {
+          .post('http://localhost:3000/employee', {
             email: this.email,
             password: this.password,
           })

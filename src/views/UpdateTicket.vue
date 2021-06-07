@@ -17,10 +17,10 @@ export default {
     TicketForm: () => import('@/components/Forms/Ticketform.vue'),
   },
   mounted() {
-    document.title = 'Update Ticket';
     if (!localStorage.getItem('token')) {
       this.$router.push({ name: 'Login' });
     }
+    document.title = 'Update Ticket';
   },
 };
 </script>

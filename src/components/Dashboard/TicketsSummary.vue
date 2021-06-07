@@ -52,7 +52,7 @@ export default {
   methods: {},
   created() {
     axios
-      .get('https://infobeans-support.herokuapp.com/summary', {
+      .get('http://localhost:3000/summary', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
