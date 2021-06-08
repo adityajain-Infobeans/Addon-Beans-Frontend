@@ -33,6 +33,8 @@
           <v-col cols="12">
             <v-select
               :items="priorities"
+              item-value="value"
+              item-text="priority"
               label="Priority"
               name="priority"
               v-model="priority"
@@ -98,47 +100,52 @@ const axios = require('axios');
 
 export default {
   props: ['type'],
-  data: () => ({
-    priorities: ['', 'P1 -- Critical', 'P2 -- High', 'P3 -- Medium'],
-    clients: [{ client_id: 0, client_name: '' }],
+  data() {
+    return {
+      priorities: this.$store.state.priorities,
+      clients: [{ client_id: 0, client_name: '' }],
 
-    client: null,
-    subject: null,
-    priority: null,
-    contactNumber: null,
-    description: null,
-    formValidated: false,
+      client: null,
+      subject: null,
+      priority: null,
+      contactNumber: null,
+      description: null,
+      formValidated: false,
 
-    subjectRules: [
-      (v) => !!v || 'Subject is required',
-      (v) => (v && v.length >= 10) || 'Subject must be more than 10 characters',
-    ],
+      subjectRules: [
+        (v) => !!v || 'Subject is required',
+        (v) =>
+          // eslint-disable-next-line implicit-arrow-linebreak
+          (v && v.length >= 10) || 'Subject must be more than 10 characters',
+      ],
 
-    priorityRules: [(v) => !!v || 'Please select a priority level.'],
-    clientRules: [(v) => !!v || 'Please select a client.'],
+      priorityRules: [(v) => !!v || 'Please select a priority level.'],
+      clientRules: [(v) => !!v || 'Please select a client.'],
 
-    contactNumberRules: [
-      (v) => {
-        if (v) {
-          if (v.length !== 10) {
-            return 'Invalid length';
-          }
-          if (!/^[6-9]\d{9}$/.test(v)) {
-            return 'Invalid mobile number';
+      contactNumberRules: [
+        (v) => {
+          if (v) {
+            if (v.length !== 10) {
+              return 'Invalid length';
+            }
+            if (!/^[6-9]\d{9}$/.test(v)) {
+              return 'Invalid mobile number';
+            }
+            return true;
           }
           return true;
-        }
-        return true;
-      },
-    ],
+        },
+      ],
 
-    descriptionRules: [
-      (v) => !!v || 'Please write a valid description.',
-      (v) =>
-        // eslint-disable-next-line implicit-arrow-linebreak
-        (v && v.length >= 50) || 'Description must be more than 50 characters',
-    ],
-  }),
+      descriptionRules: [
+        (v) => !!v || 'Please write a valid description.',
+        (v) =>
+          // eslint-disable-next-line
+          (v && v.length >= 50) ||
+          'Description must be more than 50 characters',
+      ],
+    };
+  },
 
   computed: {
     isFormValid: () => {},
@@ -225,7 +232,7 @@ export default {
           this.contact = response.data.data.contactNumber;
           this.subject = response.data.data.subject;
           this.description = response.data.data.description;
-          this.client_id = response.data.data.client_id;
+          this.client = response.data.data.client_id;
         })
         .catch((error) => {
           console.log(error);
