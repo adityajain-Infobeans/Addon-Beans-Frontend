@@ -83,6 +83,7 @@ export default {
             localStorage.setItem('emp_name', response.data.data.emp_name);
             localStorage.setItem('emp_email', response.data.data.emp_email);
             localStorage.setItem('token', response.data.data.token);
+            localStorage.setItem('is_hr', response.data.data.is_hr);
 
             setTimeout(() => {
               this.$router.push({ name: 'Dashboard' });
