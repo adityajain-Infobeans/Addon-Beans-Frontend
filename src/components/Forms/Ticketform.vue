@@ -53,6 +53,20 @@
           </v-col>
 
           <v-col cols="12">
+            <v-select
+              :items="clients"
+              item-value="client_id"
+              item-text="client_name"
+              label="Client"
+              name="client"
+              v-model="client"
+              :rules="clientRules"
+              :disabled="ifView"
+              required
+            ></v-select>
+          </v-col>
+
+          <v-col cols="12">
             <v-textarea
               name="description"
               label="Description"
@@ -86,6 +100,9 @@ export default {
   props: ['type'],
   data: () => ({
     priorities: ['', 'P1 -- Critical', 'P2 -- High', 'P3 -- Medium'],
+    clients: [{ client_id: 0, client_name: '' }],
+
+    client: null,
     subject: null,
     priority: null,
     contactNumber: null,
@@ -98,6 +115,7 @@ export default {
     ],
 
     priorityRules: [(v) => !!v || 'Please select a priority level.'],
+    clientRules: [(v) => !!v || 'Please select a client.'],
 
     contactNumberRules: [
       (v) => {
@@ -144,7 +162,7 @@ export default {
               contact: this.contactNumber,
               subject: this.subject,
               description: this.description,
-              client_id: 1,
+              client_id: this.client,
             },
             {
               headers: {
@@ -170,7 +188,7 @@ export default {
               contact: this.contactNumber,
               subject: this.subject,
               description: this.description,
-              client_id: 1,
+              client_id: this.client,
             },
             {
               headers: {
@@ -213,6 +231,19 @@ export default {
           console.log(error);
         });
     }
+
+    axios
+      .get('http://localhost:3000/client', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+      .then((response) => {
+        this.clients = this.clients.concat(response.data.data.clientsList);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 </script>
