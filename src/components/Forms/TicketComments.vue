@@ -1,62 +1,45 @@
 <template >
-  <v-container class="mt-5">
+  <v-container class="mt-5" v-if="commentsData.length === 0 ? false : true">
     <v-card light class="pa-5">
-      <div class="blue lighten-4 black--text pa-5 mb-5">
+      <div
+        class="blue lighten-4 black--text pa-5 mb-5"
+        v-for="commentData in commentsData"
+        :key="commentData.id"
+      >
         <p class="">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quidem
-          praesentium voluptatum delectus impedit? Vero, autem nostrum sequi
-          fugiat iusto ipsa obcaecati aliquam soluta ipsum officia nobis
-          debitis, doloribus optio.Lorem, ipsum dolor sit amet consectetur
-          adipisicing elit. Nulla quidem praesentium voluptatum delectus
-          impedit? Vero, autem nostrum sequi fugiat iusto ipsa obcaecati aliquam
-          soluta ipsum officia nobis debitis, doloribus optio.
+          {{ commentData.comment }}
         </p>
-        <p class="text-right">by Aditya Jain.</p>
-      </div>
-      <div class="blue lighten-4 black--text pa-5 mb-5">
-        <p class="">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quidem
-          praesentium voluptatum delectus impedit? Vero, autem nostrum sequi
-          fugiat iusto ipsa obcaecati aliquam soluta ipsum officia nobis
-          debitis, doloribus optio.Lorem, ipsum dolor sit amet consectetur
-          adipisicing elit. Nulla quidem praesentium voluptatum delectus
-          impedit? Vero, autem nostrum sequi fugiat iusto ipsa obcaecati aliquam
-          soluta ipsum officia nobis debitis, doloribus optio.
-        </p>
-        <p class="text-right">by Aditya Jain.</p>
-      </div>
-
-      <div class="blue lighten-4 black--text pa-5 mb-5">
-        <p class="">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quidem
-          praesentium voluptatum delectus impedit? Vero, autem nostrum sequi
-          fugiat iusto ipsa obcaecati aliquam soluta ipsum officia nobis
-          debitis, doloribus optio.Lorem, ipsum dolor sit amet consectetur
-          adipisicing elit. Nulla quidem praesentium voluptatum delectus
-          impedit? Vero, autem nostrum sequi fugiat iusto ipsa obcaecati aliquam
-          soluta ipsum officia nobis debitis, doloribus optio.
-        </p>
-        <p class="text-right">by Aditya Jain.</p>
-      </div>
-
-      <div class="blue lighten-4 black--text pa-5 mb-5">
-        <p class="">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla quidem
-          praesentium voluptatum delectus impedit? Vero, autem nostrum sequi
-          fugiat iusto ipsa obcaecati aliquam soluta ipsum officia nobis
-          debitis, doloribus optio.Lorem, ipsum dolor sit amet consectetur
-          adipisicing elit. Nulla quidem praesentium voluptatum delectus
-          impedit? Vero, autem nostrum sequi fugiat iusto ipsa obcaecati aliquam
-          soluta ipsum officia nobis debitis, doloribus optio.
-        </p>
-        <p class="text-right">by Aditya Jain.</p>
+        <p class="text-right">- By {{ commentData.comment_by }}</p>
       </div>
     </v-card>
   </v-container>
 </template>
 
 <script>
-export default {};
+const axios = require('axios');
+
+export default {
+  data: () => ({
+    commentsData: [],
+  }),
+  created() {
+    // get comment data
+
+    const ticketId = this.$route.params.id;
+    axios
+      .get(`http://localhost:3000/comment/T_${ticketId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+      .then((response) => {
+        this.commentsData = response.data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+};
 </script>
 
 <style>

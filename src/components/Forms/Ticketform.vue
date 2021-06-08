@@ -202,8 +202,6 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data.data);
-
           this.status = response.data.data.status;
           this.priority = response.data.data.priority;
           this.contact = response.data.data.contactNumber;
