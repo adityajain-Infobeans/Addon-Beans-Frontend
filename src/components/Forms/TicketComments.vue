@@ -27,7 +27,7 @@ export default {
 
     const ticketId = this.$route.params.id;
     axios
-      .get(`http://localhost:3000/comment/T_${ticketId}`, {
+      .get(`/comment/T_${ticketId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

@@ -128,7 +128,7 @@ export default {
     submitComment() {
       axios
         .post(
-          'http://localhost:3000/comment',
+          '/comment',
           {
             ticket_id: this.$route.params.id,
             comment: this.comment,
@@ -150,7 +150,7 @@ export default {
   created() {
     const ticketId = this.$route.params.id;
     axios
-      .get(`http://localhost:3000/ticket/${ticketId}`, {
+      .get(`/ticket/${ticketId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

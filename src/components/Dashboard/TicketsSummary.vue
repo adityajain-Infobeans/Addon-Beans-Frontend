@@ -52,7 +52,7 @@ export default {
   methods: {},
   created() {
     axios
-      .get('http://localhost:3000/summary', {
+      .get('/summary', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

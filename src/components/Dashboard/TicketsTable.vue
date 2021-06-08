@@ -162,7 +162,7 @@ export default {
 
   created() {
     axios
-      .get('http://localhost:3000/ticket', {
+      .get('/ticket', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },

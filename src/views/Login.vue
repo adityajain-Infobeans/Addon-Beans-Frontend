@@ -73,7 +73,7 @@ export default {
     login() {
       if (this.email && this.password) {
         axios
-          .post('http://localhost:3000/employee', {
+          .post('/employee', {
             email: this.email,
             password: this.password,
           })

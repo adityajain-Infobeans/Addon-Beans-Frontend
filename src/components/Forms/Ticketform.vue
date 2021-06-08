@@ -162,7 +162,7 @@ export default {
 
         axios
           .post(
-            'http://localhost:3000/ticket',
+            '/ticket',
             {
               status: 'OPEN',
               priority: this.priority,
@@ -189,7 +189,7 @@ export default {
         const ticketId = this.$route.params.id;
         axios
           .put(
-            `http://localhost:3000/ticket/${ticketId}`,
+            `/ticket/${ticketId}`,
             {
               priority: this.priority,
               contact: this.contactNumber,
@@ -221,7 +221,7 @@ export default {
 
       const ticketId = this.$route.params.id;
       axios
-        .get(`http://localhost:3000/ticket/${ticketId}`, {
+        .get(`/ticket/${ticketId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
@@ -240,7 +240,7 @@ export default {
     }
 
     axios
-      .get('http://localhost:3000/client', {
+      .get('/client', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
