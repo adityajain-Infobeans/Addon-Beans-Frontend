@@ -4,11 +4,12 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
       <!-- <v-toolbar-title class="body-1 pl-1">Support Portal</v-toolbar-title> -->
-      <v-img
-        src="@/assets/LOGO-main-light@2x.png"
-        class="infobeansLogo"
-      ></v-img>
-
+      <router-link to="/">
+        <v-img
+          src="@/assets/LOGO-main-light@2x.png"
+          class="infobeansLogo"
+        ></v-img>
+      </router-link>
       <v-spacer></v-spacer>
       <v-toolbar-title class="body-1">{{ welcomeMessage }}</v-toolbar-title>
     </v-app-bar>
