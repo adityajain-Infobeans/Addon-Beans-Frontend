@@ -86,7 +86,7 @@ export default {
 
             setTimeout(() => {
               this.$router.push({ name: 'Dashboard' });
-            }, 3000);
+            }, 1000);
           })
           .catch((error) => {
             this.errorMessage = error.response.data.message;
