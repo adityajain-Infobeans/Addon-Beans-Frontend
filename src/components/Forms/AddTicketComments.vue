@@ -1,10 +1,12 @@
 <template >
-  <v-container class="mt-5">
+  <v-container class="mt-5" v-if="currentStatus == 1 ? true : false">
     <v-card light class="px-10 pb-10">
       <v-row v-if="isHR" class="mb-5">
         <v-col cols="12" sm="3" class="">
           <v-select
             :items="statuses"
+            item-value="value"
+            item-text="status"
             label="Status"
             name="status"
             v-model="status"
@@ -14,7 +16,7 @@
         </v-col>
 
         <v-col cols="12" sm="3" class="my-auto">
-          <v-btn block color="primary" dark :disabled="statusChanged"
+          <v-btn block color="primary" dark :disabled="!statusChanged"
             >Change Status</v-btn
           >
         </v-col>
@@ -22,6 +24,8 @@
         <v-col cols="12" sm="3" class="">
           <v-select
             :items="priorities"
+            item-value="value"
+            item-text="priority"
             label="Priority"
             name="priority"
             v-model="priority"
@@ -31,7 +35,7 @@
         </v-col>
 
         <v-col cols="12" sm="3" class="my-auto">
-          <v-btn block color="primary" dark :disabled="priorityChanged"
+          <v-btn block color="primary" dark :disabled="!priorityChanged"
             >Change Priority</v-btn
           >
         </v-col>
@@ -72,25 +76,33 @@ const axios = require('axios');
 
 export default {
   props: ['type'],
-  data: () => ({
-    priorities: ['P1 -- Critical', 'P2 -- High', 'P3 -- Medium'],
-    statuses: ['Open', 'Closed'],
-    isCommentValid: false,
+  data() {
+    return {
+      priorities: this.$store.state.priorities,
+      statuses: [
+        { status: 'Open', value: '1' },
+        { status: 'Closed', value: '2' },
+      ],
 
-    priority: null,
-    status: null,
-    comment: null,
+      isCommentValid: false,
 
-    priorityRules: [(v) => !!v || 'Please select a priority level.'],
-    statusRules: [(v) => !!v || 'Please select ticket status.'],
+      priority: null,
+      status: null,
+      currentPriority: null,
+      currentStatus: null,
+      comment: null,
 
-    commentRules: [
-      (v) => !!v || 'Please write a valid comment.',
-      (v) =>
-        // eslint-disable-next-line implicit-arrow-linebreak
-        (v && v.length >= 30) || 'Comment must be more than 30 characters',
-    ],
-  }),
+      priorityRules: [(v) => !!v || 'Please select a priority level.'],
+      statusRules: [(v) => !!v || 'Please select ticket status.'],
+
+      commentRules: [
+        (v) => !!v || 'Please write a valid comment.',
+        (v) =>
+          // eslint-disable-next-line implicit-arrow-linebreak
+          (v && v.length >= 30) || 'Comment must be more than 30 characters',
+      ],
+    };
+  },
 
   computed: {
     isHR() {
@@ -100,9 +112,15 @@ export default {
       return !this.type;
     },
     priorityChanged() {
+      if (this.priority !== this.currentPriority) {
+        return true;
+      }
       return false;
     },
     statusChanged() {
+      if (this.status !== this.currentStatus) {
+        return true;
+      }
       return false;
     },
   },
@@ -128,6 +146,24 @@ export default {
           console.log(error);
         });
     },
+  },
+  created() {
+    const ticketId = this.$route.params.id;
+    axios
+      .get(`http://localhost:3000/ticket/${ticketId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+      .then((response) => {
+        this.status = response.data.data.status;
+        this.priority = response.data.data.priority;
+        this.currentStatus = response.data.data.status;
+        this.currentPriority = response.data.data.priority;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 </script>
