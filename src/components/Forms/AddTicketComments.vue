@@ -38,52 +38,95 @@
       </v-row>
 
       <v-divider></v-divider>
-
-      <v-row class="mt-10">
-        <v-col cols="12">
-          <v-textarea
-            name="comment"
-            label="Write your comment here"
-            v-model="comment"
-            :disabled="ifView"
-            :rules="commentRules"
-            solo
-            outlined
-          ></v-textarea>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" dark>Submit Comment</v-btn>
-      </v-row>
+      <v-form v-model="isCommentValid">
+        <v-row class="mt-10">
+          <v-col cols="12">
+            <v-textarea
+              name="comment"
+              label="Write your comment here"
+              v-model="comment"
+              v-if="ifView"
+              :rules="commentRules"
+              solo
+              outlined
+            ></v-textarea>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="primary"
+            dark
+            :disabled="!isCommentValid"
+            @click="submitComment"
+            >Submit Comment</v-btn
+          >
+        </v-row>
+      </v-form>
     </v-card>
   </v-container>
 </template>
 
 <script>
+const axios = require('axios');
+
 export default {
   props: ['type'],
   data: () => ({
     priorities: ['P1 -- Critical', 'P2 -- High', 'P3 -- Medium'],
     statuses: ['Open', 'Closed'],
+    isCommentValid: false,
 
     priority: null,
     status: null,
+    comment: null,
 
     priorityRules: [(v) => !!v || 'Please select a priority level.'],
     statusRules: [(v) => !!v || 'Please select ticket status.'],
+
+    commentRules: [
+      (v) => !!v || 'Please write a valid comment.',
+      (v) =>
+        // eslint-disable-next-line implicit-arrow-linebreak
+        (v && v.length >= 30) || 'Comment must be more than 30 characters',
+    ],
   }),
 
   computed: {
-    isFormValid: () => {},
     isHR() {
-      return 1;
+      return localStorage.getItem('is_hr');
+    },
+    ifView() {
+      return !this.type;
     },
     priorityChanged() {
-      return 0;
+      return false;
     },
     statusChanged() {
-      return 0;
+      return false;
+    },
+  },
+  methods: {
+    submitComment() {
+      axios
+        .post(
+          'http://localhost:3000/comment',
+          {
+            ticket_id: this.$route.params.id,
+            comment: this.comment,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          },
+        )
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
