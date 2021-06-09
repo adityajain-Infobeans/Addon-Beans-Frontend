@@ -164,7 +164,6 @@ export default {
           .post(
             '/ticket',
             {
-              status: 'OPEN',
               priority: this.priority,
               contact: this.contactNumber,
               subject: this.subject,

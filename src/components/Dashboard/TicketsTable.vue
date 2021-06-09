@@ -17,7 +17,7 @@
         <template v-slot:item="row">
           <tr class="text-center" v-if="!isMobile">
             <td>{{ row.item.ticket_id }}</td>
-            <td>{{ row.item.status }}</td>
+            <td>{{ row.item.status == 1 ? 'Open' : 'Closed' }}</td>
             <td class="font-weight-bold">
               <v-chip :color="bgColor(row.item.priority)" light>
                 {{ row.item.priority }}
@@ -38,6 +38,7 @@
               <v-btn
                 class="blue white--text"
                 @click="editTicket(row.item.ticket_id)"
+                :disabled="row.item.status == 1 ? false : true"
                 small
               >
                 <v-icon>mdi-pencil</v-icon> Edit</v-btn
@@ -68,7 +69,7 @@
                   :class="isMobile ? 'my-auto' : ''"
                   data-label="Ticket Status"
                 >
-                  {{ row.item.status }}
+                  {{ row.item.status == 1 ? 'Open' : 'Closed' }}
                 </li>
                 <li
                   class="font-weight-bold flex-item"
@@ -97,6 +98,7 @@
                   <v-btn
                     class="blue white--text"
                     @click="editTicket(row.item.ticket_id)"
+                    :disabled="row.item.status == 1 ? false : true"
                     small
                   >
                     <v-icon>mdi-pencil</v-icon> Edit</v-btn
