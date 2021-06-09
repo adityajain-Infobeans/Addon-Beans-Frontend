@@ -1,9 +1,13 @@
 <template>
   <div>
     <v-app-bar color="" dark>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        @click.stop="drawer = !drawer"
+        v-if="isLogin"
+      ></v-app-bar-nav-icon>
 
       <!-- <v-toolbar-title class="body-1 pl-1">Support Portal</v-toolbar-title> -->
+      <v-spacer v-if="!isLogin"></v-spacer>
       <router-link to="/">
         <v-img
           src="@/assets/LOGO-main-light@2x.png"
@@ -11,10 +15,18 @@
         ></v-img>
       </router-link>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="body-1">{{ welcomeMessage }}</v-toolbar-title>
+      <v-toolbar-title class="body-1" v-if="isLogin">{{
+        welcomeMessage
+      }}</v-toolbar-title>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" absolute temporary dark>
+    <v-navigation-drawer
+      v-model="drawer"
+      absolute
+      temporary
+      dark
+      v-if="isLogin"
+    >
       <v-list>
         <v-list-item-group v-model="model">
           <v-list-item
@@ -39,11 +51,19 @@
 
 <script>
 export default {
-  data: () => ({
-    drawer: false,
-    model: 1,
-    welcomeMessage: null,
-  }),
+  data() {
+    return {
+      drawer: false,
+      model: 1,
+      welcomeMessage: null,
+      isLogin: false,
+    };
+  },
+  created() {
+    this.welcomeMessage = `Welcome ${this.$store.state.userData.emp_name}`;
+    this.isLogin = this.$store.state.userData.is_login;
+  },
+  methods: {},
 };
 </script>
 
