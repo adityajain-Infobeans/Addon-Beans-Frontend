@@ -19,6 +19,7 @@
             type="email"
             v-model="email"
             :rules="emailRules"
+            @keyup.enter="login"
           ></v-text-field>
           <v-text-field
             name="Password"
@@ -30,6 +31,7 @@
             @click:append="showPassword = !showPassword"
             v-model="password"
             :rules="passwordRules"
+            @keyup.enter="login"
           ></v-text-field>
         </v-form>
       </v-card-text>
