@@ -106,7 +106,7 @@ export default {
 
   computed: {
     isHR() {
-      return localStorage.getItem('is_hr');
+      return localStorage.getItem('is_hr') !== 'false';
     },
     ifView() {
       return !this.type;
