@@ -46,7 +46,7 @@
             <td>
               <v-btn
                 class="red white--text"
-                @click="deleteTicket(row.item.ticket_id)"
+                @click="confirmDelete(row.item.ticket_id)"
                 small
               >
                 <v-icon>mdi-delete</v-icon> Delete</v-btn
@@ -105,7 +105,7 @@
                 <li class="flex-item" data-label="Delete Ticket">
                   <v-btn
                     class="red white--text"
-                    @click="deleteTicket(row.item.ticket_id)"
+                    @click="confirmDelete(row.item.ticket_id)"
                     small
                   >
                     <v-icon>mdi-delete</v-icon> Delete</v-btn
@@ -118,6 +118,24 @@
       </v-data-table>
     </div>
     <!-- </v-layout> -->
+
+    <v-row justify="center">
+      <v-dialog v-model="deleteDialog" width="600px">
+        <v-card>
+          <v-card-title>
+            <span class="text-h5">Delete Ticket</span>
+          </v-card-title>
+          <v-card-text> Are you sure ? </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text @click="deleteDialog = false"> Cancel </v-btn>
+            <v-btn color="success" @click="deleteTicket(deleteId)">
+              Yes I am sure!
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-row>
   </v-container>
 </template>
 
@@ -128,14 +146,34 @@ export default {
   data: () => ({
     isMobile: false,
     ticketsData: [],
+    deleteDialog: false,
+    deleteId: null,
   }),
 
   methods: {
     editTicket(id) {
       this.$router.push({ name: 'Update Ticket', params: { id } });
     },
+    confirmDelete(id) {
+      this.deleteDialog = true;
+      this.deleteId = id;
+    },
     deleteTicket(id) {
-      console.log(id);
+      this.deleteDialog = false;
+      this.deleteId = null;
+
+      axios
+        .delete(`/ticket/${id}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     detailTicket(id) {
       this.$router.push({ name: 'View Ticket', params: { id } });
