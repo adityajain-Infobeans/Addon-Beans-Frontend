@@ -16,7 +16,12 @@
         </v-col>
 
         <v-col cols="12" sm="3" class="my-auto">
-          <v-btn block color="primary" dark :disabled="!statusChanged"
+          <v-btn
+            block
+            color="primary"
+            dark
+            :disabled="!statusChanged"
+            @click="submitStatusChanged"
             >Change Status</v-btn
           >
         </v-col>
@@ -35,14 +40,19 @@
         </v-col>
 
         <v-col cols="12" sm="3" class="my-auto">
-          <v-btn block color="primary" dark :disabled="!priorityChanged"
+          <v-btn
+            block
+            color="primary"
+            dark
+            :disabled="!priorityChanged"
+            @click="submitPriorityChanged"
             >Change Priority</v-btn
           >
         </v-col>
       </v-row>
 
       <v-divider></v-divider>
-      <v-form v-model="isCommentValid">
+      <v-form v-model="isCommentValid" ref="formComment">
         <v-row class="mt-10">
           <v-col cols="12">
             <v-textarea
@@ -140,10 +150,77 @@ export default {
           },
         )
         .then((response) => {
-          console.log(response);
+          this.$refs.formComment.reset();
+          this.$swal({
+            icon: 'success',
+            title: 'Success',
+            text: response.data.message,
+          });
         })
         .catch((error) => {
-          console.log(error);
+          this.$swal({
+            icon: 'error',
+            title: 'Some Error Occured',
+            text: error.data.message,
+          });
+        });
+    },
+    submitStatusChanged() {
+      const ticketId = this.$route.params.id;
+      axios
+        .put(
+          `/ticket/${ticketId}`,
+          {
+            status: this.status,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          },
+        )
+        .then((response) => {
+          this.$swal({
+            icon: 'success',
+            title: 'Success',
+            text: response.data.message,
+          });
+        })
+        .catch((error) => {
+          this.$swal({
+            icon: 'error',
+            title: 'Some Error Occured',
+            text: error.data.message,
+          });
+        });
+    },
+    submitPriorityChanged() {
+      const ticketId = this.$route.params.id;
+      axios
+        .put(
+          `/ticket/${ticketId}`,
+          {
+            priority: this.priority,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          },
+        )
+        .then((response) => {
+          this.$swal({
+            icon: 'success',
+            title: 'Success',
+            text: response.data.message,
+          });
+        })
+        .catch((error) => {
+          this.$swal({
+            icon: 'error',
+            title: 'Some Error Occured',
+            text: error.data.message,
+          });
         });
     },
   },

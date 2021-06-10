@@ -171,10 +171,18 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response.data.data);
+          this.$swal({
+            icon: 'success',
+            title: 'Success',
+            text: response.data.message,
+          });
         })
         .catch((error) => {
-          console.log(error);
+          this.$swal({
+            icon: 'error',
+            title: 'Some Error Occured',
+            text: error.data.message,
+          });
         });
     },
     detailTicket(id) {

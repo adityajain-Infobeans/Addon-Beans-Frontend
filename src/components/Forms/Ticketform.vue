@@ -1,6 +1,6 @@
 <template >
   <v-card light class="mt-8 pa-5">
-    <v-form v-model="formValidated">
+    <v-form v-model="formValidated" ref="form">
       <v-container>
         <div v-if="type === 'add'">
           <h1 class="h1">Open Support Ticket</h1>
@@ -158,8 +158,6 @@ export default {
     formSubmit() {
       if (this.type === 'add') {
         // call add api
-        console.log('add api call');
-
         axios
           .post(
             '/ticket',
@@ -177,14 +175,23 @@ export default {
             },
           )
           .then((response) => {
-            console.log(response);
+            this.$refs.form.reset();
+            this.$swal({
+              icon: 'success',
+              title: 'Success',
+              text: response.data.message,
+            });
           })
           .catch((error) => {
-            console.log(error);
+            this.$swal({
+              icon: 'error',
+              title: 'Some Error Occured',
+              text: error.data.message,
+            });
           });
       } else if (this.type === 'update') {
         // call update api
-        console.log('update api call');
+
         const ticketId = this.$route.params.id;
         axios
           .put(
@@ -203,10 +210,18 @@ export default {
             },
           )
           .then((response) => {
-            console.log(response);
+            this.$swal({
+              icon: 'success',
+              title: 'Success',
+              text: response.data.message,
+            });
           })
           .catch((error) => {
-            console.log(error);
+            this.$swal({
+              icon: 'error',
+              title: 'Some Error Occured',
+              text: error.data.message,
+            });
           });
       } else {
         // invalid
@@ -228,13 +243,17 @@ export default {
         .then((response) => {
           this.status = response.data.data.status;
           this.priority = response.data.data.priority;
-          this.contact = response.data.data.contactNumber;
+          this.contactNumber = response.data.data.contact;
           this.subject = response.data.data.subject;
           this.description = response.data.data.description;
           this.client = response.data.data.client_id;
         })
         .catch((error) => {
-          console.log(error);
+          this.$swal({
+            icon: 'error',
+            title: 'Some Error Occured',
+            text: error.data.message,
+          });
         });
     }
 
