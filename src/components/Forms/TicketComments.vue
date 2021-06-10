@@ -36,7 +36,11 @@ export default {
         this.commentsData = response.data.data;
       })
       .catch((error) => {
-        console.log(error);
+        this.$swal({
+          icon: 'error',
+          title: 'Some Error Occured',
+          text: error.data.message,
+        });
       });
   },
 };

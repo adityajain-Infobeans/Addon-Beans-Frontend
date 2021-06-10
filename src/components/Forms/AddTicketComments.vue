@@ -239,7 +239,11 @@ export default {
         this.currentPriority = response.data.data.priority;
       })
       .catch((error) => {
-        console.log(error);
+        this.$swal({
+          icon: 'error',
+          title: 'Some Error Occured',
+          text: error.data.message,
+        });
       });
   },
 };

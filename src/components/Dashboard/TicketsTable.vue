@@ -217,10 +217,13 @@ export default {
       })
       .then((response) => {
         this.ticketsData = response.data.data.ticketsList;
-        console.log(response.data.data.ticketsList);
       })
       .catch((error) => {
-        console.log(error);
+        this.$swal({
+          icon: 'error',
+          title: 'Some Error Occured',
+          text: error.data.message,
+        });
       });
   },
 };

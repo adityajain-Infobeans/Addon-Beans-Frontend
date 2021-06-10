@@ -267,7 +267,11 @@ export default {
         this.clients = this.clients.concat(response.data.data.clientsList);
       })
       .catch((error) => {
-        console.log(error);
+        this.$swal({
+          icon: 'error',
+          title: 'Some Error Occured',
+          text: error.data.message,
+        });
       });
   },
 };

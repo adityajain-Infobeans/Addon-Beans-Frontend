@@ -58,13 +58,11 @@ export default {
         },
       })
       .then((response) => {
-        console.log(response);
         this.totalTickets = response.data.data.totalTickets;
         this.openTickets = response.data.data.openTicket;
         this.resolvedTickets = response.data.data.resolvedTicket;
       })
       .catch((error) => {
-        console.log(error);
         if (error.response.status === 401) {
           this.$router.push({ name: 'Login' });
         }
