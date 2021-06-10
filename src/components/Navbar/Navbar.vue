@@ -60,8 +60,8 @@ export default {
     };
   },
   created() {
-    this.welcomeMessage = `Welcome ${this.$store.state.userData.emp_name}`;
-    this.isLogin = this.$store.state.userData.is_login;
+    // this.welcomeMessage = `Welcome ${this.$store.state.userData.emp_name}`;
+    // this.isLogin = this.$store.state.userData.is_login;
   },
   methods: {},
 };
