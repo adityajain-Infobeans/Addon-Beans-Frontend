@@ -116,7 +116,7 @@ export default {
 
   computed: {
     isHR() {
-      return this.$store.state.userData.is_hr !== 'false';
+      return this.$store.state.userData.is_hr;
     },
     ifView() {
       return !this.type;
