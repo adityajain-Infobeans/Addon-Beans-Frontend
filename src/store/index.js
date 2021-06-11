@@ -55,7 +55,7 @@ export default new Vuex.Store({
       {
         text: 'Last Update',
         align: 'center',
-        sortable: true,
+        sortable: false,
         value: 'ticket_last_updated',
       },
       {
