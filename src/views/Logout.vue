@@ -5,8 +5,9 @@
 export default {
   methods: {
     redirect() {
-      localStorage.clear();
-      this.$router.push({ name: 'Login' });
+      this.$store.dispatch('userLogout').then(() => {
+        this.$router.push({ name: 'Login' });
+      });
     },
   },
 };

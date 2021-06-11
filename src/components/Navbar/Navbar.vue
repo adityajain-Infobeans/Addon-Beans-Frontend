@@ -20,13 +20,7 @@
       }}</v-toolbar-title>
     </v-app-bar>
 
-    <v-navigation-drawer
-      v-model="drawer"
-      absolute
-      temporary
-      dark
-      v-if="isLogin"
-    >
+    <v-navigation-drawer v-model="drawer" absolute temporary dark>
       <v-list>
         <v-list-item-group v-model="model">
           <v-list-item
@@ -55,15 +49,21 @@ export default {
     return {
       drawer: false,
       model: 1,
-      welcomeMessage: null,
-      isLogin: false,
     };
   },
-  created() {
-    // this.welcomeMessage = `Welcome ${this.$store.state.userData.emp_name}`;
-    // this.isLogin = this.$store.state.userData.is_login;
-  },
+
   methods: {},
+  computed: {
+    isLogin() {
+      return this.$store.state.userData.is_login;
+    },
+
+    welcomeMessage() {
+      return this.isLogin
+        ? `Welcome ${this.$store.state.userData.emp_name}`
+        : null;
+    },
+  },
 };
 </script>
 

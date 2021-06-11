@@ -116,7 +116,7 @@ export default {
 
   computed: {
     isHR() {
-      return localStorage.getItem('is_hr') !== 'false';
+      return this.$store.state.userData.is_hr !== 'false';
     },
     ifView() {
       return !this.type;
@@ -145,7 +145,7 @@ export default {
           },
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              Authorization: `Bearer ${this.$store.state.userData.token}`,
             },
           },
         )
@@ -175,7 +175,7 @@ export default {
           },
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              Authorization: `Bearer ${this.$store.state.userData.token}`,
             },
           },
         )
@@ -204,7 +204,7 @@ export default {
           },
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              Authorization: `Bearer ${this.$store.state.userData.token}`,
             },
           },
         )
@@ -229,7 +229,7 @@ export default {
     axios
       .get(`/ticket/${ticketId}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${this.$store.state.userData.token}`,
         },
       })
       .then((response) => {

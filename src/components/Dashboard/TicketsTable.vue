@@ -167,7 +167,7 @@ export default {
       axios
         .delete(`/ticket/${id}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${this.$store.state.userData.token}`,
           },
         })
         .then((response) => {
@@ -212,7 +212,7 @@ export default {
     axios
       .get('/ticket', {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${this.$store.state.userData.token}`,
         },
       })
       .then((response) => {

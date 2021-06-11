@@ -26,11 +26,6 @@ export default new Vuex.Store({
         text: 'Logout',
         route: 'Logout',
       },
-      {
-        icon: 'mdi-login',
-        text: 'Login',
-        route: 'Login',
-      },
     ],
     headers: [
       {
@@ -82,8 +77,40 @@ export default new Vuex.Store({
       { priority: 'P2 -- High', value: 'P2' },
       { priority: 'P3 -- Medium', value: 'P3' },
     ],
+    userData: {
+      emp_id: null,
+      emp_name: null,
+      emp_email: null,
+      token: null,
+      is_hr: null,
+      is_login: false,
+    },
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    userLogin(state, userData) {
+      state.userData.emp_id = userData.emp_id;
+      state.userData.emp_name = userData.emp_name;
+      state.userData.emp_email = userData.emp_email;
+      state.userData.token = userData.token;
+      state.userData.is_hr = userData.is_hr;
+      state.userData.is_login = true;
+    },
+    userLogout(state) {
+      state.userData.emp_id = null;
+      state.userData.emp_name = null;
+      state.userData.emp_email = null;
+      state.userData.token = null;
+      state.userData.is_hr = null;
+      state.userData.is_login = false;
+    },
+  },
+  actions: {
+    userLogin(context, userData) {
+      context.commit('userLogin', userData);
+    },
+    userLogout(context) {
+      context.commit('userLogout');
+    },
+  },
   modules: {},
 });

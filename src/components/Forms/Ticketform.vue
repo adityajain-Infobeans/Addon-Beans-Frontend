@@ -170,7 +170,7 @@ export default {
             },
             {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${this.$store.state.userData.token}`,
               },
             },
           )
@@ -205,7 +205,7 @@ export default {
             },
             {
               headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${this.$store.state.userData.token}`,
               },
             },
           )
@@ -237,7 +237,7 @@ export default {
       axios
         .get(`/ticket/${ticketId}`, {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            Authorization: `Bearer ${this.$store.state.userData.token}`,
           },
         })
         .then((response) => {
@@ -260,7 +260,7 @@ export default {
     axios
       .get('/client', {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${this.$store.state.userData.token}`,
         },
       })
       .then((response) => {

@@ -82,13 +82,16 @@ export default {
           })
           .then((response) => {
             this.successMessage = response.data;
-            localStorage.setItem('emp_id', response.data.data.emp_id);
-            localStorage.setItem('emp_name', response.data.data.emp_name);
-            localStorage.setItem('emp_email', response.data.data.emp_email);
-            localStorage.setItem('token', response.data.data.token);
-            localStorage.setItem('is_hr', response.data.data.is_hr);
 
+            const userData = {
+              emp_id: response.data.data.emp_id,
+              emp_name: response.data.data.emp_name,
+              emp_email: response.data.data.emp_email,
+              token: response.data.data.token,
+              is_hr: response.data.data.is_hr,
+            };
             setTimeout(() => {
+              this.$store.dispatch('userLogin', userData);
               this.$router.push({ name: 'Dashboard' });
             }, 1000);
           })
