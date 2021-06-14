@@ -243,3 +243,14 @@ export default {
   padding: 0.5rem;
 }
 </style>
+
+<style>
+.v-data-table-header > tr:nth-child(1) {
+  background-color: #000000;
+  color: #ffffff;
+}
+th.text-center > span {
+  color: #ffffff;
+  font-size: 1rem;
+}
+</style>
