@@ -86,6 +86,7 @@ export default new Vuex.Store({
       is_login: false,
     },
     currentComments: [],
+    ticketsData: [],
   },
   mutations: {
     userLogin(state, userData) {
@@ -113,6 +114,12 @@ export default new Vuex.Store({
     clearComment(state) {
       state.currentComments = [];
     },
+    deleteTicker(state, ticketId) {
+      state.ticketsData = state.ticketsData.filter((ticket) => ticket.ticket_id !== ticketId);
+    },
+    clearTickets(state) {
+      state.ticketsData = [];
+    },
   },
   actions: {
     userLogin(context, userData) {
@@ -126,6 +133,12 @@ export default new Vuex.Store({
     },
     clearComment(context) {
       context.commit('clearComment');
+    },
+    deleteTicker(context, ticketId) {
+      context.commit('deleteTicker', ticketId);
+    },
+    clearTickets(context) {
+      context.commit('clearTickets');
     },
   },
   modules: {},

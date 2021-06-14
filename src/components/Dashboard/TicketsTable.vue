@@ -129,7 +129,6 @@ const axios = require('axios');
 export default {
   data: () => ({
     isMobile: false,
-    ticketsData: [],
   }),
 
   methods: {
@@ -154,6 +153,7 @@ export default {
               },
             })
             .then((response) => {
+              this.$store.dispatch('deleteTicker', id);
               this.$swal({
                 icon: 'success',
                 title: 'Success',
@@ -192,6 +192,11 @@ export default {
       else this.isMobile = false;
     },
   },
+  computed: {
+    ticketsData() {
+      return this.$store.state.ticketsData;
+    },
+  },
 
   created() {
     axios
@@ -201,7 +206,7 @@ export default {
         },
       })
       .then((response) => {
-        this.ticketsData = response.data.data.ticketsList;
+        this.$store.state.ticketsData = response.data.data.ticketsList;
       })
       .catch((error) => {
         this.$swal({
@@ -210,6 +215,9 @@ export default {
           text: error.data.message,
         });
       });
+  },
+  beforeDestroy() {
+    this.$store.dispatch('clearTickets');
   },
 };
 </script>
