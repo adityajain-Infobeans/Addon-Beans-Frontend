@@ -4,7 +4,7 @@
 
     <!-- <v-layout v-resize="onResize"> -->
     <!-- refer this  https://stackoverflow.com/questions/59081299/vuetify-insert-action-button-in-data-table-and-get-row-data -->
-    <div v-resize="onResize">
+    <div v-resize="onResize" class="pb-12">
       <v-data-table
         :headers="this.$store.state.headers"
         :items="ticketsData"
