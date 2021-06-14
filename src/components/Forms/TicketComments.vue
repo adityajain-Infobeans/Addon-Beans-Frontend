@@ -19,9 +19,7 @@
 const axios = require('axios');
 
 export default {
-  data: () => ({
-    commentsData: [],
-  }),
+  data: () => ({}),
   created() {
     // get comment data
 
@@ -33,7 +31,7 @@ export default {
         },
       })
       .then((response) => {
-        this.commentsData = response.data.data;
+        this.$store.state.currentComments = response.data.data;
       })
       .catch((error) => {
         this.$swal({
@@ -42,6 +40,14 @@ export default {
           text: error.data.message,
         });
       });
+  },
+  computed: {
+    commentsData() {
+      return this.$store.state.currentComments;
+    },
+  },
+  beforeDestroy() {
+    this.$store.dispatch('clearComment');
   },
 };
 </script>

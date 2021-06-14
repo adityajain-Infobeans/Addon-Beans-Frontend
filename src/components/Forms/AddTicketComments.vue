@@ -150,7 +150,12 @@ export default {
           },
         )
         .then((response) => {
+          const commentData = {
+            comment_by: this.$store.state.userData.emp_name,
+            comment: this.comment,
+          };
           this.$refs.formComment.reset();
+          this.$store.dispatch('addComment', commentData);
           this.$swal({
             icon: 'success',
             title: 'Success',

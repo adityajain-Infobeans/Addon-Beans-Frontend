@@ -85,6 +85,7 @@ export default new Vuex.Store({
       is_hr: null,
       is_login: false,
     },
+    currentComments: [],
   },
   mutations: {
     userLogin(state, userData) {
@@ -106,6 +107,12 @@ export default new Vuex.Store({
       state.userData.is_login = false;
       localStorage.removeItem('userData');
     },
+    addComment(state, commentData) {
+      state.currentComments.unshift(commentData);
+    },
+    clearComment(state) {
+      state.currentComments = [];
+    },
   },
   actions: {
     userLogin(context, userData) {
@@ -113,6 +120,12 @@ export default new Vuex.Store({
     },
     userLogout(context) {
       context.commit('userLogout');
+    },
+    addComment(context, commentData) {
+      context.commit('addComment', commentData);
+    },
+    clearComment(context) {
+      context.commit('clearComment');
     },
   },
   modules: {},
