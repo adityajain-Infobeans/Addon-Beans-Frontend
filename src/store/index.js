@@ -94,6 +94,8 @@ export default new Vuex.Store({
       state.userData.token = userData.token;
       state.userData.is_hr = userData.is_hr;
       state.userData.is_login = true;
+
+      localStorage.setItem('userData', JSON.stringify(state.userData));
     },
     userLogout(state) {
       state.userData.emp_id = null;
@@ -102,6 +104,7 @@ export default new Vuex.Store({
       state.userData.token = null;
       state.userData.is_hr = null;
       state.userData.is_login = false;
+      localStorage.removeItem('userData');
     },
   },
   actions: {
