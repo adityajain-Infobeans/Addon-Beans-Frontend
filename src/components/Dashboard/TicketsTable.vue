@@ -155,7 +155,7 @@ const axios = require('axios');
 export default {
   data: () => ({
     isMobile: false,
-    employeeList: ['', 1, 2],
+    employeeList: [],
     employee: null,
     showClosed: false,
   }),
@@ -264,6 +264,21 @@ export default {
           text: error.data.message,
         });
       });
+
+    if (this.isHR) {
+      axios
+        .get('/employee')
+        .then((response) => {
+          this.employeeList = response.data.data.employeeList;
+        })
+        .catch((error) => {
+          this.$swal({
+            icon: 'error',
+            title: 'Some Error Occured',
+            text: error.data.message,
+          });
+        });
+    }
   },
   beforeDestroy() {
     this.$store.dispatch('clearTickets');
