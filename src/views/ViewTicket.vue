@@ -31,7 +31,7 @@ export default {
   },
 
   mounted() {
-    if (!this.$store.state.userData.token) {
+    if (!this.$store.state.Auth.userData.token) {
       this.$router.push({ name: 'Login' });
     }
     document.title = 'View Ticket';

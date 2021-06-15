@@ -149,7 +149,7 @@ export default {
           axios
             .delete(`/ticket/${id}`, {
               headers: {
-                Authorization: `Bearer ${this.$store.state.userData.token}`,
+                Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
               },
             })
             .then((response) => {
@@ -194,7 +194,7 @@ export default {
   },
   computed: {
     ticketsData() {
-      return this.$store.state.ticketsData;
+      return this.$store.state.Ticket.ticketsData;
     },
   },
 
@@ -202,11 +202,11 @@ export default {
     axios
       .get('/ticket', {
         headers: {
-          Authorization: `Bearer ${this.$store.state.userData.token}`,
+          Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
         },
       })
       .then((response) => {
-        this.$store.state.ticketsData = response.data.data.ticketsList;
+        this.$store.state.Ticket.ticketsData = response.data.data.ticketsList;
       })
       .catch((error) => {
         this.$swal({

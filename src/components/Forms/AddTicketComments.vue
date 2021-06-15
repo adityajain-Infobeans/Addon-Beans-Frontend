@@ -116,7 +116,7 @@ export default {
 
   computed: {
     isHR() {
-      return this.$store.state.userData.is_hr;
+      return this.$store.state.Auth.userData.is_hr;
     },
     ifView() {
       return !this.type;
@@ -145,13 +145,13 @@ export default {
           },
           {
             headers: {
-              Authorization: `Bearer ${this.$store.state.userData.token}`,
+              Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
             },
           },
         )
         .then((response) => {
           const commentData = {
-            comment_by: this.$store.state.userData.emp_name,
+            comment_by: this.$store.state.Auth.userData.emp_name,
             comment: this.comment,
           };
           this.$refs.formComment.reset();
@@ -180,7 +180,7 @@ export default {
           },
           {
             headers: {
-              Authorization: `Bearer ${this.$store.state.userData.token}`,
+              Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
             },
           },
         )
@@ -209,7 +209,7 @@ export default {
           },
           {
             headers: {
-              Authorization: `Bearer ${this.$store.state.userData.token}`,
+              Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
             },
           },
         )
@@ -234,7 +234,7 @@ export default {
     axios
       .get(`/ticket/${ticketId}`, {
         headers: {
-          Authorization: `Bearer ${this.$store.state.userData.token}`,
+          Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
         },
       })
       .then((response) => {

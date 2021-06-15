@@ -54,7 +54,7 @@ export default {
     axios
       .get('/summary', {
         headers: {
-          Authorization: `Bearer ${this.$store.state.userData.token}`,
+          Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
         },
       })
       .then((response) => {

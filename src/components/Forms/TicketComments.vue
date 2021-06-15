@@ -27,11 +27,11 @@ export default {
     axios
       .get(`/comment/T_${ticketId}`, {
         headers: {
-          Authorization: `Bearer ${this.$store.state.userData.token}`,
+          Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
         },
       })
       .then((response) => {
-        this.$store.state.currentComments = response.data.data;
+        this.$store.state.Comment.currentComments = response.data.data;
       })
       .catch((error) => {
         this.$swal({
@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     commentsData() {
-      return this.$store.state.currentComments;
+      return this.$store.state.Comment.currentComments;
     },
   },
   beforeDestroy() {

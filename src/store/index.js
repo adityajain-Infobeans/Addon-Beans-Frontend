@@ -1,6 +1,10 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import Auth from './modules/Auth';
+import Comment from './modules/Comment';
+import Ticket from './modules/Ticket';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -77,69 +81,12 @@ export default new Vuex.Store({
       { priority: 'P2 -- High', value: 'P2' },
       { priority: 'P3 -- Medium', value: 'P3' },
     ],
-    userData: {
-      emp_id: null,
-      emp_name: null,
-      emp_email: null,
-      token: null,
-      is_hr: null,
-      is_login: false,
-    },
-    currentComments: [],
-    ticketsData: [],
   },
-  mutations: {
-    userLogin(state, userData) {
-      state.userData.emp_id = userData.emp_id;
-      state.userData.emp_name = userData.emp_name;
-      state.userData.emp_email = userData.emp_email;
-      state.userData.token = userData.token;
-      state.userData.is_hr = userData.is_hr;
-      state.userData.is_login = true;
-
-      localStorage.setItem('userData', JSON.stringify(state.userData));
-    },
-    userLogout(state) {
-      state.userData.emp_id = null;
-      state.userData.emp_name = null;
-      state.userData.emp_email = null;
-      state.userData.token = null;
-      state.userData.is_hr = null;
-      state.userData.is_login = false;
-      localStorage.removeItem('userData');
-    },
-    addComment(state, commentData) {
-      state.currentComments.unshift(commentData);
-    },
-    clearComment(state) {
-      state.currentComments = [];
-    },
-    deleteTicker(state, ticketId) {
-      state.ticketsData = state.ticketsData.filter((ticket) => ticket.ticket_id !== ticketId);
-    },
-    clearTickets(state) {
-      state.ticketsData = [];
-    },
+  mutations: {},
+  actions: {},
+  modules: {
+    Auth,
+    Comment,
+    Ticket,
   },
-  actions: {
-    userLogin(context, userData) {
-      context.commit('userLogin', userData);
-    },
-    userLogout(context) {
-      context.commit('userLogout');
-    },
-    addComment(context, commentData) {
-      context.commit('addComment', commentData);
-    },
-    clearComment(context) {
-      context.commit('clearComment');
-    },
-    deleteTicker(context, ticketId) {
-      context.commit('deleteTicker', ticketId);
-    },
-    clearTickets(context) {
-      context.commit('clearTickets');
-    },
-  },
-  modules: {},
 });

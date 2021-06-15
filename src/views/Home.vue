@@ -10,7 +10,7 @@ export default {
   name: 'Home',
 
   mounted() {
-    if (!this.$store.state.userData.token) {
+    if (!this.$store.state.Auth.userData.token) {
       this.$router.push({ name: 'Login' });
     }
     this.$router.push({ name: 'Dashboard' });

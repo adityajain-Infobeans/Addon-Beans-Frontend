@@ -55,12 +55,12 @@ export default {
   methods: {},
   computed: {
     isLogin() {
-      return this.$store.state.userData.is_login;
+      return this.$store.state.Auth.userData.is_login;
     },
 
     welcomeMessage() {
       return this.isLogin
-        ? `Welcome ${this.$store.state.userData.emp_name}`
+        ? `Welcome ${this.$store.state.Auth.userData.emp_name}`
         : null;
     },
   },

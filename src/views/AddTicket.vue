@@ -17,7 +17,7 @@ export default {
     TicketForm: () => import('@/components/Forms/Ticketform.vue'),
   },
   mounted() {
-    if (!this.$store.state.userData.token) {
+    if (!this.$store.state.Auth.userData.token) {
       this.$router.push({ name: 'Login' });
     }
     document.title = 'Add Ticket';
