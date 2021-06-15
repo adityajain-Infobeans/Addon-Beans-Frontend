@@ -4,6 +4,9 @@ export default {
   },
   getters: {},
   mutations: {
+    setTicker(state, ticketsData) {
+      state.ticketsData = ticketsData;
+    },
     deleteTicker(state, ticketId) {
       state.ticketsData = state.ticketsData.filter((ticket) => ticket.ticket_id !== ticketId);
     },
@@ -12,6 +15,9 @@ export default {
     },
   },
   actions: {
+    setTicker(context, ticketsData) {
+      context.commit('setTicker', ticketsData);
+    },
     deleteTicker(context, ticketId) {
       context.commit('deleteTicker', ticketId);
     },

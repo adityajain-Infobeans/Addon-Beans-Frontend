@@ -31,7 +31,7 @@ export default {
         },
       })
       .then((response) => {
-        this.$store.state.Comment.currentComments = response.data.data;
+        this.$store.dispatch('setComment', response.data.data);
       })
       .catch((error) => {
         this.$swal({

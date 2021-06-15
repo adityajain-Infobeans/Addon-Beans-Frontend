@@ -4,6 +4,9 @@ export default {
   },
   getters: {},
   mutations: {
+    setComment(state, commentData) {
+      state.currentComments = commentData;
+    },
     addComment(state, commentData) {
       state.currentComments.unshift(commentData);
     },
@@ -12,6 +15,9 @@ export default {
     },
   },
   actions: {
+    setComment(context, commentData) {
+      context.commit('setComment', commentData);
+    },
     addComment(context, commentData) {
       context.commit('addComment', commentData);
     },

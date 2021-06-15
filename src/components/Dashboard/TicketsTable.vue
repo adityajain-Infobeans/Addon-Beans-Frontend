@@ -206,7 +206,7 @@ export default {
         },
       })
       .then((response) => {
-        this.$store.state.Ticket.ticketsData = response.data.data.ticketsList;
+        this.$store.dispatch('setTicker', response.data.data.ticketsList);
       })
       .catch((error) => {
         this.$swal({
