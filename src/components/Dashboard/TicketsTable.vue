@@ -2,7 +2,34 @@
   <v-container>
     <h2 class="display-2 mb-6 white--text">Tickets:</h2>
 
-    <!-- <v-layout v-resize="onResize"> -->
+    <template>
+      <v-expansion-panels flat>
+        <v-expansion-panel v-for="(item, i) in 1" :key="i">
+          <v-expansion-panel-header>
+            <h2>Filters</h2>
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-row class="px-5">
+              <v-col cols="4">
+                <v-checkbox
+                  v-model="showClosed"
+                  label="Show Closed Ticket"
+                ></v-checkbox>
+              </v-col>
+              <v-col cols="4" v-if="isHR">
+                <v-autocomplete
+                  v-model="employee"
+                  :items="employeeList"
+                  label="Search by employee"
+                ></v-autocomplete>
+              </v-col>
+              <v-spacer></v-spacer>
+            </v-row>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </template>
+
     <!-- refer this  https://stackoverflow.com/questions/59081299/vuetify-insert-action-button-in-data-table-and-get-row-data -->
     <div v-resize="onResize" class="pb-12">
       <v-data-table
@@ -119,7 +146,6 @@
         </template>
       </v-data-table>
     </div>
-    <!-- </v-layout> -->
   </v-container>
 </template>
 
@@ -129,6 +155,9 @@ const axios = require('axios');
 export default {
   data: () => ({
     isMobile: false,
+    employeeList: ['', 1, 2],
+    employee: null,
+    showClosed: false,
   }),
 
   methods: {
@@ -193,8 +222,28 @@ export default {
     },
   },
   computed: {
+    isHR() {
+      return this.$store.state.Auth.userData.is_hr;
+    },
     ticketsData() {
-      return this.$store.state.Ticket.ticketsData;
+      let { ticketsData } = this.$store.state.Ticket;
+      if (!this.showClosed && this.employee) {
+        ticketsData = this.$store.state.Ticket.ticketsData.filter((ticket) => {
+          if (ticket.status !== '2' && ticket.emp_id === this.employee) {
+            return true;
+          }
+          return false;
+        });
+      } else if (this.employee) {
+        ticketsData = this.$store.state.Ticket.ticketsData.filter(
+          (ticket) => ticket.emp_id === this.employee,
+        );
+      } else if (!this.showClosed) {
+        ticketsData = this.$store.state.Ticket.ticketsData.filter(
+          (ticket) => ticket.status !== '2',
+        );
+      }
+      return ticketsData;
     },
   },
 
