@@ -20,6 +20,8 @@
                 <v-autocomplete
                   v-model="employee"
                   :items="employeeList"
+                  item-value="emp_id"
+                  item-text="emp_name"
                   label="Search by employee"
                 ></v-autocomplete>
               </v-col>
