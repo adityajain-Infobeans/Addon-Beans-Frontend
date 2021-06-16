@@ -166,7 +166,7 @@ export default {
           this.$swal({
             icon: 'error',
             title: 'Some Error Occured',
-            text: error.data.message,
+            text: error.response.data.message,
           });
         });
     },
@@ -195,7 +195,7 @@ export default {
           this.$swal({
             icon: 'error',
             title: 'Some Error Occured',
-            text: error.data.message,
+            text: error.response.data.message,
           });
         });
     },
@@ -224,7 +224,7 @@ export default {
           this.$swal({
             icon: 'error',
             title: 'Some Error Occured',
-            text: error.data.message,
+            text: error.response.data.message,
           });
         });
     },
@@ -247,7 +247,7 @@ export default {
         this.$swal({
           icon: 'error',
           title: 'Some Error Occured',
-          text: error.data.message,
+          text: error.response.data.message,
         });
       });
   },
