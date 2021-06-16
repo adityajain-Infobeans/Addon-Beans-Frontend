@@ -1,0 +1,46 @@
+<template>
+  <div class="white--text">
+    <v-container>
+      <div v-if="this.$route.params.id">
+        <v-row>
+          <v-col cols="12" sm="8" class="mx-auto">
+            <RequirementForm />
+          </v-col>
+        </v-row>
+        <AddRequirementComments />
+        <RequirementComments />
+      </div>
+      <div v-else>
+        <RequirementsTable />
+      </div>
+    </v-container>
+  </div>
+</template>
+
+<script>
+// @ is an alias to /src
+// params me Requirement id h toh uski details dika do varna pura table
+
+export default {
+  name: 'ViewRequirements',
+  components: {
+    RequirementsTable: () =>
+      // eslint-disable-next-line implicit-arrow-linebreak
+      import('@/components/Dashboard/RequirementsTable.vue'),
+    RequirementForm: () => import('@/components/Forms/RequirementForm.vue'),
+    AddRequirementComments: () =>
+      // eslint-disable-next-line implicit-arrow-linebreak
+      import('@/components/Forms/AddRequirementComments.vue'),
+    RequirementComments: () =>
+      // eslint-disable-next-line implicit-arrow-linebreak
+      import('@/components/Forms/RequirementComments.vue'),
+  },
+
+  mounted() {
+    if (!this.$store.state.Auth.userData.token) {
+      this.$router.push({ name: 'Login' });
+    }
+    document.title = 'View Requirement';
+  },
+};
+</script>

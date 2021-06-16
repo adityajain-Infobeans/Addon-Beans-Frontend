@@ -23,9 +23,9 @@ export default {
   created() {
     // get comment data
 
-    const ticketId = this.$route.params.id;
+    const RequirementId = this.$route.params.id;
     axios
-      .get(`/comment/T_${ticketId}`, {
+      .get(`/comment/T_${RequirementId}`, {
         headers: {
           Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
         },

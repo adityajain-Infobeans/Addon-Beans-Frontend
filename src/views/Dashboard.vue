@@ -1,11 +1,11 @@
 <template>
   <div class="white--text">
     <v-container>
-      <TicketsSummary />
+      <RequirementsSummary />
 
       <v-divider class="mt-12 mb-5"></v-divider>
 
-      <TicketsTable />
+      <RequirementsTable />
     </v-container>
   </div>
 </template>
@@ -13,14 +13,18 @@
 <script>
 // @ is an alias to /src
 
-// import TicketsSummary from '';
-// import TicketsTable from '';
+// import RequirementsSummary from '';
+// import RequirementsTable from '';
 
 export default {
   name: 'Dashboard',
   components: {
-    TicketsSummary: () => import('@/components/Dashboard/TicketsSummary.vue'),
-    TicketsTable: () => import('@/components/Dashboard/TicketsTable.vue'),
+    RequirementsSummary: () =>
+      // eslint-disable-next-line implicit-arrow-linebreak
+      import('@/components/Dashboard/RequirementsSummary.vue'),
+    RequirementsTable: () =>
+      // eslint-disable-next-line implicit-arrow-linebreak
+      import('@/components/Dashboard/RequirementsTable.vue'),
   },
 
   mounted() {

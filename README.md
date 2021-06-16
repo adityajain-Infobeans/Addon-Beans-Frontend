@@ -1,4 +1,4 @@
-# Support Ticket System
+# Support requirement System
 
 A simple single page application where Frontend and Backend code will be completely separated,
 Frontend will communicate with Backend via REST APIs for authentication and database operations.
@@ -10,25 +10,26 @@ Frontend will communicate with Backend via REST APIs for authentication and data
    - Manager
    - HR
 3. Manager can :
-   - Raise ticket
-   - View their own tickets.
-   - Edit their ticket
-   - Delete Their Ticket
+   - Raise requirement
+   - View their own requirements.
+   - Edit their requirement
+   - Delete their requirement
+   - Add comments to their requirement
 4. HR can
-   - View all tickets
-   - Change status of any ticket
-   - Add comments to any ticket
-   - Raise ticket
-   - View their own tickets.
-   - Edit their ticket
-   - Delete Their Ticket
+   - View all requirements
+   - Change status of any requirement
+   - Add comments to any requirement
+   - Raise requirement
+   - View their own requirements.
+   - Edit their requirement
+   - Delete their requirement
 
 ##### Backend :
 
 1. DataBase MySQL 8
 2. NodeJS
 3. Express
-4. Passport & JWT
+4. JWT
 5. CORS enabled
 
 # Front-end Commands

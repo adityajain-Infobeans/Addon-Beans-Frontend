@@ -18,19 +18,19 @@ const routes = [
     component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
   },
   {
-    path: '/addticket',
-    name: 'Add Ticket',
-    component: () => import(/* webpackChunkName: "addticket" */ '../views/AddTicket.vue'),
+    path: '/addRequirement',
+    name: 'Add Requirement',
+    component: () => import(/* webpackChunkName: "addRequirement" */ '../views/AddRequirement.vue'),
   },
   {
-    path: '/updateticket/:id',
-    name: 'Update Ticket',
-    component: () => import(/* webpackChunkName: "updateticket" */ '../views/UpdateTicket.vue'),
+    path: '/updateRequirement/:id',
+    name: 'Update Requirement',
+    component: () => import(/* webpackChunkName: "updateRequirement" */ '../views/UpdateRequirement.vue'),
   },
   {
-    path: '/viewticket/:id?',
-    name: 'View Ticket',
-    component: () => import(/* webpackChunkName: "viewticket" */ '../views/ViewTicket.vue'),
+    path: '/viewRequirement/:id?',
+    name: 'View Requirement',
+    component: () => import(/* webpackChunkName: "viewRequirement" */ '../views/ViewRequirement.vue'),
   },
   {
     path: '/logout',
@@ -45,7 +45,7 @@ const routes = [
   {
     path: '*',
     name: 'NotFound',
-    component: () => import(/* webpackChunkName: "viewticket" */ '../views/NotFound.vue'),
+    component: () => import(/* webpackChunkName: "viewRequirement" */ '../views/NotFound.vue'),
   },
 ];
 

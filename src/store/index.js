@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 
 import Auth from './modules/Auth';
 import Comment from './modules/Comment';
-import Ticket from './modules/Ticket';
+import Requirement from './modules/Requirement';
 
 Vue.use(Vuex);
 
@@ -17,13 +17,13 @@ export default new Vuex.Store({
       },
       {
         icon: 'mdi-ticket',
-        text: 'Add Ticket',
-        route: '/addTicket',
+        text: 'Add Requirement',
+        route: '/addRequirement',
       },
       {
         icon: 'mdi-view-list',
-        text: 'View Ticket',
-        route: '/ViewTicket',
+        text: 'View Requirement',
+        route: '/ViewRequirement',
       },
       {
         icon: 'mdi-logout',
@@ -36,43 +36,43 @@ export default new Vuex.Store({
         text: 'S. no',
         align: 'center',
         sortable: true,
-        value: 'ticket_id',
+        value: 'Requirement_id',
       },
       {
         text: 'Status',
         align: 'center',
         sortable: true,
-        value: 'ticket_status',
+        value: 'Requirement_status',
       },
       {
         text: 'Priority',
         align: 'center',
         sortable: true,
-        value: 'ticket_priority',
+        value: 'Requirement_priority',
       },
       {
         text: 'Subject',
         align: 'center',
         sortable: false,
-        value: 'ticket_subject',
+        value: 'Requirement_subject',
       },
       {
         text: 'Last Update',
         align: 'center',
         sortable: false,
-        value: 'ticket_last_updated',
+        value: 'Requirement_last_updated',
       },
       {
         text: 'Edit',
         align: 'center',
         sortable: false,
-        value: 'ticket_id',
+        value: 'Requirement_id',
       },
       {
         text: 'Delete',
         align: 'center',
         sortable: false,
-        value: 'ticket_id',
+        value: 'Requirement_id',
       },
     ],
     priorities: [
@@ -87,6 +87,6 @@ export default new Vuex.Store({
   modules: {
     Auth,
     Comment,
-    Ticket,
+    Requirement,
   },
 });

@@ -103,7 +103,7 @@ export default {
       comment: null,
 
       priorityRules: [(v) => !!v || 'Please select a priority level.'],
-      statusRules: [(v) => !!v || 'Please select ticket status.'],
+      statusRules: [(v) => !!v || 'Please select Requirement status.'],
 
       commentRules: [
         (v) => !!v || 'Please write a valid comment.',
@@ -140,7 +140,7 @@ export default {
         .post(
           '/comment',
           {
-            ticket_id: this.$route.params.id,
+            Requirement_id: this.$route.params.id,
             comment: this.comment,
           },
           {
@@ -171,10 +171,10 @@ export default {
         });
     },
     submitStatusChanged() {
-      const ticketId = this.$route.params.id;
+      const RequirementId = this.$route.params.id;
       axios
         .put(
-          `/ticket/${ticketId}`,
+          `/Requirement/${RequirementId}`,
           {
             status: this.status,
           },
@@ -200,10 +200,10 @@ export default {
         });
     },
     submitPriorityChanged() {
-      const ticketId = this.$route.params.id;
+      const RequirementId = this.$route.params.id;
       axios
         .put(
-          `/ticket/${ticketId}`,
+          `/Requirement/${RequirementId}`,
           {
             priority: this.priority,
           },
@@ -230,9 +230,9 @@ export default {
     },
   },
   created() {
-    const ticketId = this.$route.params.id;
+    const RequirementId = this.$route.params.id;
     axios
-      .get(`/ticket/${ticketId}`, {
+      .get(`/Requirement/${RequirementId}`, {
         headers: {
           Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
         },

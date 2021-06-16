@@ -2,7 +2,7 @@
   <div>
     <v-container class="">
       <v-row class="mt-6 pl-4">
-        <h2 class="headline white--text">Ticket Summary:</h2>
+        <h2 class="headline white--text">Requirement Summary:</h2>
       </v-row>
       <v-row class="mt-6 text-center">
         <v-col
@@ -11,8 +11,8 @@
           class="yellow darken-3 white--text rounded mb-3"
           elevation="4"
         >
-          <p class="headline mb-2">Total Tickets</p>
-          <p class="display-3 font-weight-bold">{{ totalTickets }}</p>
+          <p class="headline mb-2">Total Requirements</p>
+          <p class="display-3 font-weight-bold">{{ totalRequirements }}</p>
         </v-col>
         <v-spacer></v-spacer>
         <v-col
@@ -21,8 +21,8 @@
           class="red darken-1 white--text rounded mb-3"
           elevation="4"
         >
-          <p class="headline mb-2">Open Tickets</p>
-          <p class="display-3 font-weight-bold">{{ openTickets }}</p>
+          <p class="headline mb-2">Open Requirements</p>
+          <p class="display-3 font-weight-bold">{{ openRequirements }}</p>
         </v-col>
         <v-spacer></v-spacer>
         <v-col
@@ -31,8 +31,8 @@
           class="green darken-1 white--text rounded mb-3"
           elevation="4"
         >
-          <p class="headline mb-2">Resolved Tickets</p>
-          <p class="display-3 font-weight-bold">{{ resolvedTickets }}</p>
+          <p class="headline mb-2">Resolved Requirements</p>
+          <p class="display-3 font-weight-bold">{{ resolvedRequirements }}</p>
         </v-col>
       </v-row>
     </v-container>
@@ -44,9 +44,9 @@ const axios = require('axios');
 
 export default {
   data: () => ({
-    totalTickets: '--',
-    openTickets: '--',
-    resolvedTickets: '--',
+    totalRequirements: '--',
+    openRequirements: '--',
+    resolvedRequirements: '--',
   }),
 
   methods: {},
@@ -58,9 +58,9 @@ export default {
         },
       })
       .then((response) => {
-        this.totalTickets = response.data.data.totalTickets;
-        this.openTickets = response.data.data.openTicket;
-        this.resolvedTickets = response.data.data.resolvedTicket;
+        this.totalRequirements = response.data.data.totalRequirements;
+        this.openRequirements = response.data.data.openRequirement;
+        this.resolvedRequirements = response.data.data.resolvedRequirement;
       })
       .catch((error) => {
         if (error.response.status === 401) {

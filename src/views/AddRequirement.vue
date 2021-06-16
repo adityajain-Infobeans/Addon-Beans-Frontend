@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12" sm="8" class="mx-auto">
-        <TicketForm type="update"> </TicketForm>
+        <RequirementForm type="add"> </RequirementForm>
       </v-col>
     </v-row>
   </v-container>
@@ -12,15 +12,15 @@
 // @ is an alias to /src
 
 export default {
-  name: 'AddTicket',
+  name: 'AddRequirement',
   components: {
-    TicketForm: () => import('@/components/Forms/Ticketform.vue'),
+    RequirementForm: () => import('@/components/Forms/RequirementForm.vue'),
   },
   mounted() {
     if (!this.$store.state.Auth.userData.token) {
       this.$router.push({ name: 'Login' });
     }
-    document.title = 'Update Ticket';
+    document.title = 'Add Requirement';
   },
 };
 </script>

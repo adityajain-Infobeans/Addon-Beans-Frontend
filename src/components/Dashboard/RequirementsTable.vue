@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h2 class="display-2 mb-6 white--text">Tickets:</h2>
+    <h2 class="display-2 mb-6 white--text">Requirements:</h2>
 
     <template>
       <v-expansion-panels flat>
@@ -13,7 +13,7 @@
               <v-col cols="4">
                 <v-checkbox
                   v-model="showClosed"
-                  label="Show Closed Ticket"
+                  label="Show Closed Requirement"
                 ></v-checkbox>
               </v-col>
               <v-col cols="4" v-if="isHR">
@@ -36,7 +36,7 @@
     <div v-resize="onResize" class="pb-12">
       <v-data-table
         :headers="this.$store.state.headers"
-        :items="ticketsData"
+        :items="RequirementsData"
         :items-per-page="10"
         class="elevation-1"
         light
@@ -45,7 +45,7 @@
       >
         <template v-slot:item="row">
           <tr class="text-center" v-if="!isMobile">
-            <td>{{ row.item.ticket_id }}</td>
+            <td>{{ row.item.Requirement_id }}</td>
             <td>{{ row.item.status == 1 ? 'Open' : 'Closed' }}</td>
             <td class="font-weight-bold">
               <v-chip :color="bgColor(row.item.priority)" light>
@@ -54,7 +54,7 @@
             </td>
             <td
               class="text-left font-weight-bold"
-              @click="detailTicket(row.item.ticket_id)"
+              @click="detailRequirement(row.item.Requirement_id)"
             >
               {{
                 row.item.subject.length > 140
@@ -66,7 +66,7 @@
             <td>
               <v-btn
                 class="blue white--text"
-                @click="editTicket(row.item.ticket_id)"
+                @click="editRequirement(row.item.Requirement_id)"
                 :disabled="row.item.status == 1 ? false : true"
                 small
               >
@@ -76,7 +76,7 @@
             <td>
               <v-btn
                 class="red white--text"
-                @click="confirmDelete(row.item.ticket_id)"
+                @click="confirmDelete(row.item.Requirement_id)"
                 small
               >
                 <v-icon>mdi-delete</v-icon> Delete</v-btn
@@ -89,20 +89,20 @@
                 <li
                   class="flex-item"
                   :class="isMobile ? 'my-auto' : ''"
-                  data-label="Ticket Id"
+                  data-label="Requirement Id"
                 >
-                  {{ row.item.ticket_id }}
+                  {{ row.item.Requirement_id }}
                 </li>
                 <li
                   class="flex-item"
                   :class="isMobile ? 'my-auto' : ''"
-                  data-label="Ticket Status"
+                  data-label="Requirement Status"
                 >
                   {{ row.item.status == 1 ? 'Open' : 'Closed' }}
                 </li>
                 <li
                   class="font-weight-bold flex-item"
-                  data-label="Ticket Priority"
+                  data-label="Requirement Priority"
                 >
                   <v-chip :color="bgColor(row.item.priority)" light>
                     {{ row.item.priority }}
@@ -111,8 +111,8 @@
 
                 <li
                   class="text-left font-weight-bold flex-item"
-                  data-label="Ticket Subject"
-                  @click="detailTicket(row.item.ticket_id)"
+                  data-label="Requirement Subject"
+                  @click="detailRequirement(row.item.Requirement_id)"
                 >
                   {{
                     row.item.subject.length > 140
@@ -120,23 +120,23 @@
                       : row.item.subject
                   }}
                 </li>
-                <li class="flex-item" data-label="Ticket Last Updated">
+                <li class="flex-item" data-label="Requirement Last Updated">
                   {{ row.item.updated_on }}
                 </li>
-                <li class="flex-item" data-label="Edit Ticket">
+                <li class="flex-item" data-label="Edit Requirement">
                   <v-btn
                     class="blue white--text"
-                    @click="editTicket(row.item.ticket_id)"
+                    @click="editRequirement(row.item.Requirement_id)"
                     :disabled="row.item.status == 1 ? false : true"
                     small
                   >
                     <v-icon>mdi-pencil</v-icon> Edit</v-btn
                   >
                 </li>
-                <li class="flex-item" data-label="Delete Ticket">
+                <li class="flex-item" data-label="Delete Requirement">
                   <v-btn
                     class="red white--text"
-                    @click="confirmDelete(row.item.ticket_id)"
+                    @click="confirmDelete(row.item.Requirement_id)"
                     small
                   >
                     <v-icon>mdi-delete</v-icon> Delete</v-btn
@@ -163,8 +163,8 @@ export default {
   }),
 
   methods: {
-    editTicket(id) {
-      this.$router.push({ name: 'Update Ticket', params: { id } });
+    editRequirement(id) {
+      this.$router.push({ name: 'Update Requirement', params: { id } });
     },
     confirmDelete(id) {
       this.$swal({
@@ -178,7 +178,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           axios
-            .delete(`/ticket/${id}`, {
+            .delete(`/Requirement/${id}`, {
               headers: {
                 Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
               },
@@ -201,8 +201,8 @@ export default {
         }
       });
     },
-    detailTicket(id) {
-      this.$router.push({ name: 'View Ticket', params: { id } });
+    detailRequirement(id) {
+      this.$router.push({ name: 'View Requirement', params: { id } });
     },
 
     bgColor(priority) {
@@ -227,37 +227,49 @@ export default {
     isHR() {
       return this.$store.state.Auth.userData.is_hr;
     },
-    ticketsData() {
-      let { ticketsData } = this.$store.state.Ticket;
+    RequirementsData() {
+      let { RequirementsData } = this.$store.state.Requirement;
       if (!this.showClosed && this.employee) {
-        ticketsData = this.$store.state.Ticket.ticketsData.filter((ticket) => {
-          if (ticket.status !== '2' && ticket.emp_id === this.employee) {
-            return true;
-          }
-          return false;
-        });
+        // eslint-disable-next-line operator-linebreak
+        RequirementsData =
+          this.$store.state.Requirement.RequirementsData.filter(
+            (Requirement) => {
+              if (
+                // eslint-disable-next-line operator-linebreak
+                Requirement.status !== '2' &&
+                Requirement.emp_id === this.employee
+              ) {
+                return true;
+              }
+              return false;
+            },
+          );
       } else if (this.employee) {
-        ticketsData = this.$store.state.Ticket.ticketsData.filter(
-          (ticket) => ticket.emp_id === this.employee,
-        );
+        // eslint-disable-next-line operator-linebreak
+        RequirementsData =
+          this.$store.state.Requirement.RequirementsData.filter(
+            (Requirement) => Requirement.emp_id === this.employee,
+          );
       } else if (!this.showClosed) {
-        ticketsData = this.$store.state.Ticket.ticketsData.filter(
-          (ticket) => ticket.status !== '2',
-        );
+        // eslint-disable-next-line operator-linebreak
+        RequirementsData =
+          this.$store.state.Requirement.RequirementsData.filter(
+            (Requirement) => Requirement.status !== '2',
+          );
       }
-      return ticketsData;
+      return RequirementsData;
     },
   },
 
   created() {
     axios
-      .get('/ticket', {
+      .get('/Requirement', {
         headers: {
           Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
         },
       })
       .then((response) => {
-        this.$store.dispatch('setTicker', response.data.data.ticketsList);
+        this.$store.dispatch('setTicker', response.data.data.RequirementsList);
       })
       .catch((error) => {
         this.$swal({
@@ -283,7 +295,7 @@ export default {
     }
   },
   beforeDestroy() {
-    this.$store.dispatch('clearTickets');
+    this.$store.dispatch('clearRequirements');
   },
 };
 </script>

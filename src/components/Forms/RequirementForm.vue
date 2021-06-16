@@ -3,19 +3,19 @@
     <v-form v-model="formValidated" ref="form">
       <v-container>
         <div v-if="type === 'add'">
-          <h1 class="h1">Open Support Ticket</h1>
+          <h1 class="h1">Open Support Requirement</h1>
           <p class="caption">
-            Please fill in the form below to open a new ticket.
+            Please fill in the form below to open a new Requirement.
           </p>
         </div>
         <div v-else-if="type === 'update'">
-          <h1 class="h1">Update Your Ticket</h1>
+          <h1 class="h1">Update Your Requirement</h1>
           <p class="caption">
-            Please fill in the form below to update your ticket.
+            Please fill in the form below to update your Requirement.
           </p>
         </div>
         <div v-else>
-          <h1 class="h1">Your Ticket</h1>
+          <h1 class="h1">Your Requirement</h1>
         </div>
 
         <v-row class="mt-4 pa-2">
@@ -160,7 +160,7 @@ export default {
         // call add api
         axios
           .post(
-            '/ticket',
+            '/Requirement',
             {
               priority: this.priority,
               contact: this.contactNumber,
@@ -192,10 +192,10 @@ export default {
       } else if (this.type === 'update') {
         // call update api
 
-        const ticketId = this.$route.params.id;
+        const RequirementId = this.$route.params.id;
         axios
           .put(
-            `/ticket/${ticketId}`,
+            `/Requirement/${RequirementId}`,
             {
               priority: this.priority,
               contact: this.contactNumber,
@@ -231,11 +231,11 @@ export default {
 
   created() {
     if (this.type !== 'add') {
-      // get ticket data to view or update
+      // get Requirement data to view or update
 
-      const ticketId = this.$route.params.id;
+      const RequirementId = this.$route.params.id;
       axios
-        .get(`/ticket/${ticketId}`, {
+        .get(`/Requirement/${RequirementId}`, {
           headers: {
             Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
           },
