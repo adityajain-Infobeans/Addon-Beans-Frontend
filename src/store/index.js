@@ -26,53 +26,19 @@ export default new Vuex.Store({
         route: '/ViewRequirement',
       },
       {
+        icon: 'mdi-ticket',
+        text: 'Add Skill',
+        route: '/addSkill',
+      },
+      {
+        icon: 'mdi-ticket',
+        text: 'View Skill',
+        route: '/viewSkill',
+      },
+      {
         icon: 'mdi-logout',
         text: 'Logout',
         route: 'Logout',
-      },
-    ],
-    headers: [
-      {
-        text: 'S. no',
-        align: 'center',
-        sortable: true,
-        value: 'Requirement_id',
-      },
-      {
-        text: 'Status',
-        align: 'center',
-        sortable: true,
-        value: 'Requirement_status',
-      },
-      {
-        text: 'Priority',
-        align: 'center',
-        sortable: true,
-        value: 'Requirement_priority',
-      },
-      {
-        text: 'Subject',
-        align: 'center',
-        sortable: false,
-        value: 'Requirement_subject',
-      },
-      {
-        text: 'Last Update',
-        align: 'center',
-        sortable: false,
-        value: 'Requirement_last_updated',
-      },
-      {
-        text: 'Edit',
-        align: 'center',
-        sortable: false,
-        value: 'Requirement_id',
-      },
-      {
-        text: 'Delete',
-        align: 'center',
-        sortable: false,
-        value: 'Requirement_id',
       },
     ],
     priorities: [

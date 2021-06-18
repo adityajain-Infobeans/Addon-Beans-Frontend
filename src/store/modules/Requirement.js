@@ -1,6 +1,56 @@
 export default {
   state: {
     RequirementsData: [],
+    headers: [
+      {
+        text: 'S. no',
+        align: 'center',
+        sortable: true,
+        value: 'Requirement_id',
+      },
+      {
+        text: 'Status',
+        align: 'center',
+        sortable: true,
+        value: 'Requirement_status',
+      },
+      {
+        text: 'Timeline',
+        align: 'center',
+        sortable: true,
+        value: 'Requirement_priority',
+      },
+      {
+        text: 'Subject',
+        align: 'center',
+        sortable: false,
+        value: 'Requirement_subject',
+      },
+      {
+        text: 'Last Update',
+        align: 'center',
+        sortable: false,
+        value: 'Requirement_last_updated',
+      },
+      {
+        text: 'Client',
+        align: 'center',
+        sortable: true,
+        value: 'Client',
+      },
+      {
+        text: 'Edit',
+        align: 'center',
+        sortable: false,
+        value: 'Requirement_id',
+      },
+      {
+        text: 'Delete',
+        align: 'center',
+        sortable: false,
+        value: 'Requirement_id',
+      },
+    ],
   },
   getters: {},
   mutations: {
