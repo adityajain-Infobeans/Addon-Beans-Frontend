@@ -4,10 +4,10 @@ export default {
   },
   getters: {},
   mutations: {
-    setTicker(state, RequirementsData) {
+    setRequirement(state, RequirementsData) {
       state.RequirementsData = RequirementsData;
     },
-    deleteTicker(state, RequirementId) {
+    deleteRequirement(state, RequirementId) {
       state.RequirementsData = state.RequirementsData.filter(
         (Requirement) => Requirement.Requirement_id !== RequirementId,
       );
@@ -17,11 +17,11 @@ export default {
     },
   },
   actions: {
-    setTicker(context, RequirementsData) {
-      context.commit('setTicker', RequirementsData);
+    setRequirement(context, RequirementsData) {
+      context.commit('setRequirement', RequirementsData);
     },
-    deleteTicker(context, RequirementId) {
-      context.commit('deleteTicker', RequirementId);
+    deleteRequirement(context, RequirementId) {
+      context.commit('deleteRequirement', RequirementId);
     },
     clearRequirements(context) {
       context.commit('clearRequirements');

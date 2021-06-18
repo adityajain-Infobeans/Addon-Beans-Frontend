@@ -184,7 +184,7 @@ export default {
               },
             })
             .then((response) => {
-              this.$store.dispatch('deleteTicker', id);
+              this.$store.dispatch('deleteRequirement', id);
               this.$swal({
                 icon: 'success',
                 title: 'Success',
@@ -269,7 +269,10 @@ export default {
         },
       })
       .then((response) => {
-        this.$store.dispatch('setTicker', response.data.data.RequirementsList);
+        this.$store.dispatch(
+          'setRequirement',
+          response.data.data.RequirementsList,
+        );
       })
       .catch((error) => {
         this.$swal({
