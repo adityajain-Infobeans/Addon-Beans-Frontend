@@ -24,7 +24,7 @@ export default {
       import('@/components/Dashboard/RequirementsSummary.vue'),
     RequirementsTable: () =>
       // eslint-disable-next-line implicit-arrow-linebreak
-      import('@/components/Dashboard/RequirementsTable.vue'),
+      import('@/components/Table/RequirementsTable.vue'),
   },
 
   mounted() {

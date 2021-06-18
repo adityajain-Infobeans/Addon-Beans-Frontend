@@ -26,7 +26,7 @@ export default {
   components: {
     RequirementsTable: () =>
       // eslint-disable-next-line implicit-arrow-linebreak
-      import('@/components/Dashboard/RequirementsTable.vue'),
+      import('@/components/Table/RequirementsTable.vue'),
     RequirementForm: () => import('@/components/Forms/RequirementForm.vue'),
     AddRequirementComments: () =>
       // eslint-disable-next-line implicit-arrow-linebreak
