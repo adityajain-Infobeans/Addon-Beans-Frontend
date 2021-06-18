@@ -9,6 +9,8 @@ module.exports = {
   },
   rules: {
     'linebreak-style': 0,
+    'implicit-arrow-linebreak': 0,
+    'operator-linebreak': 0,
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
   },
