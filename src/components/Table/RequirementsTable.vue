@@ -238,18 +238,16 @@ export default {
     },
 
     generateSubject(noOfPosition, skillSet) {
-      // TODO show each value of array seprately instead of array
-      return `${noOfPosition} positions for ${skillSet} `;
+      return `${noOfPosition} positions for ${JSON.parse(skillSet)} `;
     },
 
     clientName(clientId) {
-      const clientName = () => {
-        const client = this.clientsList.filter(
-          (clients) => clients.client_id === clientId,
-        );
-        return client[0].client_name;
-      };
-      return clientName();
+      const client = () =>
+        this.clientsList.filter((clients) => clients.client_id === clientId);
+      if (client()[0]) {
+        return client()[0].client_name;
+      }
+      return '';
     },
   },
   computed: {
