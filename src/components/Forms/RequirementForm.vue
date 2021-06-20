@@ -3,7 +3,7 @@
     <v-form v-model="formValidated" ref="form">
       <v-container>
         <div v-if="type === 'add'">
-          <h1 class="h1">Open Support Requirement</h1>
+          <h1 class="h1">Open Requirement</h1>
           <p class="caption">
             Please fill in the form below to open a new Requirement.
           </p>
@@ -15,66 +15,88 @@
           </p>
         </div>
         <div v-else>
-          <h1 class="h1">Your Requirement</h1>
+          <h1 class="h1">Requirement Details</h1>
         </div>
 
         <v-row class="mt-4 pa-2">
           <v-col cols="12">
-            <v-text-field
-              v-model="subject"
-              label="Subject"
-              name="subject"
-              :rules="subjectRules"
-              :disabled="ifView"
-              required
-            ></v-text-field>
-          </v-col>
-
-          <v-col cols="12">
-            <v-select
-              :items="priorities"
+            <v-autocomplete
+              :items="timelineGenerator"
               item-value="value"
-              item-text="priority"
-              label="Priority"
-              name="priority"
-              v-model="priority"
-              :rules="priorityRules"
+              item-text="name"
+              label="Timeline (required)"
+              name="name"
+              v-model="timeline"
+              :rules="timelineRules"
               :disabled="ifView"
               required
-            ></v-select>
+            ></v-autocomplete>
           </v-col>
 
           <v-col cols="12">
-            <v-text-field
-              name="contactNo"
-              v-model="contactNumber"
-              label="Contact Number"
+            <v-autocomplete
+              :items="numberOfPositionGenerator"
+              item-value="value"
+              item-text="name"
+              label="Number Of Position (required)"
+              name="numberOfPosition"
+              v-model="no_of_position"
+              :rules="no_of_positionRules"
               :disabled="ifView"
-              :rules="contactNumberRules"
-            ></v-text-field>
+              required
+            ></v-autocomplete>
           </v-col>
 
           <v-col cols="12">
-            <v-select
+            <v-autocomplete
+              multiple
+              :items="skill_sets"
+              item-value="skill_id"
+              item-text="skill_name"
+              label="Skill Set (required)"
+              name="skill_set"
+              v-model="skill_set"
+              :rules="skill_setRules"
+              :disabled="ifView"
+              required
+            ></v-autocomplete>
+          </v-col>
+
+          <v-col cols="12">
+            <v-autocomplete
+              :items="experienceGenerator"
+              item-value="value"
+              item-text="name"
+              label="Experience (required)"
+              name="experience"
+              v-model="experience"
+              :rules="experienceRules"
+              :disabled="ifView"
+              required
+            ></v-autocomplete>
+          </v-col>
+
+          <v-col cols="12">
+            <v-autocomplete
               :items="clients"
               item-value="client_id"
               item-text="client_name"
-              label="Client"
+              label="Client (required)"
               name="client"
               v-model="client"
               :rules="clientRules"
               :disabled="ifView"
               required
-            ></v-select>
+            ></v-autocomplete>
           </v-col>
 
           <v-col cols="12">
             <v-textarea
-              name="description"
-              label="Description"
-              v-model="description"
+              name="additional_note"
+              label="Additional notes (optional)"
+              v-model="additional_note"
               :disabled="ifView"
-              :rules="descriptionRules"
+              :rules="additional_note_rules"
             ></v-textarea>
           </v-col>
 
@@ -102,47 +124,33 @@ export default {
   props: ['type'],
   data() {
     return {
-      priorities: this.$store.state.priorities,
       clients: [{ client_id: 0, client_name: '' }],
+      skill_sets: [],
 
+      timeline: null,
+      no_of_position: null,
+      skill_set: null,
+      experience: null,
       client: null,
-      subject: null,
-      priority: null,
-      contactNumber: null,
-      description: null,
+      additional_note: null,
       formValidated: false,
 
-      subjectRules: [
-        (v) => !!v || 'Subject is required',
-        (v) =>
-          // eslint-disable-next-line implicit-arrow-linebreak
-          (v && v.length >= 10) || 'Subject must be more than 10 characters',
-      ],
-
-      priorityRules: [(v) => !!v || 'Please select a priority level.'],
       clientRules: [(v) => !!v || 'Please select a client.'],
 
-      contactNumberRules: [
+      timelineRules: [(v) => !!v || 'Please select timelie.'],
+      no_of_positionRules: [(v) => !!v || 'Please enter number of positions.'],
+      skill_setRules: [(v) => !!v || 'Please select skill sets.'],
+      experienceRules: [(v) => !!v || 'Please select required experience.'],
+
+      additional_note_rules: [
         (v) => {
           if (v) {
-            if (v.length !== 10) {
-              return 'Invalid length';
-            }
-            if (!/^[6-9]\d{9}$/.test(v)) {
-              return 'Invalid mobile number';
-            }
-            return true;
+            return v.length >= 50
+              ? true
+              : 'Description must be more than 50 characters';
           }
           return true;
         },
-      ],
-
-      descriptionRules: [
-        (v) => !!v || 'Please write a valid description.',
-        (v) =>
-          // eslint-disable-next-line
-          (v && v.length >= 50) ||
-          'Description must be more than 50 characters',
       ],
     };
   },
@@ -151,6 +159,33 @@ export default {
     isFormValid: () => {},
     ifView() {
       return !this.type;
+    },
+    timelineGenerator: () => {
+      const timeline = [];
+      // eslint-disable-next-line no-plusplus
+      for (let index = 1; index <= 10; index++) {
+        timeline.push({ name: `${index} week`, value: index });
+      }
+      return timeline;
+    },
+    numberOfPositionGenerator: () => {
+      const numberOfPosition = [];
+      // eslint-disable-next-line no-plusplus
+      for (let index = 1; index <= 100; index++) {
+        numberOfPosition.push({
+          name: `${index} position only `,
+          value: index,
+        });
+      }
+      return numberOfPosition;
+    },
+    experienceGenerator: () => {
+      const experience = [];
+      // eslint-disable-next-line no-plusplus
+      for (let index = 1; index <= 50; index++) {
+        experience.push({ name: `${index} week`, value: index });
+      }
+      return experience;
     },
   },
 
@@ -162,11 +197,12 @@ export default {
           .post(
             '/Requirement',
             {
-              priority: this.priority,
-              contact: this.contactNumber,
-              subject: this.subject,
-              description: this.description,
+              timeline: this.timeline,
+              number_of_position: this.no_of_position,
+              skill_set: this.skill_set,
+              experience: this.experience,
               client_id: this.client,
+              additional_note: this.additional_note,
             },
             {
               headers: {
@@ -197,11 +233,12 @@ export default {
           .put(
             `/Requirement/${RequirementId}`,
             {
-              priority: this.priority,
-              contact: this.contactNumber,
-              subject: this.subject,
-              description: this.description,
+              timeline: this.timeline,
+              number_of_position: this.no_of_position,
+              skill_set: this.skill_set,
+              experience: this.experience,
               client_id: this.client,
+              additional_note: this.additional_note,
             },
             {
               headers: {
@@ -241,11 +278,11 @@ export default {
           },
         })
         .then((response) => {
-          this.status = response.data.data.status;
-          this.priority = response.data.data.priority;
-          this.contactNumber = response.data.data.contact;
-          this.subject = response.data.data.subject;
-          this.description = response.data.data.description;
+          this.timeline = response.data.data.timeline;
+          this.no_of_position = response.data.data.number_of_position;
+          this.skill_set = JSON.parse(response.data.data.skill_set);
+          this.experience = response.data.data.experience;
+          this.additional_note = response.data.data.additional_note;
           this.client = response.data.data.client_id;
         })
         .catch((error) => {
@@ -265,6 +302,23 @@ export default {
       })
       .then((response) => {
         this.clients = this.clients.concat(response.data.data.clientsList);
+      })
+      .catch((error) => {
+        this.$swal({
+          icon: 'error',
+          title: 'Some Error Occured',
+          text: error.response.data.message,
+        });
+      });
+
+    axios
+      .get('/skillset', {
+        headers: {
+          Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
+        },
+      })
+      .then((response) => {
+        this.skill_sets = this.skill_sets.concat(response.data.data);
       })
       .catch((error) => {
         this.$swal({
