@@ -182,8 +182,8 @@ export default {
     experienceGenerator: () => {
       const experience = [];
       // eslint-disable-next-line no-plusplus
-      for (let index = 1; index <= 50; index++) {
-        experience.push({ name: `${index} week`, value: index });
+      for (let index = 1; index <= 30; index++) {
+        experience.push({ name: `${index}+ years`, value: index });
       }
       return experience;
     },
