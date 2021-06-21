@@ -140,7 +140,7 @@ export default {
         .post(
           '/comment',
           {
-            Requirement_id: this.$route.params.id,
+            requirement_id: this.$route.params.id,
             comment: this.comment,
           },
           {
