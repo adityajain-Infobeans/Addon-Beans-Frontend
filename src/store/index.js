@@ -26,26 +26,10 @@ export default new Vuex.Store({
         route: '/ViewRequirement',
       },
       {
-        icon: 'mdi-ticket',
-        text: 'Add Skill',
-        route: '/addSkill',
-      },
-      {
-        icon: 'mdi-ticket',
-        text: 'View Skill',
-        route: '/viewSkill',
-      },
-      {
         icon: 'mdi-logout',
         text: 'Logout',
         route: 'Logout',
       },
-    ],
-    priorities: [
-      { priority: '', value: '' },
-      { priority: 'P1 -- Critical', value: 'P1' },
-      { priority: 'P2 -- High', value: 'P2' },
-      { priority: 'P3 -- Medium', value: 'P3' },
     ],
   },
   mutations: {},

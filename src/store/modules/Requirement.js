@@ -18,7 +18,7 @@ export default {
         text: 'Timeline',
         align: 'center',
         sortable: true,
-        value: 'Requirement_priority',
+        value: 'Requirement_timeline',
       },
       {
         text: 'Subject',
