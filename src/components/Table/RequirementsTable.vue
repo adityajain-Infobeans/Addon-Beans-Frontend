@@ -84,7 +84,7 @@
             <td>
               <v-btn
                 class="red white--text"
-                @click="confirmDelete(row.item.Requirement_id)"
+                @click="confirmDelete(row.item.requirement_id)"
                 small
               >
                 <v-icon>mdi-delete</v-icon> Delete</v-btn
@@ -99,7 +99,7 @@
                   :class="isMobile ? 'my-auto' : ''"
                   data-label="Requirement Id"
                 >
-                  {{ row.item.Requirement_id }}
+                  {{ row.item.requirement_id }}
                 </li>
                 <li
                   class="flex-item"
@@ -120,7 +120,7 @@
                 <li
                   class="text-left font-weight-bold flex-item"
                   data-label="Requirement Subject"
-                  @click="detailRequirement(row.item.Requirement_id)"
+                  @click="detailRequirement(row.item.requirement_id)"
                 >
                   {{
                     generateSubject(
@@ -132,13 +132,13 @@
                 <li class="flex-item" data-label="Requirement Last Updated">
                   {{ row.item.updated_on }}
                 </li>
-                <li class="flex-item" data-label="Requirement Last Updated">
+                <li class="flex-item" data-label="Client id">
                   {{ clientName(row.item.client_id) }}
                 </li>
                 <li class="flex-item" data-label="Edit Requirement">
                   <v-btn
                     class="blue white--text"
-                    @click="editRequirement(row.item.Requirement_id)"
+                    @click="editRequirement(row.item.requirement_id)"
                     :disabled="row.item.status == 1 ? false : true"
                     small
                   >
@@ -148,7 +148,7 @@
                 <li class="flex-item" data-label="Delete Requirement">
                   <v-btn
                     class="red white--text"
-                    @click="confirmDelete(row.item.Requirement_id)"
+                    @click="confirmDelete(row.item.requirement_id)"
                     small
                   >
                     <v-icon>mdi-delete</v-icon> Delete</v-btn
@@ -174,6 +174,7 @@ export default {
     employee: null,
     client: null,
     showClosed: false,
+    skillset: [],
   }),
 
   methods: {
@@ -238,7 +239,21 @@ export default {
     },
 
     generateSubject(noOfPosition, skillSet) {
-      return `${noOfPosition} positions for ${JSON.parse(skillSet)} `;
+      let skills = '';
+      JSON.parse(skillSet).forEach((skill, index) => {
+        this.skillset.filter((filterSkill) => {
+          if (filterSkill.skill_id === skill) {
+            skills =
+              index === JSON.parse(skillSet).length - 1
+                ? `${skills + filterSkill.skill_name}`
+                : `${skills + filterSkill.skill_name}, `;
+            return true;
+          }
+          return false;
+        });
+      });
+
+      return `${noOfPosition} positions for ${skills} `;
     },
 
     clientName(clientId) {
@@ -296,6 +311,23 @@ export default {
           'setRequirement',
           response.data.data.requirementsList,
         );
+      })
+      .catch((error) => {
+        this.$swal({
+          icon: 'error',
+          title: 'Some Error Occured',
+          text: error.response.data.message,
+        });
+      });
+
+    axios
+      .get('/skillset', {
+        headers: {
+          Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
+        },
+      })
+      .then((response) => {
+        this.skillset = response.data.data;
       })
       .catch((error) => {
         this.$swal({
