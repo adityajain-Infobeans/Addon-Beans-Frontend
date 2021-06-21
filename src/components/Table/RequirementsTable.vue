@@ -110,7 +110,7 @@
                 </li>
                 <li
                   class="font-weight-bold flex-item"
-                  data-label="Requirement Priority"
+                  data-label="Requirement Timeline"
                 >
                   <v-chip :color="bgColor(row.item.timeline)" light>
                     {{ row.item.timeline }} week
@@ -170,7 +170,7 @@ export default {
   data: () => ({
     isMobile: false,
     employeeList: [],
-    clientsList: [],
+    clientsList: [{ client_id: 0, client_name: '' }],
     employee: null,
     client: null,
     showClosed: false,
@@ -220,14 +220,14 @@ export default {
       this.$router.push({ name: 'View Requirement', params: { id } });
     },
 
-    bgColor(priority) {
-      if (priority === 1) {
+    bgColor(timeline) {
+      if (timeline <= 1) {
         return 'red';
       }
-      if (priority === 2) {
+      if (timeline <= 5) {
         return 'orange';
       }
-      if (priority === 3) {
+      if (timeline <= 10) {
         return 'yellow';
       }
       return 'green';
@@ -270,13 +270,40 @@ export default {
       return this.$store.state.Auth.userData.is_hr;
     },
     RequirementsData() {
-      let { RequirementsData } = this.$store.state.Requirement;
-      if (!this.showClosed && this.employee) {
-        RequirementsData =
+      let requirementsData = this.$store.state.Requirement.RequirementsData;
+      if (!this.showClosed && this.employee && this.client) {
+        requirementsData =
           this.$store.state.Requirement.RequirementsData.filter(
             (Requirement) => {
               if (
                 Requirement.status !== '2' &&
+                Requirement.emp_id === this.employee &&
+                Requirement.client_id === this.client
+              ) {
+                return true;
+              }
+              return false;
+            },
+          );
+      } else if (this.employee && this.client) {
+        requirementsData =
+          this.$store.state.Requirement.RequirementsData.filter(
+            (Requirement) => {
+              if (
+                Requirement.emp_id === this.employee &&
+                Requirement.client_id === this.client
+              ) {
+                return true;
+              }
+              return false;
+            },
+          );
+      } else if (!this.showClosed && this.employee) {
+        requirementsData =
+          this.$store.state.Requirement.RequirementsData.filter(
+            (Requirement) => {
+              if (
+                Requirement.status !== 2 &&
                 Requirement.emp_id === this.employee
               ) {
                 return true;
@@ -284,18 +311,36 @@ export default {
               return false;
             },
           );
+      } else if (!this.showClosed && this.client) {
+        requirementsData =
+          this.$store.state.Requirement.RequirementsData.filter(
+            (Requirement) => {
+              if (
+                Requirement.status !== 2 &&
+                Requirement.client_id === this.client
+              ) {
+                return true;
+              }
+              return false;
+            },
+          );
+      } else if (this.client) {
+        requirementsData =
+          this.$store.state.Requirement.RequirementsData.filter(
+            (Requirement) => Requirement.client_id === this.client,
+          );
       } else if (this.employee) {
-        RequirementsData =
+        requirementsData =
           this.$store.state.Requirement.RequirementsData.filter(
             (Requirement) => Requirement.emp_id === this.employee,
           );
       } else if (!this.showClosed) {
-        RequirementsData =
+        requirementsData =
           this.$store.state.Requirement.RequirementsData.filter(
-            (Requirement) => Requirement.status !== '2',
+            (Requirement) => Requirement.status !== 2,
           );
       }
-      return RequirementsData;
+      return requirementsData;
     },
   },
 
@@ -344,7 +389,9 @@ export default {
         },
       })
       .then((response) => {
-        this.clientsList = response.data.data.clientsList;
+        this.clientsList = this.clientsList.concat(
+          response.data.data.clientsList,
+        );
       })
       .catch((error) => {
         this.$swal({
