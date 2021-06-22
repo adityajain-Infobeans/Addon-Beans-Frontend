@@ -448,4 +448,7 @@ th.text-center > span {
   color: #ffffff;
   font-size: 1rem;
 }
+.v-data-table-header__icon {
+  color: #ffffff !important;
+}
 </style>
