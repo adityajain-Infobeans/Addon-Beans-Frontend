@@ -62,11 +62,15 @@
               </v-chip>
             </td>
             <td
-              class="text-left font-weight-bold"
+              class="text-left"
               @click="detailRequirement(row.item.requirement_id)"
             >
               {{
-                generateSubject(row.item.number_of_position, row.item.skill_set)
+                generateSubject(
+                  row.item.number_of_position,
+                  row.item.experience,
+                  row.item.skill_set,
+                )
               }}
             </td>
             <td>{{ row.item.updated_on }}</td>
@@ -118,7 +122,7 @@
                 </li>
 
                 <li
-                  class="text-left font-weight-bold flex-item"
+                  class="text-left flex-item"
                   data-label="Requirement Subject"
                   @click="detailRequirement(row.item.requirement_id)"
                 >
@@ -238,7 +242,7 @@ export default {
       else this.isMobile = false;
     },
 
-    generateSubject(noOfPosition, skillSet) {
+    generateSubject(noOfPosition, yOe, skillSet) {
       let skills = '';
       JSON.parse(skillSet).forEach((skill, index) => {
         this.skillset.filter((filterSkill) => {
@@ -253,7 +257,7 @@ export default {
         });
       });
 
-      return `${noOfPosition} positions for ${skills} `;
+      return `${yOe}+ years experience,  ${noOfPosition} positions for ${skills} `;
     },
 
     clientName(clientId) {
