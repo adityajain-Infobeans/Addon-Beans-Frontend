@@ -56,13 +56,20 @@
           <tr class="text-center" v-if="!isMobile">
             <td>{{ row.item.requirement_id }}</td>
             <td>{{ row.item.status == 1 ? 'Open' : 'Closed' }}</td>
-            <td class="font-weight-bold">
-              <v-chip :color="bgColor(row.item.timeline)" light>
-                {{ row.item.timeline }} week
+            <td class="font-weight-medium">
+              <v-chip
+                :color="bgColor(row.item.timeline, row.item.status)"
+                light
+              >
+                {{
+                  row.item.status === 2
+                    ? 'resolved'
+                    : `${row.item.timeline} week`
+                }}
               </v-chip>
             </td>
             <td
-              class="text-left"
+              class="text-left font-weight-bold"
               @click="detailRequirement(row.item.requirement_id)"
             >
               {{
@@ -116,13 +123,17 @@
                   class="font-weight-bold flex-item"
                   data-label="Requirement Timeline"
                 >
-                  <v-chip :color="bgColor(row.item.timeline)" light>
-                    {{ row.item.timeline }} week
+                  <v-chip :color="bgColor(row.item.timeline, row.item.status)">
+                    {{
+                      row.item.status === 2
+                        ? 'resolved'
+                        : `${row.item.timeline} week`
+                    }}
                   </v-chip>
                 </li>
 
                 <li
-                  class="text-left flex-item"
+                  class="text-left flex-item font-weight-bold"
                   data-label="Requirement Subject"
                   @click="detailRequirement(row.item.requirement_id)"
                 >
@@ -224,7 +235,10 @@ export default {
       this.$router.push({ name: 'View Requirement', params: { id } });
     },
 
-    bgColor(timeline) {
+    bgColor(timeline, status) {
+      if (status === 2) {
+        return 'green';
+      }
       if (timeline <= 1) {
         return 'red';
       }
@@ -232,7 +246,7 @@ export default {
         return 'orange';
       }
       if (timeline <= 10) {
-        return 'yellow';
+        return 'grey';
       }
       return 'green';
     },
