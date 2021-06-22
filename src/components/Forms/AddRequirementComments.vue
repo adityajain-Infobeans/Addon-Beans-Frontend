@@ -1,7 +1,7 @@
 <template >
-  <v-container class="mt-5" v-if="currentStatus == 1 ? true : false">
-    <v-card light class="px-10 pb-10">
-      <v-row v-if="isHR" class="mb-5">
+  <v-container class="mt-5">
+    <v-card light class="px-10" :class="bottomPadding">
+      <v-row v-if="isHR" class="marginBottom">
         <v-col cols="12" sm="3" class="">
           <v-select
             :items="statuses"
@@ -27,8 +27,12 @@
         </v-col>
       </v-row>
 
-      <v-divider></v-divider>
-      <v-form v-model="isCommentValid" ref="formComment">
+      <v-divider v-if="currentStatus == 1 ? true : false"></v-divider>
+      <v-form
+        v-model="isCommentValid"
+        ref="formComment"
+        v-if="currentStatus == 1 ? true : false"
+      >
         <v-row class="mt-10">
           <v-col cols="12">
             <v-textarea
@@ -100,6 +104,12 @@ export default {
       }
       return false;
     },
+    bottomPadding() {
+      return this.currentStatus === 1 ? 'pb-10' : 'pb-3';
+    },
+    marginBottom() {
+      return this.currentStatus === 1 ? 'mb-5' : '';
+    },
   },
   methods: {
     submitComment() {
@@ -157,6 +167,7 @@ export default {
             title: 'Success',
             text: response.data.message,
           });
+          this.currentStatus = this.status;
         })
         .catch((error) => {
           this.$swal({
