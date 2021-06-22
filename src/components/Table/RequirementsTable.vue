@@ -169,7 +169,7 @@ const axios = require('axios');
 export default {
   data: () => ({
     isMobile: false,
-    employeeList: [],
+    employeeList: [{ emp_id: 0, emp_name: '' }],
     clientsList: [{ client_id: 0, client_name: '' }],
     employee: null,
     client: null,
@@ -405,7 +405,9 @@ export default {
       axios
         .get('/employee')
         .then((response) => {
-          this.employeeList = response.data.data.employeeList;
+          this.employeeList = this.employeeList.concat(
+            response.data.data.employeeList,
+          );
         })
         .catch((error) => {
           this.$swal({
