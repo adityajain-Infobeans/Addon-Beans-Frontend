@@ -25,30 +25,6 @@
             >Change Status</v-btn
           >
         </v-col>
-
-        <v-col cols="12" sm="3" class="">
-          <v-select
-            :items="priorities"
-            item-value="value"
-            item-text="priority"
-            label="Priority"
-            name="priority"
-            v-model="priority"
-            :rules="priorityRules"
-            required
-          ></v-select>
-        </v-col>
-
-        <v-col cols="12" sm="3" class="my-auto">
-          <v-btn
-            block
-            color="primary"
-            dark
-            :disabled="!priorityChanged"
-            @click="submitPriorityChanged"
-            >Change Priority</v-btn
-          >
-        </v-col>
       </v-row>
 
       <v-divider></v-divider>
@@ -88,7 +64,6 @@ export default {
   props: ['type'],
   data() {
     return {
-      priorities: this.$store.state.priorities,
       statuses: [
         { status: 'Open', value: '1' },
         { status: 'Closed', value: '2' },
@@ -96,13 +71,10 @@ export default {
 
       isCommentValid: false,
 
-      priority: null,
       status: null,
-      currentPriority: null,
       currentStatus: null,
       comment: null,
 
-      priorityRules: [(v) => !!v || 'Please select a priority level.'],
       statusRules: [(v) => !!v || 'Please select Requirement status.'],
 
       commentRules: [
@@ -121,12 +93,7 @@ export default {
     ifView() {
       return !this.type;
     },
-    priorityChanged() {
-      if (this.priority !== this.currentPriority) {
-        return true;
-      }
-      return false;
-    },
+
     statusChanged() {
       if (this.status !== this.currentStatus) {
         return true;
@@ -199,35 +166,6 @@ export default {
           });
         });
     },
-    submitPriorityChanged() {
-      const RequirementId = this.$route.params.id;
-      axios
-        .put(
-          `/Requirement/${RequirementId}`,
-          {
-            priority: this.priority,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-            },
-          },
-        )
-        .then((response) => {
-          this.$swal({
-            icon: 'success',
-            title: 'Success',
-            text: response.data.message,
-          });
-        })
-        .catch((error) => {
-          this.$swal({
-            icon: 'error',
-            title: 'Some Error Occured',
-            text: error.response.data.message,
-          });
-        });
-    },
   },
   created() {
     const RequirementId = this.$route.params.id;
@@ -239,9 +177,7 @@ export default {
       })
       .then((response) => {
         this.status = response.data.data.status;
-        this.priority = response.data.data.priority;
         this.currentStatus = response.data.data.status;
-        this.currentPriority = response.data.data.priority;
       })
       .catch((error) => {
         this.$swal({
