@@ -59,7 +59,7 @@ export default {
     },
     deleteRequirement(state, RequirementId) {
       state.RequirementsData = state.RequirementsData.filter(
-        (Requirement) => Requirement.Requirement_id !== RequirementId,
+        (Requirement) => Requirement.requirement_id !== RequirementId,
       );
     },
     clearRequirements(state) {
