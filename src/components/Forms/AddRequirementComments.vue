@@ -65,8 +65,8 @@ export default {
   data() {
     return {
       statuses: [
-        { status: 'Open', value: '1' },
-        { status: 'Closed', value: '2' },
+        { status: 'Open', value: 1 },
+        { status: 'Closed', value: 2 },
       ],
 
       isCommentValid: false,
