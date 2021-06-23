@@ -3,7 +3,7 @@
     <v-container>
       <div v-if="this.$route.params.id">
         <v-row>
-          <v-col cols="12" sm="8" class="mx-auto">
+          <v-col cols="11" class="mx-auto">
             <RequirementForm />
           </v-col>
         </v-row>
