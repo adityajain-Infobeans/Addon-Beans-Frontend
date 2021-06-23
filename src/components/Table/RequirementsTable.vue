@@ -421,7 +421,11 @@ export default {
 
     if (this.isHR) {
       axios
-        .get('/employee')
+        .get('/employee', {
+          headers: {
+            Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
+          },
+        })
         .then((response) => {
           this.employeeList = this.employeeList.concat(
             response.data.data.employeeList,
