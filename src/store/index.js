@@ -26,6 +26,11 @@ export default new Vuex.Store({
         route: '/ViewRequirement',
       },
       {
+        icon: 'mdi-form-textbox-password',
+        text: 'Change Password',
+        route: '/changePassword',
+      },
+      {
         icon: 'mdi-logout',
         text: 'Logout',
         route: 'Logout',

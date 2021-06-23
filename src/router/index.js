@@ -25,12 +25,19 @@ const routes = [
   {
     path: '/updateRequirement/:id',
     name: 'Update Requirement',
-    component: () => import(/* webpackChunkName: "updateRequirement" */ '../views/UpdateRequirement.vue'),
+    component: () =>
+      import(/* webpackChunkName: "updateRequirement" */ '../views/UpdateRequirement.vue'),
   },
   {
     path: '/viewRequirement/:id?',
     name: 'View Requirement',
-    component: () => import(/* webpackChunkName: "viewRequirement" */ '../views/ViewRequirement.vue'),
+    component: () =>
+      import(/* webpackChunkName: "viewRequirement" */ '../views/ViewRequirement.vue'),
+  },
+  {
+    path: '/changePassword',
+    name: 'Change Password',
+    component: () => import(/* webpackChunkName: "changePassword" */ '../views/ChangePassword.vue'),
   },
   {
     path: '/logout',
