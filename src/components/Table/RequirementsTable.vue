@@ -22,7 +22,7 @@
                   :items="employeeList"
                   item-value="emp_id"
                   item-text="emp_name"
-                  label="Search by employee"
+                  label="Search by Manager"
                 ></v-autocomplete>
               </v-col>
               <v-col cols="4">

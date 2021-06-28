@@ -31,7 +31,7 @@
           class="green darken-1 white--text rounded mb-3"
           elevation="4"
         >
-          <p class="headline mb-2">Resolved Requirements</p>
+          <p class="headline mb-2">Fulfilled Requirements</p>
           <p class="display-3 font-weight-bold">{{ resolvedRequirements }}</p>
         </v-col>
       </v-row>
