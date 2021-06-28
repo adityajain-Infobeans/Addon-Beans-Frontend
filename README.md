@@ -1,5 +1,5 @@
-#Addon Beans
-#####Front-end (Create using VueJS, Vuetify, Vuex)
+# Addon Beans
+##### Front-end (Create using VueJS, Vuetify, Vuex)
 
 ### About
 A simple Single page application to fill the communication gap between **HR** & **Managers** and help them easily maintain project requirements of new resources or to help managers raising requests of adding new beans to our InfoBeans family.
@@ -28,7 +28,7 @@ A simple Single page application to fill the communication gap between **HR** & 
 
 ### Features
 
-#####Login Form
+##### Login Form
 
 - Email & password field have validations
 - Until both fields are not populated with valid inputs the submit button will be disabled.
@@ -48,22 +48,22 @@ A simple Single page application to fill the communication gap between **HR** & 
 
 
 
-#####Requirement
+##### Requirement
 - User can create, update, delete & view their own tickets
 	- HR can an view, update & delete  anyone's ticket
 - All the form fields have validation rules & the form cannot be submitted untill fields are not properly validated
 
-#####Comments
+##### Comments
 
 
-#####Change Password
+##### Change Password
 
 
-#####Skill Sets
+##### Skill Sets
 
 
 
-#####Clients
+##### Clients
 
 
 
@@ -97,4 +97,4 @@ npm run lint
 
 
 
-###End
+### -- End --
