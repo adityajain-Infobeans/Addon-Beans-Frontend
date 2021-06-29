@@ -9,7 +9,7 @@ const axios = require('axios');
 
 Vue.use(VueSweetalert2);
 
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? 'https://infobeans-support.herokuapp.com/' : 'http://localhost:3000';
 
 Vue.config.productionTip = false;
 
