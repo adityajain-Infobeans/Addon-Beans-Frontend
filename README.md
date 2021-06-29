@@ -65,13 +65,13 @@ A single-page application to fill the communication gap between **HR** & **Manag
 
 
 ##### Skill Sets
-- HR can add, remove or update skill sets to/from the database.
-- Validation to prevent duplication entry for skill set is there.
+- HR can add, remove or update skillsets to/from the database.
+- Validation to prevent duplication entry for skill set.
 
 
 ##### Clients
 - HR can add, remove or update clients to/from the database.
-- Validation to prevent duplication entry for clients is there.
+- Validation to prevent duplication entry for clients.
 
 
 # Commands
