@@ -19,7 +19,13 @@ describe('LoginForm', () => {
   });
 
   it('Shows forgot password reset instructions', () => {
-    expect(true).toBe(true);
+    const wrapper = mount(LoginForm);
+    const forgotPasswordButton = wrapper.find('[data-testid="forgotButton"]');
+
+    forgotPasswordButton.trigger('click').then(() => {
+      const errorMessage = wrapper.find('[data-testid="errorMessage"]').element.textContent;
+      expect(errorMessage).toBe('Please contact IT team to reset your password.');
+    });
   });
 
   it('Shows error message for wrong credentials', () => {
