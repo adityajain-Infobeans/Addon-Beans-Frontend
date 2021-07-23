@@ -31,7 +31,25 @@ describe('LoginForm', () => {
   });
 
   it('Shows error message for wrong credentials', () => {
-    expect(true).toBe(true);
+    const wrapper = mount(LoginForm, {
+      data() {
+        return {
+          email: 'test@email.com',
+          password: 'password',
+          formValidated: true,
+        };
+      },
+    });
+
+    const loginButton = wrapper.find('[data-testid="loginButton"]');
+    const loginButtonStatus = loginButton.attributes().disabled;
+
+    expect(loginButtonStatus).toBe(undefined);
+
+    loginButton.trigger('click').then(() => {
+      const errorMessage = wrapper.find('[data-testid="errorMessage"]').element.textContent;
+      expect(errorMessage).toBe('wrong username or password');
+    });
   });
 
   it('Follows login success flow', () => {
