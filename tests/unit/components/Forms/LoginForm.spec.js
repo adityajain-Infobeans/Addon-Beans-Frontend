@@ -9,11 +9,13 @@ describe('LoginForm', () => {
     const passwordInputField = wrapper.find('[data-testid="password"]');
     const forgotPasswordButton = wrapper.find('[data-testid="forgotButton"]');
     const loginButton = wrapper.find('[data-testid="loginButton"]');
+    const loginButtonDisabled = loginButton.element.disabled === true;
 
     expect(emailInputField.exists()).toBe(true);
     expect(passwordInputField.exists()).toBe(true);
     expect(forgotPasswordButton.exists()).toBe(true);
     expect(loginButton.exists()).toBe(true);
+    expect(loginButtonDisabled).toBe(true);
 
     expect(true).toBe(true);
   });
