@@ -8,17 +8,14 @@
           </v-card-title>
 
           <v-card-text>
-            <v-alert type="error" v-if="errorMessage">{{
-              errorMessage
-            }}</v-alert>
-            <v-alert type="success" v-else-if="successMessage"
-              >Login Success</v-alert
-            >
+            <v-alert type="error" v-if="errorMessage">{{ errorMessage }}</v-alert>
+            <v-alert type="success" v-else-if="successMessage">Login Success</v-alert>
             <v-form v-model="formValidated">
               <v-text-field
                 name="email"
                 label="Email"
                 id="Email"
+                data-testid="email"
                 prepend-icon="mdi-account-circle"
                 type="email"
                 v-model="email"
@@ -29,6 +26,7 @@
                 name="Password"
                 label="Password"
                 id="Password"
+                data-testid="password"
                 :type="showPassword ? 'text' : 'password'"
                 prepend-icon="mdi-lock"
                 :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -41,9 +39,11 @@
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
-            <v-btn text @click="forgotPassword">Forgot Password ? </v-btn>
+            <v-btn text @click="forgotPassword" data-testid="forgotButton"
+              >Forgot Password ?
+            </v-btn>
             <v-spacer></v-spacer>
-            <v-btn color="info" @click="login" :disabled="!formValidated"
+            <v-btn color="info" @click="login" :disabled="!formValidated" data-testid="loginButton"
               >Login
             </v-btn>
           </v-card-actions>
