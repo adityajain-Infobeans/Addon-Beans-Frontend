@@ -8,8 +8,12 @@
           </v-card-title>
 
           <v-card-text>
-            <v-alert type="error" v-if="errorMessage">{{ errorMessage }}</v-alert>
-            <v-alert type="success" v-else-if="successMessage">Login Success</v-alert>
+            <v-alert type="error" v-if="errorMessage" data-testid="errorMessage">{{
+              errorMessage
+            }}</v-alert>
+            <v-alert type="success" v-else-if="successMessage" data-testid="successMessage"
+              >Login Success</v-alert
+            >
             <v-form v-model="formValidated">
               <v-text-field
                 name="email"
