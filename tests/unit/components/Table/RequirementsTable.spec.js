@@ -6,4 +6,8 @@ describe('FullComponentTest', () => {
   it('verify table get populated after api call', () => {
     expect(true).toBe(true);
   });
+
+  it('edit, delete & view test', () => {
+    expect(true).toBe(true);
+  });
 });
