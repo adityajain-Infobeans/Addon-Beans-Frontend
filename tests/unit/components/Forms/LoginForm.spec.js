@@ -1,9 +1,9 @@
-import { mount } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import LoginForm from '@/components/Forms/LoginForm.vue';
 
 describe('LoginForm', () => {
   it('Verify input fields & buttons are visible', () => {
-    const wrapper = mount(LoginForm);
+    const wrapper = shallowMount(LoginForm);
 
     const emailInputField = wrapper.find('[data-testid="email"]');
     const passwordInputField = wrapper.find('[data-testid="password"]');
@@ -21,7 +21,7 @@ describe('LoginForm', () => {
   });
 
   it('Shows forgot password reset instructions', () => {
-    const wrapper = mount(LoginForm);
+    const wrapper = shallowMount(LoginForm);
     const forgotPasswordButton = wrapper.find('[data-testid="forgotButton"]');
 
     forgotPasswordButton.trigger('click').then(() => {
@@ -31,7 +31,7 @@ describe('LoginForm', () => {
   });
 
   it('Shows error message for wrong credentials', () => {
-    const wrapper = mount(LoginForm, {
+    const wrapper = shallowMount(LoginForm, {
       data() {
         return {
           email: 'test@email.com',
