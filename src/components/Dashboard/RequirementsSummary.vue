@@ -5,34 +5,25 @@
         <h2 class="headline white--text">Requirement Summary:</h2>
       </v-row>
       <v-row class="mt-6 text-center">
-        <v-col
-          cols="12"
-          sm="3"
-          class="yellow darken-3 white--text rounded mb-3"
-          elevation="4"
-        >
+        <v-col cols="12" sm="3" class="yellow darken-3 white--text rounded mb-3" elevation="4">
           <p class="headline mb-2">Total Requirements</p>
-          <p class="display-3 font-weight-bold">{{ totalRequirements }}</p>
+          <p class="display-3 font-weight-bold" data-testid="totalRequirements">
+            {{ totalRequirements }}
+          </p>
         </v-col>
         <v-spacer></v-spacer>
-        <v-col
-          cols="12"
-          sm="3"
-          class="red darken-1 white--text rounded mb-3"
-          elevation="4"
-        >
+        <v-col cols="12" sm="3" class="red darken-1 white--text rounded mb-3" elevation="4">
           <p class="headline mb-2">Open Requirements</p>
-          <p class="display-3 font-weight-bold">{{ openRequirements }}</p>
+          <p class="display-3 font-weight-bold" data-testid="openRequirements">
+            {{ openRequirements }}
+          </p>
         </v-col>
         <v-spacer></v-spacer>
-        <v-col
-          cols="12"
-          sm="3"
-          class="green darken-1 white--text rounded mb-3"
-          elevation="4"
-        >
+        <v-col cols="12" sm="3" class="green darken-1 white--text rounded mb-3" elevation="4">
           <p class="headline mb-2">Fulfilled Requirements</p>
-          <p class="display-3 font-weight-bold">{{ resolvedRequirements }}</p>
+          <p class="display-3 font-weight-bold" data-testid="resolvedRequirements">
+            {{ resolvedRequirements }}
+          </p>
         </v-col>
       </v-row>
     </v-container>
@@ -44,9 +35,9 @@ const axios = require('axios');
 
 export default {
   data: () => ({
-    totalRequirements: '--',
-    openRequirements: '--',
-    resolvedRequirements: '--',
+    totalRequirements: 0,
+    openRequirements: 0,
+    resolvedRequirements: 0,
   }),
 
   methods: {},
@@ -71,5 +62,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
