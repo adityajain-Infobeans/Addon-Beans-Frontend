@@ -1,4 +1,4 @@
-<template >
+<template>
   <v-container class="mt-5" v-if="commentsData.length === 0 ? false : true">
     <v-card light class="pa-5">
       <div
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-const axios = require('axios');
+const { getComment } = require('@/services/axios/Forms/RequirementComments');
 
 export default {
   data: () => ({}),
@@ -24,12 +24,8 @@ export default {
     // get comment data
 
     const RequirementId = this.$route.params.id;
-    axios
-      .get(`/comment/T_${RequirementId}`, {
-        headers: {
-          Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-        },
-      })
+
+    getComment(this.$store.state.Auth.userData.token, RequirementId)
       .then((response) => {
         this.$store.dispatch('setComment', response.data.data);
       })
@@ -52,5 +48,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
