@@ -37,10 +37,7 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              color="info"
-              @click="changePassword"
-              :disabled="!formValidated"
+            <v-btn color="info" @click="changePassword" :disabled="!formValidated"
               >Change Password
             </v-btn>
           </v-card-actions>
@@ -51,7 +48,7 @@
 </template>
 
 <script>
-const axios = require('axios');
+const { changePassword } = require('@/services/axios/Forms/ChangePasswordForm');
 
 export default {
   data: () => ({
@@ -65,8 +62,7 @@ export default {
 
   methods: {
     validatePassword(userPass) {
-      const re =
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+      const re = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
       return re.test(userPass);
     },
     changePassword() {
@@ -82,23 +78,13 @@ export default {
         this.$swal({
           icon: 'error',
           title: 'Weak Password',
-          text: 'Password must contain at least an upper case letter, a lower case letter, an special character, a number & must be of at least 8 character',
+          text:
+            'Password must contain at least an upper case letter, a lower case letter, an special character, a number & must be of at least 8 character',
         });
         return true;
       }
 
-      axios
-        .put(
-          '/employee',
-          {
-            newPassword: this.newPassword,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-            },
-          },
-        )
+      changePassword(this.$store.state.Auth.userData.token, this.newPassword)
         .then((response) => {
           this.$swal({
             icon: 'success',
