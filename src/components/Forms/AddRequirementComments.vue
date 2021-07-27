@@ -1,4 +1,4 @@
-<template >
+<template>
   <v-container class="mt-5">
     <v-card light class="px-10" :class="bottomPadding">
       <v-row v-if="isHR" class="marginBottom">
@@ -16,23 +16,14 @@
         </v-col>
 
         <v-col cols="12" sm="3" class="my-auto">
-          <v-btn
-            block
-            color="primary"
-            dark
-            :disabled="!statusChanged"
-            @click="submitStatusChanged"
+          <v-btn block color="primary" dark :disabled="!statusChanged" @click="submitStatusChanged"
             >Change Status</v-btn
           >
         </v-col>
       </v-row>
 
       <v-divider v-if="currentStatus == 1 ? true : false"></v-divider>
-      <v-form
-        v-model="isCommentValid"
-        ref="formComment"
-        v-if="currentStatus == 1 ? true : false"
-      >
+      <v-form v-model="isCommentValid" ref="formComment" v-if="currentStatus == 1 ? true : false">
         <v-row class="mt-10">
           <v-col cols="12">
             <v-textarea
@@ -48,11 +39,7 @@
         </v-row>
         <v-row>
           <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            dark
-            :disabled="!isCommentValid"
-            @click="submitComment"
+          <v-btn color="primary" dark :disabled="!isCommentValid" @click="submitComment"
             >Submit Comment</v-btn
           >
         </v-row>
@@ -62,7 +49,11 @@
 </template>
 
 <script>
-const axios = require('axios');
+const {
+  postComment,
+  updateStatus,
+  getRequirementIdData,
+} = require('@/services/axios/Forms/AddRequirementComments');
 
 export default {
   props: ['type'],
@@ -113,19 +104,7 @@ export default {
   },
   methods: {
     submitComment() {
-      axios
-        .post(
-          '/comment',
-          {
-            requirement_id: this.$route.params.id,
-            comment: this.comment,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-            },
-          },
-        )
+      postComment(this.$store.state.Auth.userData.token, this.$route.params.id, this.comment)
         .then((response) => {
           const commentData = {
             comment_by: this.$store.state.Auth.userData.emp_name,
@@ -148,19 +127,7 @@ export default {
         });
     },
     submitStatusChanged() {
-      const RequirementId = this.$route.params.id;
-      axios
-        .put(
-          `/Requirement/${RequirementId}`,
-          {
-            status: this.status,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-            },
-          },
-        )
+      updateStatus(this.$store.state.Auth.userData.token, this.$route.params.id, this.status)
         .then((response) => {
           this.$swal({
             icon: 'success',
@@ -179,13 +146,7 @@ export default {
     },
   },
   created() {
-    const RequirementId = this.$route.params.id;
-    axios
-      .get(`/Requirement/${RequirementId}`, {
-        headers: {
-          Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-        },
-      })
+    getRequirementIdData(this.$store.state.Auth.userData.token, this.$route.params.id)
       .then((response) => {
         this.status = response.data.data.status;
         this.currentStatus = response.data.data.status;
@@ -201,5 +162,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
