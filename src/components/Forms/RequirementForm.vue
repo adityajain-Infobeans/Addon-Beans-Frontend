@@ -1,4 +1,4 @@
-<template >
+<template>
   <v-card light class="mt-8 pa-5">
     <v-form v-model="formValidated" ref="form">
       <v-container>
@@ -118,7 +118,9 @@
 </template>
 
 <script>
-const axios = require('axios');
+const { postRequirement, updateRequirement } = require('@/services/axios/Forms/RequirementForm');
+const { getSkillsetData, getClientsData } = require('@/services/axios/Table/RequirementsTable');
+const { getRequirementIdData } = require('@/services/axios/Forms/AddRequirementComments');
 
 export default {
   props: ['type'],
@@ -145,9 +147,7 @@ export default {
       additional_note_rules: [
         (v) => {
           if (v) {
-            return v.length >= 50
-              ? true
-              : 'Description must be more than 50 characters';
+            return v.length >= 50 ? true : 'Description must be more than 50 characters';
           }
           return true;
         },
@@ -193,23 +193,16 @@ export default {
     formSubmit() {
       if (this.type === 'add') {
         // call add api
-        axios
-          .post(
-            '/Requirement',
-            {
-              timeline: this.timeline,
-              number_of_position: this.no_of_position,
-              skill_set: this.skill_set,
-              experience: this.experience,
-              client_id: this.client,
-              additional_note: this.additional_note,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-              },
-            },
-          )
+
+        postRequirement(
+          this.$store.state.Auth.userData.token,
+          this.timeline,
+          this.no_of_position,
+          this.skill_set,
+          this.experience,
+          this.client,
+          this.additional_note,
+        )
           .then((response) => {
             this.$refs.form.reset();
             this.$swal({
@@ -228,24 +221,16 @@ export default {
       } else if (this.type === 'update') {
         // call update api
 
-        const RequirementId = this.$route.params.id;
-        axios
-          .put(
-            `/Requirement/${RequirementId}`,
-            {
-              timeline: this.timeline,
-              number_of_position: this.no_of_position,
-              skill_set: this.skill_set,
-              experience: this.experience,
-              client_id: this.client,
-              additional_note: this.additional_note,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-              },
-            },
-          )
+        updateRequirement(
+          this.$store.state.Auth.userData.token,
+          this.$route.params.id,
+          this.timeline,
+          this.no_of_position,
+          this.skill_set,
+          this.experience,
+          this.client,
+          this.additional_note,
+        )
           .then((response) => {
             this.$swal({
               icon: 'success',
@@ -262,6 +247,7 @@ export default {
           });
       } else {
         // invalid
+        console.log('invalid');
       }
     },
   },
@@ -270,13 +256,7 @@ export default {
     if (this.type !== 'add') {
       // get Requirement data to view or update
 
-      const RequirementId = this.$route.params.id;
-      axios
-        .get(`/Requirement/${RequirementId}`, {
-          headers: {
-            Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-          },
-        })
+      getRequirementIdData(this.$store.state.Auth.userData.token, this.$route.params.id)
         .then((response) => {
           this.timeline = response.data.data.timeline;
           this.no_of_position = response.data.data.number_of_position;
@@ -294,12 +274,7 @@ export default {
         });
     }
 
-    axios
-      .get('/client', {
-        headers: {
-          Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-        },
-      })
+    getClientsData(this.$store.state.Auth.userData.token)
       .then((response) => {
         this.clients = this.clients.concat(response.data.data.clientsList);
       })
@@ -311,12 +286,7 @@ export default {
         });
       });
 
-    axios
-      .get('/skillset', {
-        headers: {
-          Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-        },
-      })
+    getSkillsetData(this.$store.state.Auth.userData.token)
       .then((response) => {
         this.skill_sets = this.skill_sets.concat(response.data.data);
       })
@@ -331,5 +301,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
