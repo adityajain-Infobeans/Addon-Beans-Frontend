@@ -11,10 +11,7 @@
           <v-expansion-panel-content>
             <v-row class="px-5">
               <v-col cols="4">
-                <v-checkbox
-                  v-model="showClosed"
-                  label="Show Closed Requirement"
-                ></v-checkbox>
+                <v-checkbox v-model="showClosed" label="Show Closed Requirement"></v-checkbox>
               </v-col>
               <v-col cols="4" v-if="isHR">
                 <v-autocomplete
@@ -57,15 +54,8 @@
             <td>{{ row.item.requirement_id }}</td>
             <td>{{ row.item.status == 1 ? 'Open' : 'Closed' }}</td>
             <td class="font-weight-medium">
-              <v-chip
-                :color="bgColor(row.item.timeline, row.item.status)"
-                light
-              >
-                {{
-                  row.item.status === 2
-                    ? 'resolved'
-                    : `${row.item.timeline} week`
-                }}
+              <v-chip :color="bgColor(row.item.timeline, row.item.status)" light>
+                {{ row.item.status === 2 ? 'resolved' : `${row.item.timeline} week` }}
               </v-chip>
             </td>
             <td
@@ -93,11 +83,7 @@
               >
             </td>
             <td>
-              <v-btn
-                class="red white--text"
-                @click="confirmDelete(row.item.requirement_id)"
-                small
-              >
+              <v-btn class="red white--text" @click="confirmDelete(row.item.requirement_id)" small>
                 <v-icon>mdi-delete</v-icon> Delete</v-btn
               >
             </td>
@@ -119,16 +105,9 @@
                 >
                   {{ row.item.status == 1 ? 'Open' : 'Closed' }}
                 </li>
-                <li
-                  class="font-weight-bold flex-item"
-                  data-label="Requirement Timeline"
-                >
+                <li class="font-weight-bold flex-item" data-label="Requirement Timeline">
                   <v-chip :color="bgColor(row.item.timeline, row.item.status)">
-                    {{
-                      row.item.status === 2
-                        ? 'resolved'
-                        : `${row.item.timeline} week`
-                    }}
+                    {{ row.item.status === 2 ? 'resolved' : `${row.item.timeline} week` }}
                   </v-chip>
                 </li>
 
@@ -137,12 +116,7 @@
                   data-label="Requirement Subject"
                   @click="detailRequirement(row.item.requirement_id)"
                 >
-                  {{
-                    generateSubject(
-                      row.item.number_of_position,
-                      row.item.skill_set,
-                    )
-                  }}
+                  {{ generateSubject(row.item.number_of_position, row.item.skill_set) }}
                 </li>
                 <li class="flex-item" data-label="Requirement Last Updated">
                   {{ row.item.updated_on }}
@@ -179,7 +153,13 @@
 </template>
 
 <script>
-const axios = require('axios');
+const {
+  getRequirementData,
+  getSkillsetData,
+  getClientsData,
+  deleteRequirementData,
+  getEmployeesData,
+} = require('@/services/axios/Table/RequirementsTable');
 
 export default {
   data: () => ({
@@ -207,12 +187,7 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          axios
-            .delete(`/Requirement/${id}`, {
-              headers: {
-                Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-              },
-            })
+          deleteRequirementData(this.$store.state.Auth.userData.token)
             .then((response) => {
               this.$store.dispatch('deleteRequirement', id);
               this.$swal({
@@ -275,8 +250,7 @@ export default {
     },
 
     clientName(clientId) {
-      const client = () =>
-        this.clientsList.filter((clients) => clients.client_id === clientId);
+      const client = () => this.clientsList.filter((clients) => clients.client_id === clientId);
       if (client()[0]) {
         return client()[0].client_name;
       }
@@ -290,90 +264,58 @@ export default {
     RequirementsData() {
       let requirementsData = this.$store.state.Requirement.RequirementsData;
       if (!this.showClosed && this.employee && this.client) {
-        requirementsData =
-          this.$store.state.Requirement.RequirementsData.filter(
-            (Requirement) => {
-              if (
-                Requirement.status !== '2' &&
-                Requirement.emp_id === this.employee &&
-                Requirement.client_id === this.client
-              ) {
-                return true;
-              }
-              return false;
-            },
-          );
+        requirementsData = this.$store.state.Requirement.RequirementsData.filter((Requirement) => {
+          if (
+            Requirement.status !== '2' &&
+            Requirement.emp_id === this.employee &&
+            Requirement.client_id === this.client
+          ) {
+            return true;
+          }
+          return false;
+        });
       } else if (this.employee && this.client) {
-        requirementsData =
-          this.$store.state.Requirement.RequirementsData.filter(
-            (Requirement) => {
-              if (
-                Requirement.emp_id === this.employee &&
-                Requirement.client_id === this.client
-              ) {
-                return true;
-              }
-              return false;
-            },
-          );
+        requirementsData = this.$store.state.Requirement.RequirementsData.filter((Requirement) => {
+          if (Requirement.emp_id === this.employee && Requirement.client_id === this.client) {
+            return true;
+          }
+          return false;
+        });
       } else if (!this.showClosed && this.employee) {
-        requirementsData =
-          this.$store.state.Requirement.RequirementsData.filter(
-            (Requirement) => {
-              if (
-                Requirement.status !== 2 &&
-                Requirement.emp_id === this.employee
-              ) {
-                return true;
-              }
-              return false;
-            },
-          );
+        requirementsData = this.$store.state.Requirement.RequirementsData.filter((Requirement) => {
+          if (Requirement.status !== 2 && Requirement.emp_id === this.employee) {
+            return true;
+          }
+          return false;
+        });
       } else if (!this.showClosed && this.client) {
-        requirementsData =
-          this.$store.state.Requirement.RequirementsData.filter(
-            (Requirement) => {
-              if (
-                Requirement.status !== 2 &&
-                Requirement.client_id === this.client
-              ) {
-                return true;
-              }
-              return false;
-            },
-          );
+        requirementsData = this.$store.state.Requirement.RequirementsData.filter((Requirement) => {
+          if (Requirement.status !== 2 && Requirement.client_id === this.client) {
+            return true;
+          }
+          return false;
+        });
       } else if (this.client) {
-        requirementsData =
-          this.$store.state.Requirement.RequirementsData.filter(
-            (Requirement) => Requirement.client_id === this.client,
-          );
+        requirementsData = this.$store.state.Requirement.RequirementsData.filter(
+          (Requirement) => Requirement.client_id === this.client,
+        );
       } else if (this.employee) {
-        requirementsData =
-          this.$store.state.Requirement.RequirementsData.filter(
-            (Requirement) => Requirement.emp_id === this.employee,
-          );
+        requirementsData = this.$store.state.Requirement.RequirementsData.filter(
+          (Requirement) => Requirement.emp_id === this.employee,
+        );
       } else if (!this.showClosed) {
-        requirementsData =
-          this.$store.state.Requirement.RequirementsData.filter(
-            (Requirement) => Requirement.status !== 2,
-          );
+        requirementsData = this.$store.state.Requirement.RequirementsData.filter(
+          (Requirement) => Requirement.status !== 2,
+        );
       }
       return requirementsData;
     },
   },
 
   created() {
-    axios
-      .get('/Requirement', {
-        headers: {
-          Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-        },
-      })
+    getRequirementData(this.$store.state.Auth.userData.token)
       .then((response) => {
-        this.$store.dispatch(
-          'setRequirement',
-          response.data.data.requirementsList,
-        );
+        this.$store.dispatch('setRequirement', response.data.data.requirementsList);
       })
       .catch((error) => {
         this.$swal({
@@ -383,12 +325,7 @@ export default {
         });
       });
 
-    axios
-      .get('/skillset', {
-        headers: {
-          Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-        },
-      })
+    getSkillsetData(this.$store.state.Auth.userData.token)
       .then((response) => {
         this.skillset = response.data.data;
       })
@@ -400,16 +337,9 @@ export default {
         });
       });
 
-    axios
-      .get('/client', {
-        headers: {
-          Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-        },
-      })
+    getClientsData(this.$store.state.Auth.userData.token)
       .then((response) => {
-        this.clientsList = this.clientsList.concat(
-          response.data.data.clientsList,
-        );
+        this.clientsList = this.clientsList.concat(response.data.data.clientsList);
       })
       .catch((error) => {
         this.$swal({
@@ -420,16 +350,9 @@ export default {
       });
 
     if (this.isHR) {
-      axios
-        .get('/employee', {
-          headers: {
-            Authorization: `Bearer ${this.$store.state.Auth.userData.token}`,
-          },
-        })
+      getEmployeesData(this.$store.state.Auth.userData.token)
         .then((response) => {
-          this.employeeList = this.employeeList.concat(
-            response.data.data.employeeList,
-          );
+          this.employeeList = this.employeeList.concat(response.data.data.employeeList);
         })
         .catch((error) => {
           this.$swal({
