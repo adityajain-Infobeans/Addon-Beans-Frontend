@@ -58,7 +58,7 @@
 </template>
 
 <script>
-const axios = require('axios');
+const { loginEmployee } = require('@/services/axios/Forms/LoginForm');
 
 export default {
   data: () => ({
@@ -80,11 +80,7 @@ export default {
   methods: {
     login() {
       if (this.email && this.password) {
-        axios
-          .post('/employee', {
-            email: this.email,
-            password: this.password,
-          })
+        loginEmployee(this.email, this.password)
           .then((response) => {
             this.successMessage = response.data;
 
