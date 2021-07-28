@@ -4,10 +4,22 @@ const { getSummaryData } = require('@/services/axios/Dashboard/RequirementsSumma
 const flushPromises = require('flush-promises');
 
 jest.mock('@/services/axios/Dashboard/RequirementsSummary');
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 describe('FullComponentTest', () => {
   it('Api call resolved successfully', async () => {
+    summaryData = {
+      status: 'success',
+      message: 'Data retrieved successfully',
+      data: { totalRequirements: 3, openRequirement: 3, resolvedRequirement: 0 },
+    };
+    getSummaryData.mockResolvedValueOnce(summaryData);
     const wrapper = shallowMount(Summary);
+    await flushPromises();
+
+    expect(getSummaryData).toHaveBeenCalledTimes(1);
 
     expect(true).toBe(true);
   });
