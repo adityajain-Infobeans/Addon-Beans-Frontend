@@ -1,7 +1,7 @@
 <template>
   <v-container class="mt-5">
     <v-card light class="px-10" :class="bottomPadding">
-      <v-row v-if="isHR" class="marginBottom">
+      <v-row v-if="isHR" class="marginBottom" data-testid="isHRCheck">
         <v-col cols="12" sm="3" class="">
           <v-select
             :items="statuses"
@@ -34,12 +34,18 @@
               :rules="commentRules"
               solo
               outlined
+              data-testid="commentBox"
             ></v-textarea>
           </v-col>
         </v-row>
         <v-row>
           <v-spacer></v-spacer>
-          <v-btn color="primary" dark :disabled="!isCommentValid" @click="submitComment"
+          <v-btn
+            color="primary"
+            dark
+            :disabled="!isCommentValid"
+            @click="submitComment"
+            data-testid="commentSubmitBtn"
             >Submit Comment</v-btn
           >
         </v-row>
