@@ -20,6 +20,7 @@
                 v-model="newPassword"
                 :rules="passwordRules"
                 @keyup.enter="changePassword"
+                data-testid="newPassword"
               ></v-text-field>
 
               <v-text-field
@@ -31,13 +32,18 @@
                 v-model="ConfirmNewPassword"
                 :rules="passwordRules"
                 @keyup.enter="changePassword"
+                data-testid="ConfirmPassword"
               ></v-text-field>
             </v-form>
           </v-card-text>
           <v-divider></v-divider>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="info" @click="changePassword" :disabled="!formValidated"
+            <v-btn
+              color="info"
+              @click="changePassword"
+              :disabled="!formValidated"
+              data-testid="changePasswordBtn"
               >Change Password
             </v-btn>
           </v-card-actions>
