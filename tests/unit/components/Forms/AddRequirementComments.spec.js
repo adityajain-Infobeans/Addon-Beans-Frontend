@@ -92,6 +92,10 @@ describe('FullComponentTest', () => {
     // Dont show change status btn to non HR users
     const isHRCheck = wrapper.find('[data-testid="isHRCheck"]');
     expect(isHRCheck.exists()).toBe(false);
+
+    // hide
+    const commentSubmitBtn = wrapper.find('[data-testid="commentSubmitBtn"]');
+    expect(commentSubmitBtn.exists()).toBe(false);
   });
 
   it('Verify all input fields are present', () => {
