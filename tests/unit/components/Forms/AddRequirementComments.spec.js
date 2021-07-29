@@ -88,6 +88,10 @@ describe('FullComponentTest', () => {
         type: undefined,
       },
     });
+
+    // Dont show change status btn to non HR users
+    const isHRCheck = wrapper.find('[data-testid="isHRCheck"]');
+    expect(isHRCheck.exists()).toBe(false);
   });
 
   it('Verify all input fields are present', () => {
