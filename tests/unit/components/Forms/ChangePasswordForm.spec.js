@@ -17,8 +17,20 @@ beforeEach(() => {
 
 describe('FullComponentTest', () => {
   it('Verify default values', () => {
-    expect(true).toBe(true);
+    const wrapper = shallowMount(ChangePasswordForm);
+
+    const newPassword = wrapper.find('[data-testid="newPassword"]');
+    const ConfirmPassword = wrapper.find('[data-testid="ConfirmPassword"]');
+    const changePasswordBtn = wrapper.find('[data-testid="changePasswordBtn"]');
+    const changePasswordBtnStatus = changePasswordBtn.attributes().disabled;
+
+    expect(newPassword.exists()).toBe(true);
+    expect(ConfirmPassword.exists()).toBe(true);
+    expect(changePasswordBtn.exists()).toBe(true);
+    expect(changePasswordBtnStatus).toBe('true');
   });
 
-  it('Verify all input fields are present', () => {});
+  it('Verify all input fields are present', () => {
+    expect(true).toBe(true);
+  });
 });
