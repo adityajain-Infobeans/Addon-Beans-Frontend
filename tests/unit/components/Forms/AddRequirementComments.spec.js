@@ -7,14 +7,8 @@ import Vuex from 'vuex';
 // import component to mock
 import commentField from '@/components/Forms/AddRequirementComments.vue';
 
-const flushPromises = require('flush-promises');
-
 // import API modules
-const {
-  postComment,
-  updateStatus,
-  getRequirementIdData,
-} = require('@/services/axios/Forms/AddRequirementComments');
+const { getRequirementIdData } = require('@/services/axios/Forms/AddRequirementComments');
 
 // mock API modules imported above
 jest.mock('@/services/axios/Forms/AddRequirementComments');
