@@ -44,7 +44,7 @@ describe('FullComponentTest', () => {
       },
     };
 
-    const resolvePromise = new Promise((resolve, reject) => {
+    const resolvePromise = new Promise((resolve) => {
       const receivedRequirementIdData = {
         status: 'success',
         message: 'Requirement data successfully retrieved',
@@ -83,7 +83,7 @@ describe('FullComponentTest', () => {
       },
     });
 
-    // Dont show change status btn to non HR users
+    // Don't show change status btn to non HR users
     const isHRCheck = wrapper.find('[data-testid="isHRCheck"]');
     expect(isHRCheck.exists()).toBe(false);
 
@@ -100,7 +100,7 @@ describe('FullComponentTest', () => {
       },
     };
 
-    const resolvePromise = new Promise((resolve, reject) => {
+    const resolvePromise = new Promise((resolve) => {
       const receivedRequirementIdData = {
         status: 'success',
         message: 'Requirement data successfully retrieved',
@@ -139,7 +139,7 @@ describe('FullComponentTest', () => {
       },
     });
 
-    // Dont show change status btn to non HR users
+    // Don't show change status btn to non HR users
     const isHRCheck = wrapper.find('[data-testid="isHRCheck"]');
     expect(isHRCheck.exists()).toBe(true);
   });
