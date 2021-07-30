@@ -119,7 +119,7 @@ describe('FullComponentTest', () => {
         },
       };
       resolve(receivedRequirementIdData);
-    });
+    }).catch(() => {});
 
     getRequirementIdData.mockResolvedValueOnce(resolvePromise);
 

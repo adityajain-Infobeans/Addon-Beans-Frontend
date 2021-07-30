@@ -24,10 +24,13 @@ describe('LoginForm', () => {
     const wrapper = shallowMount(LoginForm);
     const forgotPasswordButton = wrapper.find('[data-testid="forgotButton"]');
 
-    forgotPasswordButton.trigger('click').then(() => {
-      const errorMessage = wrapper.find('[data-testid="errorMessage"]').element.textContent;
-      expect(errorMessage).toBe('Please contact IT team to reset your password.');
-    });
+    forgotPasswordButton
+      .trigger('click')
+      .then(() => {
+        const errorMessage = wrapper.find('[data-testid="errorMessage"]').element.textContent;
+        expect(errorMessage).toBe('Please contact IT team to reset your password.');
+      })
+      .catch(() => {});
   });
 
   it('Shows error message for wrong credentials', () => {
@@ -46,10 +49,13 @@ describe('LoginForm', () => {
 
     expect(loginButtonStatus).toBe(undefined);
 
-    loginButton.trigger('click').then(() => {
-      const errorMessage = wrapper.find('[data-testid="errorMessage"]').element.textContent;
-      expect(errorMessage).toBe('wrong username or password');
-    });
+    loginButton
+      .trigger('click')
+      .then(() => {
+        const errorMessage = wrapper.find('[data-testid="errorMessage"]').element.textContent;
+        expect(errorMessage).toBe('wrong username or password');
+      })
+      .catch(() => {});
   });
 
   it('Follows login success flow', () => {
