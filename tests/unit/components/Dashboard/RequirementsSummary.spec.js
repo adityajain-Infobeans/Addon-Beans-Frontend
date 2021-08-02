@@ -33,3 +33,40 @@ const store = new Vuex.Store({
     },
   },
 });
+
+describe('FullComponentTest', () => {
+  it('Verify default values', () => {
+    const resolvePromise = new Promise((resolve) => {
+      const summaryData = {
+        data: {
+          status: 'success',
+          message: 'Data retrieved successfully',
+          data: { totalRequirements: 3, openRequirement: 3, resolvedRequirement: 0 },
+        },
+      };
+
+      resolve(summaryData);
+    });
+
+    getSummaryData.mockResolvedValueOnce(resolvePromise);
+
+    const wrapper = shallowMount(Summary, {
+      localVue,
+      store,
+    });
+
+    const totalRequirements = wrapper.find('[data-testid="totalRequirements"]');
+    const openRequirements = wrapper.find('[data-testid="openRequirements"]');
+    const resolvedRequirements = wrapper.find('[data-testid="resolvedRequirements"]');
+
+    expect(getSummaryData).toHaveBeenCalledTimes(1);
+
+    expect(totalRequirements.exists()).toBe(true);
+    expect(openRequirements.exists()).toBe(true);
+    expect(resolvedRequirements.exists()).toBe(true);
+
+    expect(totalRequirements.text()).toEqual('0');
+    expect(openRequirements.text()).toEqual('0');
+    expect(resolvedRequirements.text()).toEqual('0');
+  });
+});
