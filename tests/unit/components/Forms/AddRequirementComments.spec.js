@@ -143,8 +143,4 @@ describe('FullComponentTest', () => {
     const isHRCheck = wrapper.find('[data-testid="isHRCheck"]');
     expect(isHRCheck.exists()).toBe(true);
   });
-
-  it('Verify all input fields are present', () => {
-    expect(true).toBe(true);
-  });
 });
