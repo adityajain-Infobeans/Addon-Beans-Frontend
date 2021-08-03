@@ -44,9 +44,13 @@ export default {
     setSummaryData() {
       getSummaryData(this.$store.state.Auth.userData.token)
         .then((response) => {
+          if (response.status !== 200) {
+            return new Error(response);
+          }
           this.totalRequirements = response.data.data.totalRequirements;
           this.openRequirements = response.data.data.openRequirement;
           this.resolvedRequirements = response.data.data.resolvedRequirement;
+          return true;
         })
         .catch((error) => {
           if (error.response.status === 401) {
