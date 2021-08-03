@@ -96,4 +96,65 @@ describe('FullComponentTest', () => {
     const commentsContainer = wrapper.find('[data-testid="commentsContainer"]');
     expect(commentsContainer.exists()).toBe(false);
   });
+
+  it('API call success, verify data is reflected on DOM', async () => {
+    const allCommentData = {
+      data: {
+        status: 'success',
+        message: 'All comments successfully retrieved',
+        data: [
+          {
+            comment_id: 2,
+            requirement_id: 1,
+            emp_id: 2,
+            comment_by: 'Aditya Jain',
+            comment: 'test comment\nffffffffffffffffffffffffffffff',
+            created_on: '27-07-2021 by Aditya Jain',
+            updated_on: '27-07-2021 by Aditya Jain',
+          },
+          {
+            comment_id: 1,
+            requirement_id: 1,
+            emp_id: 1,
+            comment_by: 'Shivraj Singh Rawat',
+            comment: 'djgggggggggggggggggggggggggggggggggggggggggggggggggggg',
+            created_on: '29-06-2021 by Shivraj Singh Rawat',
+            updated_on: '29-06-2021 by Shivraj Singh Rawat',
+          },
+        ],
+      },
+    };
+
+    const $route = {
+      params: {
+        id: '1',
+      },
+    };
+
+    const resolvePromise = new Promise((resolve) => {
+      resolve(allCommentData);
+    });
+
+    getComment.mockResolvedValueOnce(resolvePromise);
+
+    const wrapper = shallowMount(RequirementComments, {
+      localVue,
+      store,
+      computed: {
+        commentsData() {
+          return allCommentData.data.data;
+        },
+      },
+      mocks: {
+        $route,
+      },
+    });
+    await flushPromises();
+
+    const commentsContainer = wrapper.find('[data-testid="commentsContainer"]');
+    expect(commentsContainer.exists()).toBe(true);
+
+    const commentsDataBox = wrapper.findAll('[data-testid="commentsDataBox"]').length;
+    expect(commentsDataBox).toEqual(2);
+  });
 });
