@@ -157,4 +157,50 @@ describe('FullComponentTest', () => {
     const commentsDataBox = wrapper.findAll('[data-testid="commentsDataBox"]').length;
     expect(commentsDataBox).toEqual(2);
   });
+
+  // it('API call fail, verify data is reflected on DOM', async () => {
+  //   const allCommentData = {
+  //     data: { status: 'error', message: 'error occurred while connecting with database', data: {} },
+  //
+  //   };
+
+  //   const $route = {
+  //     params: {
+  //       id: '1',
+  //     },
+  //   };
+
+  //   const rejectedData = {
+  //     response: {
+  //       data: {
+  //         status: 'error',
+  //         message: 'error occurred while connecting with database',
+  //         data: {},
+  //       },
+  //     },
+  //   };
+
+  //   const rejectPromise = new Promise((resolve, reject) => {
+  //     reject(rejectedData);
+  //   });
+
+  //   getComment.mockRejectedValueOnce(rejectPromise);
+
+  //   const wrapper = shallowMount(RequirementComments, {
+  //     localVue,
+  //     store,
+  //     computed: {
+  //       commentsData() {
+  //         return allCommentData.data.data;
+  //       },
+  //     },
+  //     mocks: {
+  //       $route,
+  //     },
+  //   });
+  //   await flushPromises();
+
+  //   const commentsDataBox = wrapper.findAll('[data-testid="commentsDataBox"]').length;
+  //   expect(commentsDataBox).toEqual(0);
+  // });
 });
