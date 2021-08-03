@@ -4,19 +4,16 @@ import { shallowMount, createLocalVue } from '@vue/test-utils';
 // import router, vuex & other dependencies
 import Vuex from 'vuex';
 
+// import axios & axios mock
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+
 // import component to mock
 import commentField from '@/components/Forms/AddRequirementComments.vue';
 
-// import API modules
-const { getRequirementIdData } = require('@/services/axios/Forms/AddRequirementComments');
+// import flushPromises from 'flush-promises';
 
-// mock API modules imported above
-jest.mock('@/services/axios/Forms/AddRequirementComments');
-
-// clear mocks before each test
-beforeEach(() => {
-  jest.clearAllMocks();
-});
+const mock = new MockAdapter(axios);
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -44,28 +41,23 @@ describe('FullComponentTest', () => {
       },
     };
 
-    const resolvePromise = new Promise((resolve) => {
-      const receivedRequirementIdData = {
-        status: 'success',
-        message: 'Requirement data successfully retrieved',
-        data: {
-          requirement_id: 1,
-          emp_id: 2,
-          status: 1,
-          timeline: 2,
-          additional_note: null,
-          skill_set: '[8,6]',
-          experience: 2,
-          number_of_position: 3,
-          updated_on: '27-07-2021 by Aditya Jain',
-          created_on: '22-06-2021 by Aditya Jain',
-          client_id: 2,
-        },
-      };
-      resolve(receivedRequirementIdData);
+    mock.onGet('/Requirement/1').reply(200, {
+      status: 'success',
+      message: 'Requirement data successfully retrieved',
+      data: {
+        requirement_id: 1,
+        emp_id: 2,
+        status: 1,
+        timeline: 2,
+        additional_note: null,
+        skill_set: '[8,6]',
+        experience: 2,
+        number_of_position: 3,
+        updated_on: '27-07-2021 by Aditya Jain',
+        created_on: '22-06-2021 by Aditya Jain',
+        client_id: 2,
+      },
     });
-
-    getRequirementIdData.mockResolvedValueOnce(resolvePromise);
 
     const wrapper = shallowMount(commentField, {
       localVue,
@@ -90,57 +82,5 @@ describe('FullComponentTest', () => {
     // hide submit button initially
     const commentSubmitBtn = wrapper.find('[data-testid="commentSubmitBtn"]');
     expect(commentSubmitBtn.exists()).toBe(false);
-  });
-
-  it('shows HR specific option', () => {
-    // setting dummy route for component created method
-    const $route = {
-      params: {
-        id: '1',
-      },
-    };
-
-    const resolvePromise = new Promise((resolve) => {
-      const receivedRequirementIdData = {
-        status: 'success',
-        message: 'Requirement data successfully retrieved',
-        data: {
-          requirement_id: 1,
-          emp_id: 2,
-          status: 1,
-          timeline: 2,
-          additional_note: null,
-          skill_set: '[8,6]',
-          experience: 2,
-          number_of_position: 3,
-          updated_on: '27-07-2021 by Aditya Jain',
-          created_on: '22-06-2021 by Aditya Jain',
-          client_id: 2,
-        },
-      };
-      resolve(receivedRequirementIdData);
-    }).catch(() => {});
-
-    getRequirementIdData.mockResolvedValueOnce(resolvePromise);
-
-    const wrapper = shallowMount(commentField, {
-      localVue,
-      store,
-      computed: {
-        isHR() {
-          return true;
-        },
-      },
-      mocks: {
-        $route,
-      },
-      propsData: {
-        type: undefined,
-      },
-    });
-
-    // Don't show change status btn to non HR users
-    const isHRCheck = wrapper.find('[data-testid="isHRCheck"]');
-    expect(isHRCheck.exists()).toBe(true);
   });
 });
