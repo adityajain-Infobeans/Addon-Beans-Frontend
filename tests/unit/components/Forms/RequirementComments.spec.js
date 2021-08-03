@@ -9,7 +9,7 @@ import RequirementComments from '@/components/Forms/RequirementComments.vue';
 
 import flushPromises from 'flush-promises';
 
-const { getAllComment } = require('@/services/axios/Forms/RequirementComments');
+const { getComment } = require('@/services/axios/Forms/RequirementComments');
 
 jest.mock('@/services/axios/Forms/RequirementComments');
 
@@ -19,6 +19,10 @@ beforeEach(() => {
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
+
+const actions = {
+  setComment: jest.fn(),
+};
 
 const store = new Vuex.Store({
   state: {
@@ -32,14 +36,7 @@ const store = new Vuex.Store({
       },
     },
   },
+  actions,
 });
 
-describe('FullComponentTest', () => {
-  it('Verify default values', () => {
-    expect(true).toBe(true);
-  });
-
-  it('Verify form fields are present and validated', () => {
-    expect(true).toBe(true);
-  });
-});
+describe('FullComponentTest', () => {});
