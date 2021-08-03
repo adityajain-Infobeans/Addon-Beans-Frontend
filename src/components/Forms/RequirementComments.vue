@@ -1,12 +1,16 @@
 <template>
-  <v-container class="mt-5" v-if="commentsData.length === 0 ? false : true">
+  <v-container
+    class="mt-5"
+    v-if="commentsData.length === 0 ? false : true"
+    data-testid="commentsContainer"
+  >
     <v-card light class="pa-5">
       <div
         class="blue lighten-4 black--text pa-5 mb-5"
         v-for="commentData in commentsData"
         :key="commentData.id"
       >
-        <p class="">
+        <p class="" data-testid="commentsDataBox">
           {{ commentData.comment }}
         </p>
         <p class="text-right">- By {{ commentData.comment_by }}</p>
