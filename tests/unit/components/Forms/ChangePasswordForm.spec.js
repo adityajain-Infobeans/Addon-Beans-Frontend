@@ -42,4 +42,22 @@ describe('FullComponentTest', () => {
       })
       .catch(() => {});
   });
+
+  it('Verify Weak Password verification', () => {
+    const wrapper = shallowMount(ChangePasswordForm);
+    const newPassword = wrapper.find('[data-testid="newPassword"]');
+    const confirmPassword = wrapper.find('[data-testid="ConfirmPassword"]');
+    const changePasswordBtn = wrapper.find('[data-testid="changePasswordBtn"]');
+
+    newPassword.element.value = 'password123';
+    confirmPassword.element.value = 'password123';
+
+    changePasswordBtn
+      .trigger('click')
+      .then(() => {
+        const weakPasswordAlert = wrapper.find('#swal2-title');
+        expect(weakPasswordAlert.exists()).toBe(true);
+      })
+      .catch(() => {});
+  });
 });
