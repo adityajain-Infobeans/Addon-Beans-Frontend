@@ -24,4 +24,22 @@ describe('FullComponentTest', () => {
     expect(changePasswordBtnStatus).toBe('true');
     expect(missMatchAlert.exists()).toBe(false);
   });
+
+  it('Verify Password Mismatch verification', () => {
+    const wrapper = shallowMount(ChangePasswordForm);
+    const newPassword = wrapper.find('[data-testid="newPassword"]');
+    const confirmPassword = wrapper.find('[data-testid="ConfirmPassword"]');
+    const changePasswordBtn = wrapper.find('[data-testid="changePasswordBtn"]');
+
+    newPassword.element.value = 'value';
+    confirmPassword.element.value = 'value1';
+
+    changePasswordBtn
+      .trigger('click')
+      .then(() => {
+        const missMatchAlert = wrapper.find('#swal2-title');
+        expect(missMatchAlert.exists()).toBe(true);
+      })
+      .catch(() => {});
+  });
 });
