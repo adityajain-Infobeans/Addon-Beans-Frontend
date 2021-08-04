@@ -89,4 +89,31 @@ describe('FullComponentTest', () => {
         console.log(error);
       });
   });
+
+  it('Verify fail API call', () => {
+    mock.onPut('/employee').reply(503, {
+      data: { status: 'error', message: 'error occurred while connecting with database', data: {} },
+    });
+
+    const wrapper = shallowMount(ChangePasswordForm);
+    const newPassword = wrapper.find('[data-testid="newPassword"]');
+    const confirmPassword = wrapper.find('[data-testid="ConfirmPassword"]');
+    const changePasswordBtn = wrapper.find('[data-testid="changePasswordBtn"]');
+
+    newPassword.element.value = 'SecurePassword@1234';
+    confirmPassword.element.value = 'SecurePassword@1234';
+
+    changePasswordBtn
+      .trigger('click')
+      .then(() => {
+        const missMatchAlert = wrapper.find('#swal2-title');
+        expect(missMatchAlert.exists()).toBe(true);
+
+        const alertContent = wrapper.find('#swal2-content');
+        expect(alertContent.text()).toBe('error occurred while connecting with database');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
 });
