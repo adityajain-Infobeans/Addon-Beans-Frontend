@@ -104,4 +104,33 @@ describe('LoginForm', () => {
       })
       .catch(() => {});
   });
+
+  it('employee not found', () => {
+    mock
+      .onPost('/employee')
+      .reply(406, { status: 'error', message: 'wrong username or password', data: {} });
+
+    const wrapper = shallowMount(LoginForm, {
+      data() {
+        return {
+          email: 'test@email.com',
+          password: 'password',
+          formValidated: true,
+        };
+      },
+    });
+
+    const loginButton = wrapper.find('[data-testid="loginButton"]');
+    const loginButtonStatus = loginButton.attributes().disabled;
+
+    expect(loginButtonStatus).toBe(undefined);
+
+    loginButton
+      .trigger('click')
+      .then(() => {
+        const successMessage = wrapper.find('[data-testid="successMessage"]').element.textContent;
+        expect(successMessage).toBe('wrong username or password');
+      })
+      .catch(() => {});
+  });
 });
