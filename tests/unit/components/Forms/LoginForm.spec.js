@@ -40,6 +40,10 @@ describe('LoginForm', () => {
   });
 
   it('Shows error message for wrong credentials', () => {
+    mock
+      .onPost('/employee')
+      .reply(401, { status: 'error', message: 'wrong username or password', data: {} });
+
     const wrapper = shallowMount(LoginForm, {
       data() {
         return {
