@@ -1,6 +1,12 @@
 import { shallowMount } from '@vue/test-utils';
 import LoginForm from '@/components/Forms/LoginForm.vue';
 
+// import axios & axios mock
+import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
+
+const mock = new MockAdapter(axios);
+
 describe('LoginForm', () => {
   it('Verify input fields & buttons are visible', () => {
     const wrapper = shallowMount(LoginForm);
@@ -56,9 +62,5 @@ describe('LoginForm', () => {
         expect(errorMessage).toBe('wrong username or password');
       })
       .catch(() => {});
-  });
-
-  it('Follows login success flow', () => {
-    expect(true).toBe(true);
   });
 });
