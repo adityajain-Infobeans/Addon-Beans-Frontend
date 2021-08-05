@@ -67,4 +67,41 @@ describe('LoginForm', () => {
       })
       .catch(() => {});
   });
+
+  it('Follows login success flow', () => {
+    mock.onPost('/employee').reply(200, {
+      status: 'success',
+      message: 'Employee Found',
+      data: {
+        emp_id: 1,
+        emp_name: 'Test User',
+        is_hr: true,
+        emp_email: 'test@email.com',
+        token: 'dfgfgfgfgfgfgfgfgfgfg',
+      },
+    });
+
+    const wrapper = shallowMount(LoginForm, {
+      data() {
+        return {
+          email: 'test@email.com',
+          password: 'password',
+          formValidated: true,
+        };
+      },
+    });
+
+    const loginButton = wrapper.find('[data-testid="loginButton"]');
+    const loginButtonStatus = loginButton.attributes().disabled;
+
+    expect(loginButtonStatus).toBe(undefined);
+
+    loginButton
+      .trigger('click')
+      .then(() => {
+        const successMessage = wrapper.find('[data-testid="successMessage"]').element.textContent;
+        expect(successMessage).toBe('Login Success');
+      })
+      .catch(() => {});
+  });
 });
