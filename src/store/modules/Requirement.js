@@ -53,7 +53,10 @@ export default {
       },
     ],
   },
-  getters: {},
+  getters: {
+    RequirementsData: (state) => state.RequirementsData,
+    headers: (state) => state.headers,
+  },
   mutations: {
     setRequirement(state, RequirementsData) {
       state.RequirementsData = RequirementsData;
