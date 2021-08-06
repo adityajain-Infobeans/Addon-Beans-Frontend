@@ -3,7 +3,9 @@ export default {
   state: {
     currentComments: [],
   },
-  getters: {},
+  getters: {
+    currentComments: (state) => state.currentComments,
+  },
   mutations: {
     setComment(state, commentData) {
       state.currentComments = commentData;
