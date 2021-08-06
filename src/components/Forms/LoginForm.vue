@@ -92,7 +92,7 @@ export default {
               is_hr: response.data.data.is_hr,
             };
             setTimeout(() => {
-              this.$store.dispatch('userLogin', userData);
+              this.$store.dispatch('Auth/userLogin', userData);
               this.$router.push({ name: 'Dashboard' });
             }, 1000);
           })

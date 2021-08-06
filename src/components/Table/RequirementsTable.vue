@@ -189,7 +189,7 @@ export default {
         if (result.isConfirmed) {
           deleteRequirementData(this.$store.state.Auth.userData.token)
             .then((response) => {
-              this.$store.dispatch('deleteRequirement', id);
+              this.$store.dispatch('Requirement/deleteRequirement', id);
               this.$swal({
                 icon: 'success',
                 title: 'Success',
@@ -315,7 +315,7 @@ export default {
   created() {
     getRequirementData(this.$store.state.Auth.userData.token)
       .then((response) => {
-        this.$store.dispatch('setRequirement', response.data.data.requirementsList);
+        this.$store.dispatch('Requirement/setRequirement', response.data.data.requirementsList);
       })
       .catch((error) => {
         this.$swal({
@@ -364,7 +364,7 @@ export default {
     }
   },
   beforeDestroy() {
-    this.$store.dispatch('clearRequirements');
+    this.$store.dispatch('Requirement/clearRequirements');
   },
 };
 </script>

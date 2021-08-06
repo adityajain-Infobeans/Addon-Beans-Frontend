@@ -21,7 +21,7 @@ export default {
     checkLogin() {
       if (localStorage.getItem('userData')) {
         const userData = JSON.parse(localStorage.getItem('userData'));
-        this.$store.dispatch('userLogin', userData);
+        this.$store.dispatch('Auth/userLogin', userData);
       }
     },
   },

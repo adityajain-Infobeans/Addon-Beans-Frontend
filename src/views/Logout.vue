@@ -5,7 +5,7 @@
 export default {
   methods: {
     redirect() {
-      this.$store.dispatch('userLogout').then(() => {
+      this.$store.dispatch('Auth/userLogout').then(() => {
         this.$router.push({ name: 'Login' });
       });
     },

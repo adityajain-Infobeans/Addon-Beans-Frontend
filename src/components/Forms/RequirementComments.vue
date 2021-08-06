@@ -31,7 +31,7 @@ export default {
 
     getComment(this.$store.state.Auth.userData.token, RequirementId)
       .then((response) => {
-        this.$store.dispatch('setComment', response.data.data);
+        this.$store.dispatch('Comment/setComment', response.data.data);
       })
       .catch((error) => {
         this.$swal({
@@ -47,7 +47,7 @@ export default {
     },
   },
   beforeDestroy() {
-    this.$store.dispatch('clearComment');
+    this.$store.dispatch('Comment/clearComment');
   },
 };
 </script>

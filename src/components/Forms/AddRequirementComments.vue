@@ -117,7 +117,7 @@ export default {
             comment: this.comment,
           };
           this.$refs.formComment.reset();
-          this.$store.dispatch('addComment', commentData);
+          this.$store.dispatch('Comment/addComment', commentData);
           this.$swal({
             icon: 'success',
             title: 'Success',
