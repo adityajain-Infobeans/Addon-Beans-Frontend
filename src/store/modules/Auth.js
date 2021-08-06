@@ -1,4 +1,5 @@
 export default {
+  namespaced: true,
   state: {
     userData: {
       emp_id: null,
