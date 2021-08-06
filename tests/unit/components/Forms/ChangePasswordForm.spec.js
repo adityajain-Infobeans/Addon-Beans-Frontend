@@ -85,9 +85,7 @@ describe('FullComponentTest', () => {
         const alertContent = wrapper.find('#swal2-content');
         expect(alertContent.text()).toBe('Password successfully updated');
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(() => {});
   });
 
   it('Verify fail API call', () => {
@@ -112,8 +110,6 @@ describe('FullComponentTest', () => {
         const alertContent = wrapper.find('#swal2-content');
         expect(alertContent.text()).toBe('error occurred while connecting with database');
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(() => {});
   });
 });
