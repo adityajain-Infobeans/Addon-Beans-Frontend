@@ -1,56 +1,21 @@
 const axios = require('axios');
 
-export function getRequirementData(token) {
-  return axios
-    .get('/Requirement', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((response) => response)
-    .catch((error) => error);
+export function getRequirementData() {
+  return axios.get('/Requirement');
 }
 
-export function getSkillsetData(token) {
-  return axios
-    .get('/skillset', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((response) => response)
-    .catch((error) => error);
+export function getSkillsetData() {
+  return axios.get('/skillset');
 }
 
-export function getClientsData(token) {
-  return axios
-    .get('/client', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((response) => response)
-    .catch((error) => error);
+export function getClientsData() {
+  return axios.get('/client');
 }
 
-export function getEmployeesData(token) {
-  return axios
-    .get('/employee', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((response) => response)
-    .catch((error) => error);
+export function getEmployeesData() {
+  return axios.get('/employee');
 }
 
-export function deleteRequirementData(token) {
-  return axios
-    .delete(`/Requirement/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((response) => response)
-    .catch((error) => error);
+export function deleteRequirementData(requirementId) {
+  return axios.delete(`/Requirement/${requirementId}`);
 }
