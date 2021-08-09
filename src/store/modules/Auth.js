@@ -11,12 +11,12 @@ export default {
     },
   },
   getters: {
-    emp_id: (state) => state.emp_id,
-    emp_name: (state) => state.emp_name,
-    emp_email: (state) => state.emp_email,
-    token: (state) => state.token,
-    is_hr: (state) => state.is_hr,
-    is_login: (state) => state.is_login,
+    emp_id: (state) => state.userData.emp_id,
+    emp_name: (state) => state.userData.emp_name,
+    emp_email: (state) => state.userData.emp_email,
+    token: (state) => state.userData.token,
+    is_hr: (state) => state.userData.is_hr,
+    is_login: (state) => state.userData.is_login,
   },
   mutations: {
     userLogin(state, userData) {
