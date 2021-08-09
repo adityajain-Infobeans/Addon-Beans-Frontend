@@ -20,10 +20,3 @@ export function getSummaryData() {
 export function postComment(ApiData) {
   return axios.post('/comment', ApiData);
 }
-
-// export default {
-//   getSummaryData() ,
-//   postComment(data) {
-//     return axios.post('/comment', data);
-//   },
-// };
