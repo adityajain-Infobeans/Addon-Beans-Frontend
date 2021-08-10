@@ -37,10 +37,10 @@ export default {
       import('@/components/Forms/RequirementComments.vue'),
   },
   computed: {
-    ...mapGetters(['Auth/token']),
+    ...mapGetters({ token: 'Auth/token' }),
   },
   mounted() {
-    if (!Auth/token) {
+    if (!token) {
       this.$router.push({ name: 'Login' });
     }
     document.title = 'View Requirement';

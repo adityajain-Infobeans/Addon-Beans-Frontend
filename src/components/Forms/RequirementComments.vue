@@ -1,13 +1,13 @@
 <template>
   <v-container
     class="mt-5"
-    v-if="Comment/currentComments.length === 0 ? false : true"
+    v-if="currentComments.length === 0 ? false : true"
     data-testid="commentsContainer"
   >
     <v-card light class="pa-5">
       <div
         class="blue lighten-4 black--text pa-5 mb-5"
-        v-for="commentData in Comment/currentComments"
+        v-for="commentData in currentComments"
         :key="commentData.id"
       >
         <p class="" data-testid="commentsDataBox">
@@ -44,7 +44,7 @@ export default {
       });
   },
   computed: {
-    ...mapGetters(['Comment/currentComments']),
+    ...mapGetters({ currentComments: 'Comment/currentComments' }),
   },
   beforeDestroy() {
     this.$store.dispatch('Comment/clearComment');

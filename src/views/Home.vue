@@ -10,11 +10,11 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'Home',
   computed: {
-    ...mapGetters(['Auth/token']),
+    ...mapGetters({ token: 'Auth/token' }),
   },
   mounted() {
     // console.log(token, ' this is token');
-    if (!Auth/token) {
+    if (!token) {
       this.$router.push({ name: 'Login' });
     }
     this.$router.push({ name: 'Dashboard' });

@@ -13,7 +13,7 @@
               <v-col cols="4">
                 <v-checkbox v-model="showClosed" label="Show Closed Requirement"></v-checkbox>
               </v-col>
-              <v-col cols="4" v-if="Auth/is_hr">
+              <v-col cols="4" v-if="isHr">
                 <v-autocomplete
                   v-model="employee"
                   :items="employeeList"
@@ -41,7 +41,7 @@
     <!-- refer this  https://stackoverflow.com/questions/59081299/vuetify-insert-action-button-in-data-table-and-get-row-data -->
     <div v-resize="onResize" class="pb-12">
       <v-data-table
-        :headers="Requirement/headers"
+        :headers="headers"
         :items="RequirementsData"
         :items-per-page="10"
         class="elevation-1"
@@ -260,11 +260,15 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['Auth/is_hr', 'Requirement/RequirementsData', 'Requirement/headers']),
+    ...mapGetters({
+      isHr: 'Auth/is_hr',
+      RequirementsData: 'Requirement/RequirementsData',
+      headers: 'Requirement/headers',
+    }),
     RequirementsData() {
-      let requirementsData = Requirement/RequirementsData;
+      let requirementsData = RequirementsData;
       if (!this.showClosed && this.employee && this.client) {
-        requirementsData = Requirement/RequirementsData.filter((Requirement) => {
+        requirementsData = RequirementsData.filter((Requirement) => {
           if (
             Requirement.status !== '2' &&
             Requirement.emp_id === this.employee &&
@@ -275,38 +279,36 @@ export default {
           return false;
         });
       } else if (this.employee && this.client) {
-        requirementsData = Requirement/RequirementsData.filter((Requirement) => {
+        requirementsData = RequirementsData.filter((Requirement) => {
           if (Requirement.emp_id === this.employee && Requirement.client_id === this.client) {
             return true;
           }
           return false;
         });
       } else if (!this.showClosed && this.employee) {
-        requirementsData = Requirement/RequirementsData.filter((Requirement) => {
+        requirementsData = RequirementsData.filter((Requirement) => {
           if (Requirement.status !== 2 && Requirement.emp_id === this.employee) {
             return true;
           }
           return false;
         });
       } else if (!this.showClosed && this.client) {
-        requirementsData = Requirement/RequirementsData.filter((Requirement) => {
+        requirementsData = RequirementsData.filter((Requirement) => {
           if (Requirement.status !== 2 && Requirement.client_id === this.client) {
             return true;
           }
           return false;
         });
       } else if (this.client) {
-        requirementsData = Requirement/RequirementsData.filter(
+        requirementsData = RequirementsData.filter(
           (Requirement) => Requirement.client_id === this.client,
         );
       } else if (this.employee) {
-        requirementsData = Requirement/RequirementsData.filter(
+        requirementsData = RequirementsData.filter(
           (Requirement) => Requirement.emp_id === this.employee,
         );
       } else if (!this.showClosed) {
-        requirementsData = Requirement/RequirementsData.filter(
-          (Requirement) => Requirement.status !== 2,
-        );
+        requirementsData = RequirementsData.filter((Requirement) => Requirement.status !== 2);
       }
       return requirementsData;
     },
@@ -349,7 +351,7 @@ export default {
         });
       });
 
-    if (Auth/is_hr) {
+    if (isHr) {
       getEmployeesData()
         .then((response) => {
           this.employeeList = this.employeeList.concat(response.data.data.employeeList);
