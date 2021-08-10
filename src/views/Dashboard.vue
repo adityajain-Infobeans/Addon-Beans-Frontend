@@ -13,8 +13,7 @@
 <script>
 // @ is an alias to /src
 
-// import RequirementsSummary from '';
-// import RequirementsTable from '';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Dashboard',
@@ -26,9 +25,11 @@ export default {
       // eslint-disable-next-line implicit-arrow-linebreak
       import('@/components/Table/RequirementsTable.vue'),
   },
-
+  computed: {
+    ...mapGetters(['token']),
+  },
   mounted() {
-    if (!this.$store.state.Auth.userData.token) {
+    if (!token) {
       this.$router.push({ name: 'Login' });
     }
     document.title = 'Dashboard';

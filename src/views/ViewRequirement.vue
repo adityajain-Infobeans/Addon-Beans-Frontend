@@ -20,6 +20,7 @@
 <script>
 // @ is an alias to /src
 // params me Requirement id h toh uski details dika do varna pura table
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'ViewRequirements',
@@ -35,9 +36,11 @@ export default {
       // eslint-disable-next-line implicit-arrow-linebreak
       import('@/components/Forms/RequirementComments.vue'),
   },
-
+  computed: {
+    ...mapGetters(['token']),
+  },
   mounted() {
-    if (!this.$store.state.Auth.userData.token) {
+    if (!token) {
       this.$router.push({ name: 'Login' });
     }
     document.title = 'View Requirement';
