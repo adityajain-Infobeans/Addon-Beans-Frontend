@@ -31,6 +31,7 @@ axios.interceptors.request.use(
   (error) => Promise.reject(error),
 );
 
+// eslint-disable-next-line import/prefer-default-export
 export const ApiEndpoint = {
   getSummaryData,
   postComment,
