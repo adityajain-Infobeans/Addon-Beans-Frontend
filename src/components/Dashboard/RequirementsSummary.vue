@@ -42,7 +42,7 @@ export default {
 
   methods: {
     setSummaryData() {
-      getSummaryData(this.$store.state.Auth.userData.token)
+      getSummaryData()
         .then((response) => {
           if (response.status !== 200) {
             return new Error(response);

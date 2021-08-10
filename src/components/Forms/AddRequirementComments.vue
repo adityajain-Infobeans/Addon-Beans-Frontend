@@ -110,7 +110,7 @@ export default {
   },
   methods: {
     submitComment() {
-      postComment(this.$store.state.Auth.userData.token, this.$route.params.id, this.comment)
+      postComment(this.$route.params.id, this.comment)
         .then((response) => {
           const commentData = {
             comment_by: this.$store.state.Auth.userData.emp_name,
@@ -133,7 +133,7 @@ export default {
         });
     },
     submitStatusChanged() {
-      updateStatus(this.$store.state.Auth.userData.token, this.$route.params.id, this.status)
+      updateStatus(this.$route.params.id, this.status)
         .then((response) => {
           this.$swal({
             icon: 'success',
@@ -152,7 +152,7 @@ export default {
     },
   },
   created() {
-    getRequirementIdData(this.$store.state.Auth.userData.token, this.$route.params.id)
+    getRequirementIdData(this.$route.params.id)
       .then((response) => {
         this.status = response.data.data.status;
         this.currentStatus = response.data.data.status;

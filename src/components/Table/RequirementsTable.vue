@@ -187,7 +187,7 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          deleteRequirementData(this.$store.state.Auth.userData.token)
+          deleteRequirementData()
             .then((response) => {
               this.$store.dispatch('Requirement/deleteRequirement', id);
               this.$swal({
@@ -313,7 +313,7 @@ export default {
   },
 
   created() {
-    getRequirementData(this.$store.state.Auth.userData.token)
+    getRequirementData()
       .then((response) => {
         this.$store.dispatch('Requirement/setRequirement', response.data.data.requirementsList);
       })
@@ -325,7 +325,7 @@ export default {
         });
       });
 
-    getSkillsetData(this.$store.state.Auth.userData.token)
+    getSkillsetData()
       .then((response) => {
         this.skillset = response.data.data;
       })
@@ -337,7 +337,7 @@ export default {
         });
       });
 
-    getClientsData(this.$store.state.Auth.userData.token)
+    getClientsData()
       .then((response) => {
         this.clientsList = this.clientsList.concat(response.data.data.clientsList);
       })
@@ -350,7 +350,7 @@ export default {
       });
 
     if (this.isHR) {
-      getEmployeesData(this.$store.state.Auth.userData.token)
+      getEmployeesData()
         .then((response) => {
           this.employeeList = this.employeeList.concat(response.data.data.employeeList);
         })

@@ -195,7 +195,6 @@ export default {
         // call add api
 
         postRequirement(
-          this.$store.state.Auth.userData.token,
           this.timeline,
           this.no_of_position,
           this.skill_set,
@@ -222,7 +221,6 @@ export default {
         // call update api
 
         updateRequirement(
-          this.$store.state.Auth.userData.token,
           this.$route.params.id,
           this.timeline,
           this.no_of_position,
@@ -256,7 +254,7 @@ export default {
     if (this.type !== 'add') {
       // get Requirement data to view or update
 
-      getRequirementIdData(this.$store.state.Auth.userData.token, this.$route.params.id)
+      getRequirementIdData(this.$route.params.id)
         .then((response) => {
           this.timeline = response.data.data.timeline;
           this.no_of_position = response.data.data.number_of_position;
@@ -274,7 +272,7 @@ export default {
         });
     }
 
-    getClientsData(this.$store.state.Auth.userData.token)
+    getClientsData()
       .then((response) => {
         this.clients = this.clients.concat(response.data.data.clientsList);
       })
@@ -286,7 +284,7 @@ export default {
         });
       });
 
-    getSkillsetData(this.$store.state.Auth.userData.token)
+    getSkillsetData()
       .then((response) => {
         this.skill_sets = this.skill_sets.concat(response.data.data);
       })

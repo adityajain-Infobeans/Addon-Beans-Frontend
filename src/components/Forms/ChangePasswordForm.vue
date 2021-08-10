@@ -90,7 +90,7 @@ export default {
         return true;
       }
 
-      changePassword(this.$store.state.Auth.userData.token, this.newPassword)
+      changePassword(this.newPassword)
         .then((response) => {
           this.$swal({
             icon: 'success',

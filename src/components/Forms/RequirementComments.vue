@@ -29,7 +29,7 @@ export default {
 
     const RequirementId = this.$route.params.id;
 
-    getComment(this.$store.state.Auth.userData.token, RequirementId)
+    getComment(RequirementId)
       .then((response) => {
         this.$store.dispatch('Comment/setComment', response.data.data);
       })
