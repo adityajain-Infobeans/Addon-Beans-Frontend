@@ -1,7 +1,7 @@
 <template>
   <v-container class="mt-5">
     <v-card light class="px-10" :class="bottomPadding">
-      <v-row v-if="isHR" class="marginBottom" data-testid="isHRCheck">
+      <v-row v-if="Auth/is_hr" class="marginBottom" data-testid="isHRCheck">
         <v-col cols="12" sm="3" class="">
           <v-select
             :items="statuses"
@@ -90,10 +90,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['Auth/is_hr']),
-    // isHR() {
-    //   return this.$store.state.Auth.userData.is_hr;
-    // },
+    ...mapGetters(['Auth/is_hr', 'Auth/emp_name']),
     ifView() {
       return !this.type;
     },
@@ -116,7 +113,7 @@ export default {
       postComment(this.$route.params.id, this.comment)
         .then((response) => {
           const commentData = {
-            comment_by: this.$store.state.Auth.userData.emp_name,
+            comment_by: Auth/emp_name,
             comment: this.comment,
           };
           this.$refs.formComment.reset();

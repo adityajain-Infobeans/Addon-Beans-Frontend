@@ -1,22 +1,22 @@
 <template>
   <div>
     <v-app-bar color="" dark>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="isLogin"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="is_login"></v-app-bar-nav-icon>
 
       <!-- <v-toolbar-title class="body-1 pl-1">Support Portal</v-toolbar-title> -->
-      <v-spacer v-if="!isLogin"></v-spacer>
+      <v-spacer v-if="!is_login"></v-spacer>
       <router-link to="/">
         <v-img src="@/assets/LOGO-main-light@2x.png" class="infobeansLogo"></v-img>
       </router-link>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="body-1" v-if="isLogin">{{ welcomeMessage }}</v-toolbar-title>
+      <v-toolbar-title class="body-1" v-if="is_login">{{ welcomeMessage }}</v-toolbar-title>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute temporary dark>
       <v-list>
         <v-list-item-group v-model="model">
           <v-list-item
-            v-for="(item, i) in this.$store.state.navItems"
+            v-for="(item, i) in navItems"
             :key="i"
             router
             :to="{ name: item.text }"
@@ -48,13 +48,9 @@ export default {
 
   methods: {},
   computed: {
-    ...mapGetters([]),
-    isLogin() {
-      return this.$store.state.Auth.userData.is_login;
-    },
-
+    ...mapGetters({ is_login: 'Auth/is_login', emp_name: 'Auth/emp_name', navItems: 'navItems' }),
     welcomeMessage() {
-      return this.isLogin ? `Welcome ${this.$store.state.Auth.userData.emp_name}` : null;
+      return this.is_login ? `Welcome ${this.emp_name}` : null;
     },
   },
 };
