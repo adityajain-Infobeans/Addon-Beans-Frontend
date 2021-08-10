@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const { getComment } = require('@/services/axios/Forms/RequirementComments');
 
 export default {
@@ -42,6 +44,7 @@ export default {
       });
   },
   computed: {
+    ...mapGetters(['Auth/token']),
     commentsData() {
       return this.$store.state.Comment.currentComments;
     },

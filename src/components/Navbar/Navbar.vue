@@ -1,23 +1,15 @@
 <template>
   <div>
     <v-app-bar color="" dark>
-      <v-app-bar-nav-icon
-        @click.stop="drawer = !drawer"
-        v-if="isLogin"
-      ></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" v-if="isLogin"></v-app-bar-nav-icon>
 
       <!-- <v-toolbar-title class="body-1 pl-1">Support Portal</v-toolbar-title> -->
       <v-spacer v-if="!isLogin"></v-spacer>
       <router-link to="/">
-        <v-img
-          src="@/assets/LOGO-main-light@2x.png"
-          class="infobeansLogo"
-        ></v-img>
+        <v-img src="@/assets/LOGO-main-light@2x.png" class="infobeansLogo"></v-img>
       </router-link>
       <v-spacer></v-spacer>
-      <v-toolbar-title class="body-1" v-if="isLogin">{{
-        welcomeMessage
-      }}</v-toolbar-title>
+      <v-toolbar-title class="body-1" v-if="isLogin">{{ welcomeMessage }}</v-toolbar-title>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" absolute temporary dark>
@@ -44,6 +36,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
@@ -54,14 +48,13 @@ export default {
 
   methods: {},
   computed: {
+    ...mapGetters([]),
     isLogin() {
       return this.$store.state.Auth.userData.is_login;
     },
 
     welcomeMessage() {
-      return this.isLogin
-        ? `Welcome ${this.$store.state.Auth.userData.emp_name}`
-        : null;
+      return this.isLogin ? `Welcome ${this.$store.state.Auth.userData.emp_name}` : null;
     },
   },
 };

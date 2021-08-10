@@ -55,6 +55,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const {
   postComment,
   updateStatus,
@@ -88,9 +90,10 @@ export default {
   },
 
   computed: {
-    isHR() {
-      return this.$store.state.Auth.userData.is_hr;
-    },
+    ...mapGetters(['Auth/is_hr']),
+    // isHR() {
+    //   return this.$store.state.Auth.userData.is_hr;
+    // },
     ifView() {
       return !this.type;
     },

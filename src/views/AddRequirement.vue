@@ -18,10 +18,10 @@ export default {
     RequirementForm: () => import('@/components/Forms/RequirementForm.vue'),
   },
   computed: {
-    ...mapGetters(['token']),
+    ...mapGetters(['Auth/token']),
   },
   mounted() {
-    if (!token) {
+    if (!Auth/token) {
       this.$router.push({ name: 'Login' });
     }
     document.title = 'Add Requirement';

@@ -153,6 +153,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const {
   getRequirementData,
   getSkillsetData,
@@ -258,6 +260,7 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(['Auth/is_hr']),
     isHR() {
       return this.$store.state.Auth.userData.is_hr;
     },

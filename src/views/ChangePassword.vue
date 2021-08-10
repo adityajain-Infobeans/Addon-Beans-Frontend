@@ -12,10 +12,10 @@ export default {
     ChangePasswordForm: () => import('@/components/Forms/ChangePasswordForm.vue'),
   },
   computed: {
-    ...mapGetters(['token']),
+    ...mapGetters(['Auth/token']),
   },
   mounted() {
-    if (!token) {
+    if (!Auth/token) {
       this.$router.push({ name: 'Login' });
     }
     document.title = 'Change Password';

@@ -26,10 +26,10 @@ export default {
       import('@/components/Table/RequirementsTable.vue'),
   },
   computed: {
-    ...mapGetters(['token']),
+    ...mapGetters(['Auth/token']),
   },
   mounted() {
-    if (!token) {
+    if (!Auth/token) {
       this.$router.push({ name: 'Login' });
     }
     document.title = 'Dashboard';
