@@ -18,8 +18,6 @@ module.exports = {
     'no-undef': 0,
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'space-infix-ops': 0,
-    camelcase: 0,
     'import/prefer-default-export': 0,
   },
 
