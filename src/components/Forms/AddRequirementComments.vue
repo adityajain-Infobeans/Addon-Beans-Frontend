@@ -1,7 +1,7 @@
 <template>
   <v-container class="mt-5">
     <v-card light class="px-10" :class="bottomPadding">
-      <v-row v-if="is_hr" class="marginBottom" data-testid="isHRCheck">
+      <v-row v-if="isHr" class="marginBottom" data-testid="isHRCheck">
         <v-col cols="12" sm="3" class="">
           <v-select
             :items="statuses"
@@ -57,16 +57,13 @@
 <script>
 import { mapGetters } from 'vuex';
 
-const {
-  postComment,
-  updateStatus,
-  getRequirementIdData,
-} = require('@/services/axios/Forms/AddRequirementComments');
+const { ApiEndpoint } = require('@/services/axios/');
 
 export default {
   props: ['type'],
   data() {
     return {
+      requirementId: this.$route.params.id,
       statuses: [
         { status: 'Open', value: 1 },
         { status: 'Closed', value: 2 },
@@ -90,7 +87,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters({ is_hr: 'Auth/is_hr', 'Auth/emp_name': 'Auth/emp_name' }),
+    ...mapGetters({ isHr: 'Auth/is_hr', empName: 'Auth/emp_name' }),
     ifView() {
       return !this.type;
     },
@@ -110,10 +107,18 @@ export default {
   },
   methods: {
     submitComment() {
-      postComment(this.$route.params.id, this.comment)
+      const apiData = {
+        requirement_id: this.requirementId,
+        comment: this.comment,
+      };
+      ApiEndpoint.postComment(apiData)
         .then((response) => {
+          if (response.status !== 200) {
+            return new Error(response);
+          }
+
           const commentData = {
-            comment_by: emp_name,
+            comment_by: this.empName,
             comment: this.comment,
           };
           this.$refs.formComment.reset();
@@ -123,6 +128,8 @@ export default {
             title: 'Success',
             text: response.data.message,
           });
+
+          return true;
         })
         .catch((error) => {
           this.$swal({
@@ -133,14 +140,22 @@ export default {
         });
     },
     submitStatusChanged() {
-      updateStatus(this.$route.params.id, this.status)
+      const apiData = {
+        status: this.status,
+      };
+      ApiEndpoint.updateStatus(this.requirementId, apiData)
         .then((response) => {
+          if (response.status !== 200) {
+            return new Error(response);
+          }
+
           this.$swal({
             icon: 'success',
             title: 'Success',
             text: response.data.message,
           });
           this.currentStatus = this.status;
+          return true;
         })
         .catch((error) => {
           this.$swal({
@@ -152,10 +167,16 @@ export default {
     },
   },
   created() {
-    getRequirementIdData(this.$route.params.id)
+    ApiEndpoint.getRequirementIdData(this.requirementId)
       .then((response) => {
+        if (response.status !== 200) {
+          return new Error(response);
+        }
+
         this.status = response.data.data.status;
         this.currentStatus = response.data.data.status;
+
+        return true;
       })
       .catch((error) => {
         this.$swal({
