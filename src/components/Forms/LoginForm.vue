@@ -58,7 +58,7 @@
 </template>
 
 <script>
-const { loginEmployee } = require('@/services/axios/Forms/LoginForm');
+const { ApiEndpoint } = require('@/services/axios/');
 
 export default {
   data: () => ({
@@ -80,8 +80,13 @@ export default {
   methods: {
     login() {
       if (this.email && this.password) {
-        loginEmployee(this.email, this.password)
+        const apiData = { email: this.email, password: this.password };
+        ApiEndpoint.loginEmployee(apiData)
           .then((response) => {
+            if (response.status !== 200) {
+              return new Error(response);
+            }
+
             this.successMessage = response.data;
 
             const userData = {
@@ -95,6 +100,7 @@ export default {
               this.$store.dispatch('Auth/userLogin', userData);
               this.$router.push({ name: 'Dashboard' });
             }, 1000);
+            return true;
           })
           .catch((error) => {
             this.errorMessage = error.response.data.message;
