@@ -31,7 +31,7 @@
 </template>
 
 <script>
-const { getSummaryData } = require('@/services/axios/');
+const { ApiEndpoint } = require('@/services/axios/');
 
 export default {
   data: () => ({
@@ -42,7 +42,7 @@ export default {
 
   methods: {
     setSummaryData() {
-      getSummaryData()
+      ApiEndpoint.getSummaryData()
         .then((response) => {
           if (response.status !== 200) {
             return new Error(response);
