@@ -54,7 +54,7 @@
 </template>
 
 <script>
-const { changePassword } = require('@/services/axios/Forms/ChangePasswordForm');
+const { ApiEndpoint } = require('@/services/axios/');
 
 export default {
   data: () => ({
@@ -90,14 +90,23 @@ export default {
         return true;
       }
 
-      changePassword(this.newPassword)
+      const apiData = {
+        newPassword: this.newPassword,
+      };
+      ApiEndpoint.changePassword(apiData)
         .then((response) => {
+          if (response.status !== 200) {
+            return new Error(response);
+          }
+
           this.$swal({
             icon: 'success',
             title: 'Success',
             text: response.data.message,
           });
           this.$refs.form.reset();
+
+          return true;
         })
         .catch((error) => {
           console.log(error);
