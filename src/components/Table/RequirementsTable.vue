@@ -42,7 +42,7 @@
     <div v-resize="onResize" class="pb-12">
       <v-data-table
         :headers="headers"
-        :items="RequirementsData"
+        :items="latestRequirementsData"
         :items-per-page="10"
         class="elevation-1"
         light
@@ -155,13 +155,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-const {
-  getRequirementData,
-  getSkillsetData,
-  getClientsData,
-  deleteRequirementData,
-  getEmployeesData,
-} = require('@/services/axios/Table/RequirementsTable');
+const { ApiEndpoint } = require('@/services/axios/');
 
 export default {
   data: () => ({
@@ -189,14 +183,18 @@ export default {
         reverseButtons: true,
       }).then((result) => {
         if (result.isConfirmed) {
-          deleteRequirementData()
+          ApiEndpoint.deleteRequirementData(id)
             .then((response) => {
+              if (response.status !== 200) {
+                return new Error(response);
+              }
               this.$store.dispatch('Requirement/deleteRequirement', id);
               this.$swal({
                 icon: 'success',
                 title: 'Success',
                 text: response.data.message,
               });
+              return true;
             })
             .catch((error) => {
               this.$swal({
@@ -262,13 +260,13 @@ export default {
   computed: {
     ...mapGetters({
       isHr: 'Auth/is_hr',
-      RequirementsData: 'Requirement/RequirementsData',
+      RequirementData: 'Requirement/RequirementsData',
       headers: 'Requirement/headers',
     }),
-    RequirementsData() {
-      let requirementsData = RequirementsData;
+    latestRequirementsData() {
+      let requirementsData = this.RequirementData;
       if (!this.showClosed && this.employee && this.client) {
-        requirementsData = RequirementsData.filter((Requirement) => {
+        requirementsData = this.RequirementData.filter((Requirement) => {
           if (
             Requirement.status !== '2' &&
             Requirement.emp_id === this.employee &&
@@ -279,45 +277,49 @@ export default {
           return false;
         });
       } else if (this.employee && this.client) {
-        requirementsData = RequirementsData.filter((Requirement) => {
+        requirementsData = this.RequirementData.filter((Requirement) => {
           if (Requirement.emp_id === this.employee && Requirement.client_id === this.client) {
             return true;
           }
           return false;
         });
       } else if (!this.showClosed && this.employee) {
-        requirementsData = RequirementsData.filter((Requirement) => {
+        requirementsData = this.RequirementData.filter((Requirement) => {
           if (Requirement.status !== 2 && Requirement.emp_id === this.employee) {
             return true;
           }
           return false;
         });
       } else if (!this.showClosed && this.client) {
-        requirementsData = RequirementsData.filter((Requirement) => {
+        requirementsData = this.RequirementData.filter((Requirement) => {
           if (Requirement.status !== 2 && Requirement.client_id === this.client) {
             return true;
           }
           return false;
         });
       } else if (this.client) {
-        requirementsData = RequirementsData.filter(
+        requirementsData = this.RequirementData.filter(
           (Requirement) => Requirement.client_id === this.client,
         );
       } else if (this.employee) {
-        requirementsData = RequirementsData.filter(
+        requirementsData = this.RequirementData.filter(
           (Requirement) => Requirement.emp_id === this.employee,
         );
       } else if (!this.showClosed) {
-        requirementsData = RequirementsData.filter((Requirement) => Requirement.status !== 2);
+        requirementsData = this.RequirementData.filter((Requirement) => Requirement.status !== 2);
       }
       return requirementsData;
     },
   },
 
   created() {
-    getRequirementData()
+    ApiEndpoint.getRequirementData()
       .then((response) => {
+        if (response.status !== 200) {
+          return new Error(response);
+        }
         this.$store.dispatch('Requirement/setRequirement', response.data.data.requirementsList);
+        return true;
       })
       .catch((error) => {
         this.$swal({
@@ -327,9 +329,13 @@ export default {
         });
       });
 
-    getSkillsetData()
+    ApiEndpoint.getSkillsetData()
       .then((response) => {
+        if (response.status !== 200) {
+          return new Error(response);
+        }
         this.skillset = response.data.data;
+        return true;
       })
       .catch((error) => {
         this.$swal({
@@ -339,9 +345,13 @@ export default {
         });
       });
 
-    getClientsData()
+    ApiEndpoint.getClientsData()
       .then((response) => {
+        if (response.status !== 200) {
+          return new Error(response);
+        }
         this.clientsList = this.clientsList.concat(response.data.data.clientsList);
+        return true;
       })
       .catch((error) => {
         this.$swal({
@@ -351,10 +361,14 @@ export default {
         });
       });
 
-    if (isHr) {
-      getEmployeesData()
+    if (this.isHr) {
+      ApiEndpoint.getEmployeesData()
         .then((response) => {
+          if (response.status !== 200) {
+            return new Error(response);
+          }
           this.employeeList = this.employeeList.concat(response.data.data.employeeList);
+          return true;
         })
         .catch((error) => {
           this.$swal({
