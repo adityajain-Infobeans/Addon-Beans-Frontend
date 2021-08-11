@@ -48,9 +48,9 @@ export default {
 
   methods: {},
   computed: {
-    ...mapGetters({ is_login: 'Auth/is_login', emp_name: 'Auth/emp_name', navItems: 'navItems' }),
+    ...mapGetters({ is_login: 'Auth/is_login', empName: 'Auth/emp_name', navItems: 'navItems' }),
     welcomeMessage() {
-      return this.is_login ? `Welcome ${this.emp_name}` : null;
+      return this.is_login ? `Welcome ${this.empName}` : null;
     },
   },
 };
