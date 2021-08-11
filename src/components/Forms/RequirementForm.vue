@@ -118,9 +118,7 @@
 </template>
 
 <script>
-const { postRequirement, updateRequirement } = require('@/services/axios/Forms/RequirementForm');
-const { getSkillsetData, getClientsData } = require('@/services/axios/Table/RequirementsTable');
-const { getRequirementIdData } = require('@/services/axios/Forms/AddRequirementComments');
+const { ApiEndpoint } = require('@/services/axios/');
 
 export default {
   props: ['type'],
@@ -194,21 +192,26 @@ export default {
       if (this.type === 'add') {
         // call add api
 
-        postRequirement(
-          this.timeline,
-          this.no_of_position,
-          this.skill_set,
-          this.experience,
-          this.client,
-          this.additional_note,
-        )
+        const apiData = {
+          timeline: this.timeline,
+          number_of_position: this.no_of_position,
+          skill_set: this.skill_set,
+          experience: this.experience,
+          client_id: this.client,
+          additional_note: this.additional_note,
+        };
+        ApiEndpoint.postRequirement(apiData)
           .then((response) => {
+            if (response.status !== 200) {
+              return new Error(response);
+            }
             this.$refs.form.reset();
             this.$swal({
               icon: 'success',
               title: 'Success',
               text: response.data.message,
             });
+            return true;
           })
           .catch((error) => {
             this.$swal({
@@ -220,21 +223,25 @@ export default {
       } else if (this.type === 'update') {
         // call update api
 
-        updateRequirement(
-          this.$route.params.id,
-          this.timeline,
-          this.no_of_position,
-          this.skill_set,
-          this.experience,
-          this.client,
-          this.additional_note,
-        )
+        const apiData = {
+          timeline: this.timeline,
+          number_of_position: this.no_of_position,
+          skill_set: this.skill_set,
+          experience: this.experience,
+          client_id: this.client,
+          additional_note: this.additional_note,
+        };
+        ApiEndpoint.updateRequirement(this.$route.params.id, apiData)
           .then((response) => {
+            if (response.status !== 200) {
+              return new Error(response);
+            }
             this.$swal({
               icon: 'success',
               title: 'Success',
               text: response.data.message,
             });
+            return true;
           })
           .catch((error) => {
             this.$swal({
@@ -254,14 +261,18 @@ export default {
     if (this.type !== 'add') {
       // get Requirement data to view or update
 
-      getRequirementIdData(this.$route.params.id)
+      ApiEndpoint.getRequirementIdData(this.$route.params.id)
         .then((response) => {
+          if (response.status !== 200) {
+            return new Error(response);
+          }
           this.timeline = response.data.data.timeline;
           this.no_of_position = response.data.data.number_of_position;
           this.skill_set = JSON.parse(response.data.data.skill_set);
           this.experience = response.data.data.experience;
           this.additional_note = response.data.data.additional_note;
           this.client = response.data.data.client_id;
+          return true;
         })
         .catch((error) => {
           this.$swal({
@@ -272,9 +283,13 @@ export default {
         });
     }
 
-    getClientsData()
+    ApiEndpoint.getClientsData()
       .then((response) => {
+        if (response.status !== 200) {
+          return new Error(response);
+        }
         this.clients = this.clients.concat(response.data.data.clientsList);
+        return true;
       })
       .catch((error) => {
         this.$swal({
@@ -284,9 +299,13 @@ export default {
         });
       });
 
-    getSkillsetData()
+    ApiEndpoint.getSkillsetData()
       .then((response) => {
+        if (response.status !== 200) {
+          return new Error(response);
+        }
         this.skill_sets = this.skill_sets.concat(response.data.data);
+        return true;
       })
       .catch((error) => {
         this.$swal({
