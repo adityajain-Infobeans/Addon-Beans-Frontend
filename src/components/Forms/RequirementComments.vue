@@ -22,7 +22,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-const { getComment } = require('@/services/axios/Forms/RequirementComments');
+const { ApiEndpoint } = require('@/services/axios/');
 
 export default {
   data: () => ({}),
@@ -31,9 +31,13 @@ export default {
 
     const RequirementId = this.$route.params.id;
 
-    getComment(RequirementId)
+    ApiEndpoint.getComment(RequirementId)
       .then((response) => {
+        if (response.status !== 200) {
+          return new Error(response);
+        }
         this.$store.dispatch('Comment/setComment', response.data.data);
+        return true;
       })
       .catch((error) => {
         this.$swal({
