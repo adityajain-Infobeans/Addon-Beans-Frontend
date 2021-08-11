@@ -15,7 +15,7 @@ export default {
     ...mapGetters({ token: 'Auth/token' }),
   },
   mounted() {
-    if (!token) {
+    if (!this.token) {
       this.$router.push({ name: 'Login' });
     }
     document.title = 'Change Password';

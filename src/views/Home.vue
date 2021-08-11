@@ -1,4 +1,3 @@
-/* eslint-disable vue/no-unused-components */
 <template>
   <div></div>
 </template>
@@ -13,8 +12,8 @@ export default {
     ...mapGetters({ token: 'Auth/token' }),
   },
   mounted() {
-    // console.log(token, ' this is token');
-    if (!token) {
+    // console.log(this.token, ' this is token');
+    if (!this.token) {
       this.$router.push({ name: 'Login' });
     }
     this.$router.push({ name: 'Dashboard' });
