@@ -146,6 +146,7 @@ export default {
         });
     },
     submitStatusChanged() {
+      console.log('submit button called');
       const apiData = {
         status: this.status,
       };
@@ -161,11 +162,9 @@ export default {
             text: response.data.message,
           });
           this.currentStatus = this.status;
-          console.log('success', response.data.message);
           return true;
         })
         .catch((error) => {
-          console.log('error', error);
           this.$swal({
             icon: 'error',
             title: 'Some Error Occured',
