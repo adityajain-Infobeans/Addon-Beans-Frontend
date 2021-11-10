@@ -63,7 +63,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-const { ApiEndpoint } = require('@/services/axios/');
+import { ApiEndpoint } from '@/services/axios/';
 
 export default {
   props: ['type'],

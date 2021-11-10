@@ -1,23 +1,23 @@
 import axios from 'axios';
 import store from '../../store';
 
-const { getSummaryData } = require('@/services/axios/Dashboard/RequirementsSummary.js');
-const {
+import { getSummaryData } from '@/services/axios/Dashboard/RequirementsSummary';
+import {
   postComment,
   getRequirementIdData,
   updateStatus,
-} = require('@/services/axios/Forms/AddRequirementComments.js');
-const { changePassword } = require('@/services/axios/Forms/ChangePasswordForm.js');
-const { loginEmployee } = require('@/services/axios/Forms/LoginForm.js');
-const { getComment } = require('@/services/axios/Forms/RequirementComments.js');
-const { postRequirement, updateRequirement } = require('@/services/axios/Forms/RequirementForm.js');
-const {
+} from '@/services/axios/Forms/AddRequirementComments';
+import { changePassword } from '@/services/axios/Forms/ChangePasswordForm';
+import { loginEmployee } from '@/services/axios/Forms/LoginForm';
+import { getComment } from '@/services/axios/Forms/RequirementComments';
+import { postRequirement, updateRequirement } from '@/services/axios/Forms/RequirementForm';
+import {
   getRequirementData,
   getSkillsetData,
   getClientsData,
   getEmployeesData,
   deleteRequirementData,
-} = require('@/services/axios/Table/RequirementsTable.js');
+} from '@/services/axios/Table/RequirementsTable';
 
 axios.interceptors.request.use(
   (config) => {

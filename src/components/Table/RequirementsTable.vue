@@ -155,7 +155,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-const { ApiEndpoint } = require('@/services/axios/');
+import { ApiEndpoint } from '@/services/axios/';
 
 export default {
   data: () => ({
@@ -236,10 +236,9 @@ export default {
       JSON.parse(skillSet).forEach((skill, index) => {
         this.skillset.filter((filterSkill) => {
           if (filterSkill.skill_id === skill) {
-            skills =
-              index === JSON.parse(skillSet).length - 1
-                ? `${skills + filterSkill.skill_name}`
-                : `${skills + filterSkill.skill_name}, `;
+            skills = index === JSON.parse(skillSet).length - 1
+              ? `${skills + filterSkill.skill_name}`
+              : `${skills + filterSkill.skill_name}, `;
             return true;
           }
           return false;
@@ -268,9 +267,9 @@ export default {
       if (!this.showClosed && this.employee && this.client) {
         requirementsData = this.RequirementData.filter((Requirement) => {
           if (
-            Requirement.status !== '2' &&
-            Requirement.emp_id === this.employee &&
-            Requirement.client_id === this.client
+            Requirement.status !== '2'
+            && Requirement.emp_id === this.employee
+            && Requirement.client_id === this.client
           ) {
             return true;
           }

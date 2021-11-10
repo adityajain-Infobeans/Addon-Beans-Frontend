@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-
 import Auth from './modules/Auth';
 import Comment from './modules/Comment';
 import Requirement from './modules/Requirement';
@@ -39,10 +38,11 @@ export default new Vuex.Store({
   },
   getters: {
     navItems: (state) => state.navItems,
-
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+  },
+  actions: {
+  },
   modules: {
     Auth,
     Comment,

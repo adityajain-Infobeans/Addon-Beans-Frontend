@@ -118,7 +118,7 @@
 </template>
 
 <script>
-const { ApiEndpoint } = require('@/services/axios/');
+import { ApiEndpoint } from '@/services/axios/';
 
 export default {
   props: ['type'],
@@ -154,7 +154,7 @@ export default {
   },
 
   computed: {
-    isFormValid: () => {},
+    isFormValid: () => true,
     ifView() {
       return !this.type;
     },

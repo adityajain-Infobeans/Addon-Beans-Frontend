@@ -1,12 +1,12 @@
 import Vue from 'vue';
-import VueRouter from 'vue-router';
+import VueRouter, { RouteConfig } from 'vue-router';
 import Home from '../views/Home.vue';
 import Logout from '../views/Logout.vue';
 import Login from '../views/Login.vue';
 
 Vue.use(VueRouter);
 
-const routes = [
+const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'Home',
@@ -25,14 +25,12 @@ const routes = [
   {
     path: '/updateRequirement/:id',
     name: 'Update Requirement',
-    component: () =>
-      import(/* webpackChunkName: "updateRequirement" */ '../views/UpdateRequirement.vue'),
+    component: () => import(/* webpackChunkName: "updateRequirement" */ '../views/UpdateRequirement.vue'),
   },
   {
     path: '/viewRequirement/:id?',
     name: 'View Requirement',
-    component: () =>
-      import(/* webpackChunkName: "viewRequirement" */ '../views/ViewRequirement.vue'),
+    component: () => import(/* webpackChunkName: "viewRequirement" */ '../views/ViewRequirement.vue'),
   },
   {
     path: '/changePassword',

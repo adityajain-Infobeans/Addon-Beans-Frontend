@@ -54,7 +54,7 @@
 </template>
 
 <script>
-const { ApiEndpoint } = require('@/services/axios/');
+import { ApiEndpoint } from '@/services/axios/';
 
 export default {
   data: () => ({

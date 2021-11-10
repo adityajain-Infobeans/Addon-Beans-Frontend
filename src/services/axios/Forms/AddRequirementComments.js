@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 export function postComment(ApiData) {
   return axios.post('/comment', ApiData);
