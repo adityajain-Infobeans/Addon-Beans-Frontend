@@ -1,9 +1,7 @@
 FROM node:lts-alpine
-RUN set -eux \
-    & apk add \
-        --no-cache \
-        nodejs \
-        yarn
+RUN apk add \
+    --no-cache \
+    yarn
 WORKDIR /app
 COPY package.json ./
 RUN  yarn install
